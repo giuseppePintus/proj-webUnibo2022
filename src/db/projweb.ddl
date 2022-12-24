@@ -20,48 +20,48 @@ use socialMediaReddit;
 -- _____________ 
 
 create table USER (
-     userid char(1) not null,
-     useremail char(1) not null,
-     password char(1) not null,
-     name char(1) not null,
+     userid int not null AUTO_INCREMENT,
+     useremail varchar(100) not null,
+     password varchar(100) not null,
+     name varchar(100) not null,
      active char(1) not null,
      constraint IDUSER primary key (userid));
 
 create table COMMENT (
-     commentid char(1) not null,
-     commenttext char(1) not null,
-     postid char(1) not null,
-     userid char(1) not null,
+     commentid int not null AUTO_INCREMENT,
+     commenttext varchar(100) not null,
+     postid int not null,
+     userid int not null,
      constraint IDCOMMENT primary key (commentid));
 
 create table CATEGORY (
-     categoryid char(1) not null,
-     categoryname char(1) not null,
+     categoryid int not null AUTO_INCREMENT,
+     categoryname varchar(100) not null,
      constraint IDCATEGORY primary key (categoryid));
 
 create table following (
-     followingid char(1) not null,
-     userid char(1) not null,
+     followingid int not null AUTO_INCREMENT,
+     userid int not null,
      constraint IDfollowing primary key (followingid));
 
 create table follower (
-     followerid char(1) not null,
-     userid char(1) not null,
+     followerid int not null AUTO_INCREMENT,
+     userid int not null,
      constraint IDfollower primary key (followerid));
 
 create table POST (
-     postid char(1) not null,
-     posttitle char(1) not null,
-     posttext char(1) not null,
-     postdate char(1) not null,
-     postpreview char(1) not null,
-     postimage char(1) not null,
-     userid char(1) not null,
+     postid int not null AUTO_INCREMENT,
+     posttitle varchar(100) not null,
+     posttext varchar(100) not null,
+     postdate date not null,
+     postpreview varchar(100) not null,
+     postimage blob not null,
+     userid int not null,
      constraint IDPOST primary key (postid));
 
 create table post_category (
-     categoryid char(1) not null,
-     postid char(1) not null,
+     categoryid int not null AUTO_INCREMENT,
+     postid int not null,
      constraint IDpost_category primary key (categoryid, postid));
 
 
