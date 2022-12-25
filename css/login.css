@@ -1,3 +1,9 @@
+:root{
+    --backgroundColor: black;
+    --textColor:white;
+    --invert:1;
+}
+
 body{
     position: fixed;
     overflow: hidden;
@@ -8,17 +14,21 @@ body{
     margin: 0;
     padding: 0;
     display: grid;
+    background-color: var(--backgroundColor);
 }
+
 .loginDiv{
     display: block;
-    border: solid ;
+    
 
     justify-self: center;
     align-self: center;
     text-align: center;
 }
 .loginDiv>img{
-    max-width: 100%;   
+    filter: invert(var(--invert));
+    max-width: 40%;   
+    aspect-ratio: 1;
 }
 
 .loginDiv>form{
@@ -32,16 +42,19 @@ body{
 
     border-style: solid;
     border-radius: 1vmin;
-    border-color: black;
+    border-color: var(--textColor);
     border-width: 1px;
 }
 
 a{
-    color: black;
+    color: var(--textColor);
     text-decoration: none;
 }
 a:hover{
     text-decoration: underline;
+}
+p{
+    color: var(--textColor);
 }
 
 footer{
