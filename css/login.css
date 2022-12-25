@@ -1,0 +1,51 @@
+body{
+    position: fixed;
+    overflow: hidden;
+
+    height: 100%;
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+    display: grid;
+}
+.loginDiv{
+    display: block;
+    border: solid ;
+
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+}
+.loginDiv>img{
+    max-width: 100%;   
+}
+
+.loginDiv>form{
+    display: grid;
+    justify-content: center;
+    padding: px;
+}
+.loginDiv>form>input{
+    padding:3%;
+    margin: 2%;
+
+    border-style: solid;
+    border-radius: 1vmin;
+    border-color: black;
+    border-width: 1px;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+footer{
+    padding: 2%;
+    align-self: flex-end;
+    justify-self: center;
+}
