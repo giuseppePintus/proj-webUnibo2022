@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="it-IT">
     <head>
         <meta charset="utf-8">
@@ -5,15 +6,16 @@
         <title>Tachyon-Login</title>
         <link rel="icon" href="../img/logo.ico" type="image/x-icon">
         <link rel="stylesheet" href="../css/login.css">
+        <script src="../javaScript/login.js" > </script>
     </head>
     <body>
-        <div class="loginDiv">
+        <div class="loginDiv" id="loginDiv">
             <img src="../img/logo.png"/>
             <h1> Welcome to Tachyon</h1>
-            <form id="LoginForm" action="login.php" method="post">
+            <form id="LoginForm">
                 <input type="text"      name="UsernameIn"  id="userInput" class="usrIn"  placeholder="Username" >
                 <input type="password"  name="PasswordIn"  id="passInput" class="passIn" placeholder="Password">
-                <input type="button"    name="LoginButton" value="Login"  onclick="login">
+                <input type="button"    name="LoginButton" value="Login"  onclick="login()">
             </form>
             <a href="register.html"> sign up</a> 
         </div>
