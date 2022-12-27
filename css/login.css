@@ -1,0 +1,64 @@
+:root{
+    --backgroundColor: black;
+    --textColor:white;
+    --invert:1;
+}
+
+body{
+    position: fixed;
+    overflow: hidden;
+
+    height: 100%;
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+    display: grid;
+    background-color: var(--backgroundColor);
+}
+
+.loginDiv{
+    display: block;
+    
+
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+}
+.loginDiv>img{
+    filter: invert(var(--invert));
+    max-width: 40%;   
+    aspect-ratio: 1;
+}
+
+.loginDiv>form{
+    display: grid;
+    justify-content: center;
+    padding: px;
+}
+.loginDiv>form>input{
+    padding:3%;
+    margin: 2%;
+
+    border-style: solid;
+    border-radius: 1vmin;
+    border-color: var(--textColor);
+    border-width: 1px;
+}
+
+a{
+    color: var(--textColor);
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+p{
+    color: var(--textColor);
+}
+
+footer{
+    padding: 2%;
+    align-self: flex-end;
+    justify-self: center;
+}
