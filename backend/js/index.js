@@ -1,28 +1,38 @@
-function generaArticoli(articoli) {
+function generatePosts(posts) {
     let result = "";
-
-    for (let i = 0; i < articoli.length; i++) {
-        let articolo = `
+    for (let i = 0; i < posts.length; i++) {
+        let article = `
         <article>
             <header>
-                <div>
-                    <img src="${articoli[i]["imgarticolo"]}" alt="" />
-                </div>
-                <h2>${articoli[i]["titoloarticolo"]}</h2>
-                <p>${articoli[i]["nome"]} - ${articoli[i]["dataarticolo"]}</p>
+                <ul>
+                    <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
+                    <li><h2>${posts[i]['usernickname']}</h2></li>
+                    <li> <h3>@${posts[i]["username"]}</h3> </li>
+                    <li><p> - ${posts[i]["postdate"]}</p></li>
+                </ul>
             </header>
             <section>
-                <p>${articoli[i]["anteprimaarticolo"]}</p>
+                <p>${posts[i]["posttext"]}</p>
+                <div class="postimage">
+                <img src="${posts[i]["postimage"]}" alt="postimage" />
+                </div>
             </section>
             <footer>
-                <a href="articolo.php?id=${articoli[i]["idarticolo"]}">Leggi tutto</a>
+                <ul>
+                    <li><p>235,232</p></li>
+                    <li><a href="#"><img src="./upload/like.png" alt="like"/></a></li>
+                    <li><a href="#"><img src="./upload/comment.png" alt="comment"/></a></li>
+                    <li><a href="#"><img src="./upload/save.png" alt="save"/></a></li>
+                    <li><a href="#"><img src="./upload/send.png" alt="send"/></a></li>
+                </ul>
             </footer>
         </article>
         `;
-        result += articolo;
+        result += article;
     }
     return result;
 }
+
 
 function getExamplepost() {
     let article = `<article>
@@ -68,11 +78,9 @@ function getExamplepost() {
     return article;
 }
 
-axios.get('api-post.php').then(response => {
+axios.get('./api-post.php').then(response => {
     console.log(response);
-    //let articoli = generaArticoli(response.data);
-   
+    let postshtml = generatePosts(response.data);
+    const main = document.querySelector("main");
+    main.innerHTML = postshtml;
 });
-
-const main = document.querySelector("main");
-main.innerHTML = getExamplepost();

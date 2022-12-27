@@ -140,24 +140,26 @@ article {
     border: 1px solid #cacaca;
     margin-bottom: 5%;
     min-height: 400px;
+    overflow: auto;
+    justify-self: center;
 }
 
 article>section>p {
     margin-left: 15%;
 }
 
-article>section>div {
-    width: 70%;
+
+article>section>div{
+    width: 50%;
     height: auto;
-    text-align: center;
+    justify-self: center;
     margin-left: 15%;
+    margin-top: 3%;
 }
 
 article>section>div>img {
-    height: 100%;
     width: 100%;
-    object-fit: cover;
-    overflow: hidden;
+    object-fit: scale-down;
 }
 
 article footer {
@@ -167,7 +169,6 @@ article footer {
 
 article>footer {
     padding: 0;
-
 }
 
 
@@ -218,12 +219,3 @@ body>div>footer img {
     height: auto;
 }
 
-
-@media (max-width: 767px) {
-    .footer-container {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-    }
-}

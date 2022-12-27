@@ -1,6 +1,5 @@
 function generaArticoli(articoli){
     let result = "";
-
     for(let i=0; i < articoli.length; i++){
         let articolo = `
         <article>

@@ -22,17 +22,6 @@
     <main>
     </main>
     <aside>
-        <section>
-            <h2>Categorie</h2>
-            <ul>
-                <li><a href="#">HTML</a></li>
-                <li><a href="#">CSS</a></li>
-                <li><a href="#">PHP</a></li>
-                <li><a href="#">Javascript</a></li>
-                <li><a href="#">jQuery</a></li>
-                <li><a href="#">Apache</a></li>
-            </ul>
-        </section>
     </aside>
     <div class="footer-container">
     <footer>
