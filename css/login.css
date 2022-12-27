@@ -1,7 +1,7 @@
 :root{
-    --backgroundColor: black;
-    --textColor:white;
-    --invert:1;
+    --backgroundColor: white;
+    --textColor:black;
+    --invert:0;
 }
 
 body{
