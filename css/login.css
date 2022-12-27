@@ -5,9 +5,7 @@
 }
 
 body{
-    position: fixed;
-    overflow: hidden;
-
+    
     height: 100%;
     width: 100%;
 
@@ -55,6 +53,10 @@ a:hover{
 }
 p{
     color: var(--textColor);
+}
+.errorMsg{
+    color: red;
+    font-weight: bold;
 }
 
 footer{
