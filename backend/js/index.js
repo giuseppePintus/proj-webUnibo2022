@@ -77,10 +77,35 @@ function getExamplepost() {
 </article>`;
     return article;
 }
+function getPost(A,B){
+    //interi dell'intervallo dei post A e B
+    
+}
 
+const main = document.querySelector("main");
 axios.get('./api-post.php').then(response => {
-    console.log(response);
     let postshtml = generatePosts(response.data);
-    const main = document.querySelector("main");
-    main.innerHTML = postshtml;
+    main.insertAdjacentHTML('beforeend', postshtml);
 });
+axios.get('./api-post.php').then(response => {
+    let postshtml = generatePosts(response.data);
+    main.insertAdjacentHTML('beforeend', postshtml);
+});
+
+//const main = document.querySelector("main");
+window.addEventListener('scroll', () =>{
+    let lastChild = main.lastElementChild;
+    //if ( main.offsetHeight >= lastChild.offsetTop - lastChild.offsetHeight) {
+        if(window.scrollY>main.offsetHeight-window.innerHeight){
+
+        // The last child element is currently visible
+        axios.get('./api-post.php').then(response => {
+            let postshtml = generatePosts(response.data);
+            main.insertAdjacentHTML('beforeend', postshtml);
+        });
+
+        lastChild = main.lastElementChild;
+    }
+});
+
+
