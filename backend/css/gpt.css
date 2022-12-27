@@ -204,13 +204,16 @@ body>div>footer a {
     color: #666;
 }
 
-body>div>footer a.active {
+body>div>footer a.active,
+body>div>footer button:active {
 
     background-color: rgb(83, 152, 255);
 }
 
 body>div>footer a:hover,
-body>div>footer a.active:hover {
+body>div>footer a.active:hover,
+body>div>footer button:hover,
+body>div>footer button.active:hover {
     background-color: rgb(12, 109, 255);
 }
 
@@ -219,3 +222,27 @@ body>div>footer img {
     height: auto;
 }
 
+body>div>footer button,
+body>div>footer div{
+    background-color: #fff;
+    height: 100%;
+    border: 0px;
+}
+.popup {
+    display: none;
+    position: absolute;
+    transform:translateY(-100%) ;
+    background-color: white;
+    transition: opacity 2.0s;
+    
+  }  
+  .popup.open {
+    display: block;
+    opacity: 1;
+    border-radius: 10px;
+    border:3px solid rgb(0, 0, 0) ;
+  }
+  
+  .popup.closing {
+    opacity: 0;
+  }
