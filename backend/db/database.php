@@ -9,9 +9,10 @@ class DatabaseHelper{
         }        
     }
 
-    public function getRandomPosts($n){
-        $stmt = $this->db->prepare("SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
-        $stmt->bind_param('i',$n);
+    public function getRandomPost($n){
+        $stmt = $this->db->prepare("SELECT usericon, usernickname, username, postdate, posttext, postimage FROM POST p, USER_PROFILE up
+        WHERE p.userid = up.userid ORDER BY Rand() LIMIT ?");
+        $stmt->bind_param('i', $n);
         $stmt->execute();
         $result = $stmt->get_result();
 
