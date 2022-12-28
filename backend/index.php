@@ -6,6 +6,6 @@ $templateParams["pagetitle"] = "Tachyon - Home";
 $templateParams["pagename"] = "Home";
 $templateParams["usericon"] = UPLOAD_DIR . "icon.png";
 
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/index.js");
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/index.js","js/search.js");
 require 'template/base.php';
 ?>
