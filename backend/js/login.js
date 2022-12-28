@@ -1,38 +1,28 @@
-function login(){
-    let user = document.getElementById("userInput").value;
-    let pwd =  document.getElementById("passInput").value;
- 
-    
-    if(!checkInput(user, pwd)){
-     return;
-    }
- 
-    const xhttp = new XMLHttpRequest();
-    const challengeString = xhttp.responseText;
-     xhttp.open("GET", "login.php?fun=reqChg&user=" + user);    
-     xhttp.send();   
- 
-     if(challengeString != null){
- 
-         let sha255 = SubtleCrypto.digest('SHA-256',pwd).then
- 
- 
-     }
-      
- 
-     
- }
+async function login() {
+  let user = document.getElementById("userInput").value;
+  let pwd =  document.getElementById("passInput").value;
+
+  if (!checkInput(user, pwd)) {
+    return;
+  }
+
+  const hashpwd = await digestMessage(pwd);
+  console.log(hashpwd);
+
+
+
+
+}
  //generate sha256 locally using SubtleCrypto ref: https://remarkablemark.medium.com/how-to-generate-a-sha-256-hash-with-javascript-d3b2696382fd
- function hash(string) {
-     const utf8 = new TextEncoder().encode(string);
-     return crypto.subtle.digest('SHA-256', utf8).then((hashBuffer) => {
-       const hashArray = Array.from(new Uint8Array(hashBuffer));
-       const hashHex = hashArray
-         .map((bytes) => bytes.toString(16).padStart(2, '0'))
-         .join('');
-       return hashHex;
-     });
-   }
+
+
+   async function digestMessage(message) {
+    const msgUint8 = new TextEncoder().encode(message);                           // encode as (utf-8) Uint8Array
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           // hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
+    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+    return hashHex;
+  }
  
    function checkInput(usr, pwd){
      if(usr=='' || usr == null){
