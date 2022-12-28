@@ -1,6 +1,11 @@
-
 /* Reset styles */
-body{
+body,
+div,
+span,
+h1,
+h2,
+h3,
+p {
     margin: 0;
     padding: 0;
     border: 0;
@@ -40,11 +45,9 @@ h6 {
 
 
 /* Header styles */
-body>header {
+header {
     display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-
+    align-items: center;
     padding: 1rem;
     background-color: #f2f2f2;
 }
@@ -56,16 +59,12 @@ header img {
     margin-right: 1rem;
 }
 
-.searchBar {
-    align-self: center;
+header form {
     flex-grow: 1;
     margin-left: 10%;
 }
-.searchBar:focus{
-    
-}
 
-body>header>input[type="text"] {
+header input[type="text"] {
     width: 50%;
     height: 2rem;
     padding: 0 2% 0%;
@@ -74,7 +73,7 @@ body>header>input[type="text"] {
     text-align: left;
 }
 
-body>header>button[type="submit"] {
+header button[type="submit"] {
     height: 2rem;
     padding: 0 1rem;
     border: 1px solid #ccc;
@@ -83,32 +82,26 @@ body>header>button[type="submit"] {
     cursor: pointer;
 }
 
-.basicPost>header{
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background-color: #f2f2f2;
-}
-
 /*main styles*/
 main {
     margin: 2% 5% 0;
 }
 
-.homePost>footer li {
+main>article>footer li {
     list-style-type: none;
     display: inline-block;
     margin-left: 10%;
     margin-top: 0;
 }
 
-.homePost>footer img {
+main>article>footer img {
     width: 2rem;
     height: 2rem;
 }
 
 
-.homePost>header ul {
+
+article>header ul {
     margin: 0;
     padding: 0;
     border: 0;
@@ -116,48 +109,48 @@ main {
     display: inline-flex;
 }
 
-.homePost>header {
+article>header {
     text-align: center;
     white-space: nowrap;
 }
 
-.homePost>header img {
+article>header img {
     padding: 0;
     margin: 0;
 }
 
-.homePost>header h2 {
+article>header h2 {
     padding: 0 1% 0;
     font-weight: 800;
 }
 
-.homePost>header h3 {
+article>header h3 {
     padding: 0 1% 0;
     font-weight: 200;
     color: rgb(0, 119, 238);
 }
 
-.homePost>header p {
+article>header p {
     padding: 0 5% 0;
     color: rgb(184, 184, 184);
 }
 
-.homePost {
+article {
     background-color: #fff;
     border: 1px solid #cacaca;
     margin-bottom: 5%;
-    max-height: fit-content;
+    min-height: auto;
     overflow: auto;
     justify-self: center;
 }
 
-.homePost>section>p {
+article>section>p {
     margin-left: 15%;
     margin-top: 2%;
 }
 
 
-.homePost>section>div{
+article>section>div{
     width: 50%;
     height: auto;
     justify-self: center;
@@ -165,23 +158,23 @@ main {
     margin-top: 3%;
 }
 
-.homePost>section>div>img {
+article>section>div>img {
     width: 100%;
     object-fit: scale-down;
 }
 
-.homePost footer {
+article footer {
     text-align: center;
 
 }
 
-.homePost>footer {
+article>footer {
     padding: 0;
 }
 
 
 /* Footer styles */
-.footer-container>footer {
+body>div>footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -194,77 +187,58 @@ main {
     border-top: 1px solid #ccc;
 }
 
-.footer-container>footer ul {
+body>div>footer ul {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.footer-container> footer li {
+body>div>footer li {
     flex-grow: 1;
     text-align: center;
 }
 
-.footer-container>footer a {
+body>div>footer a {
     display: block;
     padding: 0.5rem 0;
     color: #666;
    
 }
 
-.footer-container> a.active {
+body>div>footer a.active {
     background-color: rgb(83, 152, 255);
 }
 
-.footer-container a:hover,
-.footer-container a.active:hover {
+body>div>footer a:hover,
+body>div>footer a.active:hover {
     background-color: rgb(12, 109, 255);
 }
 
-.footer-container img {
+body>div>footer img {
     width: 10%;
     height: auto;
 }
 
-
-
 .searchResult {
-    
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     position: absolute;
-    top: 7%;
-    left: 20%;
-    display:none;
+    height: 50%;
+    max-height: ;
     
-    width: 30vw;
-
-    overflow-y: scroll;
-    overflow-x: scroll;
-    max-height: 40%;
-    
-
-
     background-color: white;
     transition: opacity 2.0s;
     
     }  
-
     .searchResult.open {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    display: block;
     opacity: 1;
-   
-    border-radius: 1vmin;
-    
+    border-radius: 10px;
     border:3px solid rgb(0, 0, 0) ;
     }
     
-    .searchResult>article{
-        border-radius: 1vmin;
-    }
-
-
     .searchResult.closing {
     opacity: 0;
     }
