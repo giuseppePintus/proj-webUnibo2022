@@ -225,7 +225,6 @@ body>div>footer img {
     flex-grow: 1;
     position: absolute;
     height: 50%;
-    max-height: ;
     
     background-color: white;
     transition: opacity 2.0s;
