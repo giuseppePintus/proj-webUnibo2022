@@ -1,5 +1,11 @@
 <?php
 require_once "utils/bootstrap.php";
+
+//./api-search.php?A='+A+'&B='+B+'&S='+input.value;
+if(!isset($_GET["A"]) || !isset($_GET["B"]) || isset(isset($_GET["S"]))){
+    exit();
+}
+
 $posts = $dbh->getRandomPost(1);
 //$posts = $dbh->getFollowingRecentPosts(20);
 
