@@ -1,11 +1,6 @@
+
 /* Reset styles */
-body,
-div,
-span,
-h1,
-h2,
-h3,
-p {
+body{
     margin: 0;
     padding: 0;
     border: 0;
@@ -45,9 +40,11 @@ h6 {
 
 
 /* Header styles */
-header {
+body>header {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    flex-grow: 1;
+
     padding: 1rem;
     background-color: #f2f2f2;
 }
@@ -59,7 +56,8 @@ header img {
     margin-right: 1rem;
 }
 
-header form {
+.searchBar {
+    align-self: center;
     flex-grow: 1;
     margin-left: 10%;
 }
@@ -226,26 +224,29 @@ body>main>article>footer img {
    
 }
 
-body>div>footer a.active {
+.footer-container> a.active {
     background-color: rgb(83, 152, 255);
 }
 
-body>div>footer a:hover,
-body>div>footer a.active:hover {
+.footer-container a:hover,
+.footer-container a.active:hover {
     background-color: rgb(12, 109, 255);
 }
 
-body>div>footer img {
+.footer-container img {
     width: 10%;
     height: auto;
 }
+
+
 
 .searchResult {
     
     position: absolute;
     top: 7%;
     left: 20%;
-    display:none;    
+    display:none;
+    
     width: 30vw;
 
     overflow-y: scroll;
@@ -258,13 +259,23 @@ body>div>footer img {
     transition: opacity 2.0s;
     
     }  
+
     .searchResult.open {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     opacity: 1;
-    border-radius: 10px;
+   
+    border-radius: 1vmin;
+    
     border:3px solid rgb(0, 0, 0) ;
     }
     
+    .searchResult>article{
+        border-radius: 1vmin;
+    }
+
+
     .searchResult.closing {
     opacity: 0;
     }
