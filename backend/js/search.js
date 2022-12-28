@@ -18,14 +18,14 @@ form.addEventListener('submit', function(event) {
 
 function getExamplepost() {
     let article = `
-    <div class="searchPopup">
+    <article class="searchPost basicPost">
         <ul>
             <li> <img src="./upload/icon.png" alt="" /></li>
             <li><h2>Giuseppe Pintus</h2></li>
             <li> <h3>@Giuppy</h3> </li>
             <li><p> - 28 Oct 2022</p></li>
         </ul>
-  </div>`;
+</article>`;
     return article;
 }
 

@@ -1,11 +1,6 @@
+
 /* Reset styles */
-body,
-div,
-span,
-h1,
-h2,
-h3,
-p {
+body{
     margin: 0;
     padding: 0;
     border: 0;
@@ -45,9 +40,11 @@ h6 {
 
 
 /* Header styles */
-header {
+body>header {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    flex-grow: 1;
+
     padding: 1rem;
     background-color: #f2f2f2;
 }
@@ -59,12 +56,16 @@ header img {
     margin-right: 1rem;
 }
 
-header form {
+.searchBar {
+    align-self: center;
     flex-grow: 1;
     margin-left: 10%;
 }
+.searchBar:focus{
+    
+}
 
-header input[type="text"] {
+body>header>input[type="text"] {
     width: 50%;
     height: 2rem;
     padding: 0 2% 0%;
@@ -73,7 +74,7 @@ header input[type="text"] {
     text-align: left;
 }
 
-header button[type="submit"] {
+body>header>button[type="submit"] {
     height: 2rem;
     padding: 0 1rem;
     border: 1px solid #ccc;
@@ -82,26 +83,32 @@ header button[type="submit"] {
     cursor: pointer;
 }
 
+.basicPost>header{
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f2f2f2;
+}
+
 /*main styles*/
 main {
     margin: 2% 5% 0;
 }
 
-main>article>footer li {
+.homePost>footer li {
     list-style-type: none;
     display: inline-block;
     margin-left: 10%;
     margin-top: 0;
 }
 
-main>article>footer img {
+.homePost>footer img {
     width: 2rem;
     height: 2rem;
 }
 
 
-
-article>header ul {
+.homePost>header ul {
     margin: 0;
     padding: 0;
     border: 0;
@@ -109,47 +116,48 @@ article>header ul {
     display: inline-flex;
 }
 
-article>header {
+.homePost>header {
     text-align: center;
     white-space: nowrap;
 }
 
-article>header img {
+.homePost>header img {
     padding: 0;
     margin: 0;
 }
 
-article>header h2 {
+.homePost>header h2 {
     padding: 0 1% 0;
     font-weight: 800;
 }
 
-article>header h3 {
+.homePost>header h3 {
     padding: 0 1% 0;
     font-weight: 200;
-    color: rgb(184, 184, 184);
+    color: rgb(0, 119, 238);
 }
 
-article>header p {
+.homePost>header p {
     padding: 0 5% 0;
     color: rgb(184, 184, 184);
 }
 
-article {
+.homePost {
     background-color: #fff;
     border: 1px solid #cacaca;
     margin-bottom: 5%;
-    min-height: 400px;
+    max-height: fit-content;
     overflow: auto;
     justify-self: center;
 }
 
-article>section>p {
+.homePost>section>p {
     margin-left: 15%;
+    margin-top: 2%;
 }
 
 
-article>section>div{
+.homePost>section>div{
     width: 50%;
     height: auto;
     justify-self: center;
@@ -157,23 +165,23 @@ article>section>div{
     margin-top: 3%;
 }
 
-article>section>div>img {
+.homePost>section>div>img {
     width: 100%;
     object-fit: scale-down;
 }
 
-article footer {
+.homePost footer {
     text-align: center;
 
 }
 
-article>footer {
+.homePost>footer {
     padding: 0;
 }
 
 
 /* Footer styles */
-body>div>footer {
+.footer-container>footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -186,57 +194,77 @@ body>div>footer {
     border-top: 1px solid #ccc;
 }
 
-body>div>footer ul {
+.footer-container>footer ul {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-body>div>footer li {
+.footer-container> footer li {
     flex-grow: 1;
     text-align: center;
 }
 
-body>div>footer a {
+.footer-container>footer a {
     display: block;
     padding: 0.5rem 0;
     color: #666;
    
 }
 
-body>div>footer a.active {
+.footer-container> a.active {
     background-color: rgb(83, 152, 255);
 }
 
-body>div>footer a:hover,
-body>div>footer a.active:hover {
+.footer-container a:hover,
+.footer-container a.active:hover {
     background-color: rgb(12, 109, 255);
 }
 
-body>div>footer img {
+.footer-container img {
     width: 10%;
     height: auto;
 }
 
+
+
 .searchResult {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    position: absolute;
-    height: 50%;
     
+    position: absolute;
+    top: 7%;
+    left: 20%;
+    display:none;
+    
+    width: 30vw;
+
+    overflow-y: scroll;
+    overflow-x: scroll;
+    max-height: 40%;
+    
+
+
     background-color: white;
     transition: opacity 2.0s;
     
     }  
+
     .searchResult.open {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     opacity: 1;
-    border-radius: 10px;
+   
+    border-radius: 1vmin;
+    
     border:3px solid rgb(0, 0, 0) ;
     }
     
+    .searchResult>article{
+        border-radius: 1vmin;
+    }
+
+
     .searchResult.closing {
     opacity: 0;
     }

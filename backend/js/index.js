@@ -1,8 +1,12 @@
 function generatePosts(posts) {
     let result = "";
     for (let i = 0; i < posts.length; i++) {
+        let postiamge = "";
+        if(posts[i]["postimage"] != null){
+            postiamge = "<img src=" + posts[i]["postimage"] + " alt=" + "postimage" + "/>";
+        }
         let article = `
-        <article>
+        <article class="homePost basicPost">
             <header>
                 <ul>
                     <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
@@ -14,7 +18,7 @@ function generatePosts(posts) {
             <section>
                 <p>${posts[i]["posttext"]}</p>
                 <div class="postimage">
-                <img src="${posts[i]["postimage"]}" alt="postimage" />
+                ${postiamge}
                 </div>
             </section>
             <footer>
@@ -32,6 +36,7 @@ function generatePosts(posts) {
     }
     return result;
 }
+
 
 
 
