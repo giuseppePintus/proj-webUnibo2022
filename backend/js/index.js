@@ -6,7 +6,7 @@ function generatePosts(posts) {
             postiamge = "<img src=" + posts[i]["postimage"] + " alt=" + "postimage" + "/>";
         }
         let article = `
-        <article>
+        <article class="homePost basicPost">
             <header>
                 <ul>
                     <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>

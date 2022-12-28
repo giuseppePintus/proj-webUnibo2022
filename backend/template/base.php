@@ -11,10 +11,12 @@
     <header>
     <a href="profile.php"><img src="<?php echo $templateParams['usericon'] ?>" alt="" /></a>
         <h2><?php echo $templateParams["pagename"] ?></h2>
-        <form  action="search">
-            <input id="searchInfo" type="text" placeholder="Search.." name="search">
-            <button type="submit" name="submit">Go</button>
-        </form>
+        <div class="searchBar">
+            <form  action="search">
+                <input id="searchInfo" type="search" placeholder="Search.." name="search">
+                <button type="submit" name="submit">Go</button>
+            </form>
+        </div>
         <div class="searchResult">
         </div>
     </header>
