@@ -37,6 +37,7 @@ function generatePosts(posts) {
     return result;
 }
 
+
 axios.get('./api-post.php').then(response => {
     console.log(response);
     let postshtml = generatePosts(response.data);
