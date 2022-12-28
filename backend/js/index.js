@@ -6,14 +6,16 @@ function generatePosts(posts) {
             postiamge = "<img src=" + posts[i]["postimage"] + " alt=" + "postimage" + "/>";
         }
         let article = `
-        <article>
+        <article class="homePost">
             <header>
-                <ul>
-                    <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
-                    <li><h2>${posts[i]['usernickname']}</h2></li>
-                    <li> <h3>@${posts[i]["username"]}</h3> </li>
-                    <li><p> - ${posts[i]["postdate"]}</p></li>
-                </ul>
+                <div class="postHeader">
+                    <ul>
+                        <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
+                        <li><h2>${posts[i]['usernickname']}</h2></li>
+                        <li><h3>@${posts[i]["username"]}</h3> </li>
+                        <li><p> - ${posts[i]["postdate"]}</p></li>
+                    </ul>
+                </div>
             </header>
             <section>
                 <p>${posts[i]["posttext"]}</p>

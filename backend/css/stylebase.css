@@ -64,7 +64,7 @@ header form {
     margin-left: 10%;
 }
 
-header input[type="text"] {
+.searchBar>form>input{
     width: 50%;
     height: 2rem;
     padding: 0 2% 0%;
@@ -72,8 +72,7 @@ header input[type="text"] {
     border-radius: 0.5rem;
     text-align: left;
 }
-
-header button[type="submit"] {
+.searchBar>form>button{
     height: 2rem;
     padding: 0 1rem;
     border: 1px solid #ccc;
@@ -82,75 +81,88 @@ header button[type="submit"] {
     cursor: pointer;
 }
 
+
 /*main styles*/
 main {
     margin: 2% 5% 0;
 }
 
-main>article>footer li {
-    list-style-type: none;
-    display: inline-block;
-    margin-left: 10%;
-    margin-top: 0;
-}
-
-main>article>footer img {
-    width: 2rem;
-    height: 2rem;
-}
-
-
-
-article>header ul {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    list-style-type: none;
-    display: inline-flex;
-}
-
-article>header {
-    text-align: center;
-    white-space: nowrap;
-}
-
-article>header img {
-    padding: 0;
-    margin: 0;
-}
-
-article>header h2 {
-    padding: 0 1% 0;
-    font-weight: 800;
-}
-
-article>header h3 {
-    padding: 0 1% 0;
-    font-weight: 200;
-    color: rgb(0, 119, 238);
-}
-
-article>header p {
-    padding: 0 5% 0;
-    color: rgb(184, 184, 184);
-}
-
-article {
+body>main>article {
     background-color: #fff;
     border: 1px solid #cacaca;
     margin-bottom: 5%;
-    min-height: auto;
+    max-height: fit-content;
     overflow: auto;
     justify-self: center;
 }
 
-article>section>p {
+body>main>article>header>div{
+    display: inline;
+    position: inherit;
+    box-sizing: border-box;
+
+    display: inline-flex;
+   width: 100%;
+    
+    padding: 1vmin 0;
+    background-color: #f2f2f2;
+    white-space: nowrap;
+}
+
+
+body>main>article>header>div>ul {
+    display: inline-flex;
+    flex-direction: row;
+    flex-grow: 1;
+    
+    margin: 0 ;
+    padding:0;
+    border: 0;
+
+    list-style-type: none;
+}
+body>main>article>header>div>ul>li{
+    margin: 0 1%;
+}
+
+body>main>article>header>div>img { 
+    padding: 0;
+    margin: 0;
+}
+
+body>main>article>header>div h2 {
+    padding: 0 1% 0;
+    font-weight: 800;
+}
+
+body>main>article>header>ul>li>h3 {
+    justify-self: center;
+    padding: 0 ;
+    font-weight: 200;
+    color: rgb(0, 119, 238);
+}
+
+body>main>article>header p {
+    padding: 0 5% 0;
+    color: rgb(184, 184, 184);
+}
+
+body>main>article>section{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    box-sizing: border-box;
+    align-self: center;
+}
+
+
+body>main>article>section>p {
     margin-left: 15%;
     margin-top: 2%;
 }
 
 
-article>section>div{
+body>main>article>section>div{
     width: 50%;
     height: auto;
     justify-self: center;
@@ -158,23 +170,31 @@ article>section>div{
     margin-top: 3%;
 }
 
-article>section>div>img {
+body>main>article>section>div>img {
     width: 100%;
     object-fit: scale-down;
 }
 
-article footer {
-    text-align: center;
-
+body>main>article>footer {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
+}
+body>main>article>footer li {
+    list-style-type: none;
+    display: inline-block;
+    margin-left: 10%;
+    margin-top: 0;
 }
 
-article>footer {
-    padding: 0;
+body>main>article>footer img {
+    width: 2rem;
+    height: 2rem;
 }
 
 
 /* Footer styles */
-body>div>footer {
+.footer-container {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -187,19 +207,19 @@ body>div>footer {
     border-top: 1px solid #ccc;
 }
 
-body>div>footer ul {
+.footer-container ul {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-body>div>footer li {
+.footer-container li {
     flex-grow: 1;
     text-align: center;
 }
 
-body>div>footer a {
+.footer-container a {
     display: block;
     padding: 0.5rem 0;
     color: #666;
@@ -221,13 +241,19 @@ body>div>footer img {
 }
 
 .searchResult {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    position: absolute;
-    height: 50%;
-    max-height: auto;
     
+    position: absolute;
+    top: 7%;
+    left: 20%;
+    display:none;    
+    width: 30vw;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 40%;
+    
+
+
     background-color: white;
     transition: opacity 2.0s;
     
