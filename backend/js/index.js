@@ -107,10 +107,10 @@ window.addEventListener('scroll', () =>{
         // The last child element is currently visible
         axios.get('./api-post.php').then(response => {
             let postshtml = generatePosts(response.data);
-            main.insertAdjacentHTML('beforeend', postshtml);
+            //main.insertAdjacentHTML('beforeend', postshtml);
         });
 
-        lastChild = main.lastElementChild;
+        //lastChild = main.lastElementChild;
     }
 });
 

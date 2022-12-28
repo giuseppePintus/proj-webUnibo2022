@@ -20,7 +20,7 @@ class DatabaseHelper{
     }
 
     public function sendNewPost($userid, $posttext, $postImageUrl){
-        $query = "INSERT INTO POST (posttext, postdate, postimage, userid) VALUES (?, NOW(), ?, ?)";
+        $query = "INSERT INTO POST (posttext, postdate, postimage, userid) VALUES (?,  current_timestamp(), ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ssi',$posttext, $postImageUrl, $userid);
         $stmt->execute();

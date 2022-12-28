@@ -8,13 +8,18 @@ $target_dir = "upload/";
 // based on the user's login, his pictures will be uploaded to his folder.
 $target_dir .= $_SESSION["userfolder"];
 
+
+
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
+
+
 // Check if image file is a actual image or fake image
 if (isset($_POST["submitpost"])) {
-  $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+  if (!empty($_FILES["fileToUpload"]["tmp_name"]))
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
   if ($check !== false) {
     echo "File is an image - " . $check["mime"] . ".";
     $uploadOk = 1;
@@ -64,6 +69,8 @@ if (isset($_POST["writepost"])) {
 if (isset($_SESSION["userid"])) {
   $userid = $_SESSION["userid"];
 }
+if (empty($_FILES["fileToUpload"]["tmp_name"]))
+  $target_file = null;
 
 header("Location: index.php");
 
