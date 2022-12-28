@@ -61,11 +61,8 @@ header img {
     flex-grow: 1;
     margin-left: 10%;
 }
-.searchBar:focus{
-    
-}
 
-body>header>input[type="text"] {
+.searchBar>form>input{
     width: 50%;
     height: 2rem;
     padding: 0 2% 0%;
@@ -73,8 +70,7 @@ body>header>input[type="text"] {
     border-radius: 0.5rem;
     text-align: left;
 }
-
-body>header>button[type="submit"] {
+.searchBar>form>button{
     height: 2rem;
     padding: 0 1rem;
     border: 1px solid #ccc;
@@ -83,66 +79,13 @@ body>header>button[type="submit"] {
     cursor: pointer;
 }
 
-.basicPost>header{
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background-color: #f2f2f2;
-}
 
 /*main styles*/
 main {
     margin: 2% 5% 0;
 }
 
-.homePost>footer li {
-    list-style-type: none;
-    display: inline-block;
-    margin-left: 10%;
-    margin-top: 0;
-}
-
-.homePost>footer img {
-    width: 2rem;
-    height: 2rem;
-}
-
-
-.homePost>header ul {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    list-style-type: none;
-    display: inline-flex;
-}
-
-.homePost>header {
-    text-align: center;
-    white-space: nowrap;
-}
-
-.homePost>header img {
-    padding: 0;
-    margin: 0;
-}
-
-.homePost>header h2 {
-    padding: 0 1% 0;
-    font-weight: 800;
-}
-
-.homePost>header h3 {
-    padding: 0 1% 0;
-    font-weight: 200;
-    color: rgb(0, 119, 238);
-}
-
-.homePost>header p {
-    padding: 0 5% 0;
-    color: rgb(184, 184, 184);
-}
-
-.homePost {
+body>main>article {
     background-color: #fff;
     border: 1px solid #cacaca;
     margin-bottom: 5%;
@@ -151,13 +94,73 @@ main {
     justify-self: center;
 }
 
-.homePost>section>p {
+body>main>article>header>div{
+    display: inline;
+    position: inherit;
+    box-sizing: border-box;
+
+    display: inline-flex;
+   width: 100%;
+    
+    padding: 1vmin 0;
+    background-color: #f2f2f2;
+    white-space: nowrap;
+}
+
+
+body>main>article>header>div>ul {
+    display: inline-flex;
+    flex-direction: row;
+    flex-grow: 1;
+    
+    margin: 0 ;
+    padding:0;
+    border: 0;
+
+    list-style-type: none;
+}
+body>main>article>header>div>ul>li{
+    margin: 0 1%;
+}
+
+body>main>article>header>div>img { 
+    padding: 0;
+    margin: 0;
+}
+
+body>main>article>header>div h2 {
+    padding: 0 1% 0;
+    font-weight: 800;
+}
+
+body>main>article>header>ul>li>h3 {
+    justify-self: center;
+    padding: 0 ;
+    font-weight: 200;
+    color: rgb(0, 119, 238);
+}
+
+body>main>article>header p {
+    padding: 0 5% 0;
+    color: rgb(184, 184, 184);
+}
+
+body>main>article>section{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    box-sizing: border-box;
+    align-self: center;
+}
+
+
+body>main>article>section>p {
     margin-left: 15%;
     margin-top: 2%;
 }
 
 
-.homePost>section>div{
+body>main>article>section>div{
     width: 50%;
     height: auto;
     justify-self: center;
@@ -165,23 +168,31 @@ main {
     margin-top: 3%;
 }
 
-.homePost>section>div>img {
+body>main>article>section>div>img {
     width: 100%;
     object-fit: scale-down;
 }
 
-.homePost footer {
-    text-align: center;
-
+body>main>article>footer {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
+}
+body>main>article>footer li {
+    list-style-type: none;
+    display: inline-block;
+    margin-left: 10%;
+    margin-top: 0;
 }
 
-.homePost>footer {
-    padding: 0;
+body>main>article>footer img {
+    width: 2rem;
+    height: 2rem;
 }
 
 
 /* Footer styles */
-.footer-container>footer {
+.footer-container {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -194,19 +205,19 @@ main {
     border-top: 1px solid #ccc;
 }
 
-.footer-container>footer ul {
+.footer-container ul {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.footer-container> footer li {
+.footer-container li {
     flex-grow: 1;
     text-align: center;
 }
 
-.footer-container>footer a {
+.footer-container a {
     display: block;
     padding: 0.5rem 0;
     color: #666;
@@ -239,7 +250,7 @@ main {
     width: 30vw;
 
     overflow-y: scroll;
-    overflow-x: scroll;
+    overflow-x: hidden;
     max-height: 40%;
     
 
