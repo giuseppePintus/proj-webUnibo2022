@@ -246,3 +246,23 @@ body>div>footer div{
   .popup.closing {
     opacity: 0;
   }
+
+  .searchResult {
+    display: none;
+    position: absolute;
+    height: 50%;
+    
+    background-color: white;
+    transition: opacity 2.0s;
+
+  }  
+  .searchResult.open {
+    display: block;
+    opacity: 1;
+    border-radius: 10px;
+    border:3px solid rgb(0, 0, 0) ;
+  }
+  
+  .searchResult.closing {
+    opacity: 0;
+  }

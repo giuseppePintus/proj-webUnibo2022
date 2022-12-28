@@ -11,10 +11,12 @@
     <header>
         <img src="<?php echo $templateParams['usericon'] ?>" alt="" />
         <h2><?php echo $templateParams["pagename"] ?></h2>
-        <form action="searchpost">
-            <input type="text" placeholder="Search.." name="search">
+        <form  action="search">
+            <input id="searchInfo" type="text" placeholder="Search.." name="search">
             <button type="submit" name="submit">Go</button>
         </form>
+        <div class="searchResult">
+        </div>
     </header>
 
 
@@ -30,11 +32,10 @@
             <li>
                 <?php isActive("archivio.php"); ?>
                 <div>
-                    <div class="popup" onmouseleave="this.classList.add('closing'); setTimeout(() => this.classList.remove('open', 'closing'), 500)">
-                    <form action="/search">
-                        <label for="search">Search:</label>
-                        <input type="text" id="search" name="q">
-                        <button type="submit">Go</button>
+                    <div class="popup" onmouseleave="this.classList.add('closing'); setTimeout(() => this.classList.remove('open', 'closing'), 2000)">
+                    <form action="search">                       
+                        <input type="text" placeholder="Search.." name="search">
+                        <button type="submit" name="submit">Go</button>
                     </form>
                     </div>
                     <button onclick="document.querySelector('.popup').classList.add('open')">
