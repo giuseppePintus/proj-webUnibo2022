@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 27, 2022 alle 20:38
+-- Creato il: Dic 28, 2022 alle 16:49
 -- Versione del server: 10.4.24-MariaDB
 -- Versione PHP: 8.1.6
 
@@ -127,7 +127,8 @@ CREATE TABLE `POST` (
 --
 
 INSERT INTO `POST` (`postid`, `posttext`, `postdate`, `postimage`, `userid`) VALUES
-(3, 'Guarda ragazzi, che bello il maiale che ho trovato a newyork ahahaha!', '2022-12-26', 'giubby/icon.jpg', 0);
+(3, 'Guarda ragazzi, che bello il maiale che ho trovato a newyork ahahaha!', '2022-12-26', 'upload/giubby/icon.jpg', 0),
+(4, 'Hahahahaha sono troppo forte!', '2022-12-28', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -182,7 +183,7 @@ CREATE TABLE `USER_PROFILE` (
 --
 
 INSERT INTO `USER_PROFILE` (`userid`, `Ass_userid`, `username`, `usernickname`, `usericon`) VALUES
-(0, 1, 'giubby', 'Giuseppe Pintus', 'giubby/icon.jpg');
+(0, 1, 'giubby', 'Giuseppe Pintus', 'upload/giubby/icon.jpg');
 
 --
 -- Indici per le tabelle scaricate
@@ -315,7 +316,7 @@ ALTER TABLE `NOTIFICATION`
 -- AUTO_INCREMENT per la tabella `POST`
 --
 ALTER TABLE `POST`
-  MODIFY `postid` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `postid` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT per la tabella `USER_CREDENTIAL`
