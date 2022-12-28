@@ -47,7 +47,7 @@ input.addEventListener('input', function () {
   A+=5;
   B+=5;
   console.log(queryUrl);
-  //result.insertAdjacentHTML('beforeend', listResultSearch());
+  result.insertAdjacentHTML('beforeend', listResultSearch());
 });
 
 input.addEventListener('click', function () {
