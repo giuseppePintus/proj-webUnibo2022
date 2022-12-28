@@ -39,10 +39,11 @@ input.addEventListener('input', function () {
   console.log('Input is being modified');
   //axios call
   let queryUrl = './api-search.php?A='+A+'&B='+B+'&S='+input.value;
+  /*
   axios.get(queryUrl).then(response => {
     let postshtml = generatePosts(response.data);
     result.insertAdjacentHTML('beforeend', postshtml);
-  });
+  });*/
   A+=5;
   B+=5;
   console.log(queryUrl);
