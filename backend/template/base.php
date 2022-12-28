@@ -11,7 +11,7 @@
     <header>
     <a href="profile.php"><img src="<?php echo $templateParams['usericon'] ?>" alt="" /></a>
         <h2><?php echo $templateParams["pagename"] ?></h2>
-        <form  action="search">
+        <form  action="search.php">
             <input id="searchInfo" type="text" placeholder="Search.." name="search">
             <button type="submit" name="submit">Go</button>
         </form>
