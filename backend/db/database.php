@@ -19,6 +19,15 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function sendNewPost($userid, $posttext, $postImageUrl){
+        $query = "INSERT INTO POST (posttext, postdate, postimage, userid) VALUES (?,  current_timestamp(), ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ssi',$posttext, $postImageUrl, $userid);
+        $stmt->execute();
+        
+        return $stmt->insert_id;
+    }
+
 
     /*------------------------------------------end our file--------------------------------------*/
    
