@@ -219,3 +219,26 @@ body>div>footer img {
     height: auto;
 }
 
+.searchResult {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    position: absolute;
+    height: 50%;
+    max-height: ;
+    
+    background-color: white;
+    transition: opacity 2.0s;
+    
+    }  
+    .searchResult.open {
+    display: block;
+    opacity: 1;
+    border-radius: 10px;
+    border:3px solid rgb(0, 0, 0) ;
+    }
+    
+    .searchResult.closing {
+    opacity: 0;
+    }
+    

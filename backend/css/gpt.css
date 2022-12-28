@@ -228,41 +228,23 @@ body>div>footer div{
     height: 100%;
     border: 0px;
 }
-.popup {
-    display: none;
-    position: absolute;
-    transform:translateY(-100%) ;
-    background-color: white;
-    transition: opacity 2.0s;
-    
-  }  
-  .popup.open {
-    display: block;
-    opacity: 1;
-    border-radius: 10px;
-    border:3px solid rgb(0, 0, 0) ;
-  }
-  
-  .popup.closing {
-    opacity: 0;
-  }
 
-  .searchResult {
-    display: none;
-    position: absolute;
-    height: 50%;
-    
-    background-color: white;
-    transition: opacity 2.0s;
+.searchResult {
+display: none;
+position: absolute;
+height: 50%;
 
-  }  
-  .searchResult.open {
-    display: block;
-    opacity: 1;
-    border-radius: 10px;
-    border:3px solid rgb(0, 0, 0) ;
-  }
-  
-  .searchResult.closing {
-    opacity: 0;
-  }
+background-color: white;
+transition: opacity 2.0s;
+
+}  
+.searchResult.open {
+display: block;
+opacity: 1;
+border-radius: 10px;
+border:3px solid rgb(0, 0, 0) ;
+}
+
+.searchResult.closing {
+opacity: 0;
+}
