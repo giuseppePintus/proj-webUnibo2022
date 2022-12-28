@@ -10,8 +10,13 @@ class DatabaseHelper{
     }
 
     public function getRandomPost($n){
-        $stmt = $this->db->prepare("SELECT postid, usericon, usernickname, username, postdate, posttext, postimage FROM POST p, USER_PROFILE up
-        WHERE p.userid = up.userid ORDER BY postdate desc LIMIT ?");
+        $stmt = $this->db->prepare("SELECT p.postid, usericon, usernickname, username, postdate, posttext, postimage, COUNT(l.postid) as liked 
+        FROM POST p
+        INNER JOIN USER_PROFILE up on up.userid = p.userid
+        LEFT JOIN LIKED l on l.postid = p.postid AND p.userid = up.userid
+        GROUP BY p.postid
+        ORDER BY p.postid
+        DESC LIMIT ?");
         $stmt->bind_param('i', $n);
         $stmt->execute();
         $result = $stmt->get_result();

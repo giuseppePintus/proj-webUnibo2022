@@ -23,7 +23,7 @@ function generatePosts(posts) {
             </section>
             <footer>
                 <ul>
-                    <li><p>235,232</p></li>
+                    <li><p>${posts[i]["liked"]}</p></li>
                     <li><img id="like${posts[i]["postid"]}" src="./upload/like.png" alt="like"/></li>
                     <li><img src="./upload/comment.png" alt="comment"/></li>
                     <li><img src="./upload/save.png" alt="save"/></li>
@@ -52,7 +52,6 @@ async function postInteractionsListeners() {
     /*Interaction with posts */
     postIds.forEach(postid => {
         document.getElementById("like" + postid).addEventListener("click", () => console.log(postid));
-
     });
 
 }
