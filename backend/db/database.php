@@ -19,6 +19,10 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+
+    /*------------------------------------------end our file--------------------------------------*/
+   
+    /*These functions are useful to us as riferiment, they will be deleted later.....*/
     public function getCategories(){
         $stmt = $this->db->prepare("SELECT * FROM categoria");
         $stmt->execute();
