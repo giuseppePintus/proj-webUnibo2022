@@ -127,7 +127,7 @@ article>header h2 {
 article>header h3 {
     padding: 0 1% 0;
     font-weight: 200;
-    color: rgb(184, 184, 184);
+    color: rgb(0, 119, 238);
 }
 
 article>header p {
@@ -139,13 +139,14 @@ article {
     background-color: #fff;
     border: 1px solid #cacaca;
     margin-bottom: 5%;
-    min-height: 400px;
+    min-height: auto;
     overflow: auto;
     justify-self: center;
 }
 
 article>section>p {
     margin-left: 15%;
+    margin-top: 2%;
 }
 
 

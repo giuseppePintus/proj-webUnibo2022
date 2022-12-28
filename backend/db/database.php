@@ -11,7 +11,7 @@ class DatabaseHelper{
 
     public function getRandomPost($n){
         $stmt = $this->db->prepare("SELECT usericon, usernickname, username, postdate, posttext, postimage FROM POST p, USER_PROFILE up
-        WHERE p.userid = up.userid ORDER BY Rand() LIMIT ?");
+        WHERE p.userid = up.userid ORDER BY postdate desc LIMIT ?");
         $stmt->bind_param('i', $n);
         $stmt->execute();
         $result = $stmt->get_result();

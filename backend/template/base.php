@@ -4,12 +4,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo $templateParams["pagetitle"]; ?></title>
-    <link rel="stylesheet" type="text/css" href="./css/stylebase.css?version=51" />
+    <link rel="stylesheet" type="text/css" href="./css/stylebase.css" />
 </head>
 
 <body>
     <header>
-        <a href="profile.php"><img src="<?php echo $templateParams['usericon'] ?>" alt="" /></a>
+    <a href="profile.php"><img src="<?php echo $templateParams['usericon'] ?>" alt="" /></a>
         <h2><?php echo $templateParams["pagename"] ?></h2>
         <form  action="search">
             <input id="searchInfo" type="text" placeholder="Search.." name="search">
@@ -18,11 +18,10 @@
         <div class="searchResult">
         </div>
     </header>
-
-
-
+    
     <main>
     </main>
+    
     <aside> 
     </aside>
     <div class="footer-container">
