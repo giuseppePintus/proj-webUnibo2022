@@ -5,15 +5,16 @@ if(!isset($_GET['challenge'])){
     exit();
 }
 
-$key = $dbh.getUserPass($_SESSION['Username']);
+$key = $dbh.getUserPassHash($_SESSION['Username']);
 $data = $_SESSION['challengeString'];
 
 $challengeResponse = openssl_encrypt($data, 'aes-256-gcm', $key, OPENSSL_RAW_DATA);
 
+//header('Location: ../backend/index.php', true, 301);
+
 if($challengeResponse == $_POST['challenge']){
-    echo("everything is right");
-    header('Location: ../backend/index.php', true, 301);
-    exit();
+    header("Content-Type: application/json");    
+    echo json_encode(array('risultato' => "UNZIONAAA"));
 }
 exit();
 ?>
