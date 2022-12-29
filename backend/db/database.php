@@ -96,6 +96,17 @@ class DatabaseHelper{
         return $result->fetch_row();
     }
 
+    public function addAccount($userName, $email, $nickname, $password){
+    
+        $sql = "INSERT INTO `user_credential` (`userid`, `useremail`, `passwordhash`, `active`) VALUES (NULL,?, ? , '1');
+        SET @id = (SELECT `userid` FROM `user_credential` WHERE `useremail` = ?);
+        INSERT INTO `user_profile` (`userid`, `Ass_userid`, `username`, `usernickname`, `usericon`, `userbiography`) VALUES (NULL, @id, ?, ?, 'default.png', ' ')";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$email, $password, $email, $userName, $nickname);
+   //   $stmt->execute();
+        $result = $stmt->get_result();
+}
+
 
     /*------------------------------------------end our file--------------------------------------*/
    
