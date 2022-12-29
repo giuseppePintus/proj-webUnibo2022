@@ -23,6 +23,22 @@ class DatabaseHelper{
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    public function searchUser($start,$end,$string,$username){
+        
+        $stmt = $this->db->prepare("SELECT username,usernickname ,usericon, 
+        (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(?) * 100 AS similarity 
+        FROM USER_PROFILE 
+        WHERE username LIKE ? AND username != ? 
+        ORDER BY similarity DESC 
+        LIMIT ? ,?");
+
+        $string2 = "%".$string."%";
+        $stmt->bind_param('ssssii',$string, $string, $string2, $username, $start, $end);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
     public function sendNewPost($userid, $posttext, $postImageUrl){
         $query = "INSERT INTO POST (posttext, postdate, postimage, userid) VALUES (?,  current_timestamp(), ?, ?)";
