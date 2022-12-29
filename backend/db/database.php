@@ -84,8 +84,10 @@ class DatabaseHelper{
         return $result->fetch_row();
     }
 
-    public function getUserPass($password){
-        $query = "SELECT count( password) FROM `user_profile` where username=".$_SESSION['Username'];
+    public function getUserPassHash($username){
+        $query = " SELECT uc.passwordhash 
+                    FROM `user_profile`up, `user_credential` uc 
+                    where up.userid = uc.userid and up.username = ?; ";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
