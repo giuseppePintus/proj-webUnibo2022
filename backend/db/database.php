@@ -23,6 +23,22 @@ class DatabaseHelper{
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    public function searchUser($start,$end,$string,$username){
+        
+        $stmt = $this->db->prepare("SELECT username,usernickname ,usericon, 
+        (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(?) * 100 AS similarity 
+        FROM USER_PROFILE 
+        WHERE username LIKE ? AND username != ? 
+        ORDER BY similarity DESC 
+        LIMIT ? ,?");
+
+        $string2 = "%".$string."%";
+        $stmt->bind_param('ssssii',$string, $string, $string2, $username, $start, $end);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
     public function sendNewPost($userid, $posttext, $postImageUrl){
         $query = "INSERT INTO POST (posttext, postdate, postimage, userid) VALUES (?,  current_timestamp(), ?, ?)";
@@ -33,24 +49,29 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
-    public function checkUserExist($username){
-        $query = "SELECT count( username) FROM `user_profile` where username=?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+    public function userLikedPost($userid, $postid){
+        $stmt = $this->db->prepare("INSERT INTO LIKED(postid, userid) VALUES(?, ?)");
+        $stmt->bind_param('ii', $postid, $userid);
         $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_row();
+        return $stmt->insert_id;
     }
 
-    public function getUserPass($password){
-        $query = "SELECT count( password) FROM `user_profile` where username=".$_SESSION['Username'];
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+    public function userUnLikedPost($userid, $postid){
+        $stmt = $this->db->prepare("DELETE FROM LIKED
+        WHERE postid = ? AND userid = ?");
+        $stmt->bind_param('ii', $postid, $userid);
         $stmt->execute();
-        $result = $stmt->get_result();
+    }
 
-        return $result->fetch_row();
+    public function readIfUserLikedPost($postid, $userid){
+        $query = "SELECT COUNT(*) as likes
+        FROM LIKED l
+        WHERE l.postid = ? AND l.userid = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ii', $postid, $userid);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
 
