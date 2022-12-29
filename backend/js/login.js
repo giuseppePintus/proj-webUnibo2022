@@ -37,7 +37,7 @@ async function login() {
     chalenge: + encChallenge
   })
   .then(function (response) {
-    console.log("tutto ok, dovrebbe reindirizzare");
+    console.log("tutto ok, dovrebbe reindirizzare ----------");
     console.log(response);
     //window.location.replace("../backend/index.php");
   })
