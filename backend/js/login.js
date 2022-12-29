@@ -6,30 +6,40 @@ async function login() {
     return;
   }
 
-  const hashpwd = await digestMessage(pwd);
-  console.log(hashpwd);
+  const promiseResp = await axios.get('../backend/api-checkUser.php?user='+user);
+  const resp = promiseResp.data;
+// console.log("stampa tutto__________")
+//   console.log(resp);
+//   console.log(" stampa res");
+//   console.log(resp['res']);
 
-
-  
-  const response = await axios.get('../backend/api-checkUser.php?user='+user);
-  let challengeString = response.data;
-  console.log(response.data);
-
-  if(challengeString == "userNotFind"){
-    alert("Username non valido");
+  if(resp['res'] != null || resp['res'] ==  'userNotFound'){
+    addErrElem('Username');
+    //alert("Username non valido");
     return;
   }
+  console.log('user valido');
+  let challengeString = resp['string'];
+  console.log('challenge string: ' + challengeString);
 
+  //calculate SHA-256 of the user password
+  const hashpwd = await digestMessage(pwd);
+  console.log('hashpwd: ' + hashpwd);
+
+  //sing hashed password as key for AES encription of challenge
   const encChallenge = await encodeChallenge(hashpwd,challengeString);
-  console.log(encChallenge);
+  console.log('cal challenge response: ' + encChallenge);
 
   // const resp = await axios.get('../backend/login.php?challenge='+encChallenge);
 
+  //send back the response
   axios.post('../backend/login.php', {
     chalenge: + encChallenge
   })
   .then(function (response) {
+    console.log("tutto ok, dovrebbe reindirizzare");
     console.log(response);
+    window.location.replace("../backend/index.php");
   })
   .catch(function (error) {
     console.log(error);
@@ -113,7 +123,7 @@ function addErrElem(msg){
   }
   //creo elemento
   const node = document.createElement("p");
-  const textnode = document.createTextNode( msg + " -not valid");
+  const textnode = document.createTextNode( msg + " not valid");
   node.appendChild(textnode);
   node.setAttribute("class", "errorMsg" );
   node.setAttribute("id", "err" + msg);

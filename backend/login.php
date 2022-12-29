@@ -13,7 +13,7 @@ $challengeResponse = openssl_encrypt($data, 'aes-256-gcm', $key, OPENSSL_RAW_DAT
 if($challengeResponse == $_POST['challenge']){
     echo("all right");
     header('Location: ../backend/index.php', true, 301);
-    exit;
+    die();
 }
 exit();
 ?>
