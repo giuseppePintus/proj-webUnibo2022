@@ -74,6 +74,26 @@ class DatabaseHelper{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function checkUserExist($username){
+        $query = "SELECT count( username) FROM `user_profile` where username=?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_row();
+    }
+
+    public function getUserPass($password){
+        $query = "SELECT count( password) FROM `user_profile` where username=".$_SESSION['Username'];
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_row();
+    }
+
 
     /*------------------------------------------end our file--------------------------------------*/
    
