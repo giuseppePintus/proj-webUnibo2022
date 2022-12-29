@@ -5,7 +5,7 @@ if(!isset($_GET['challenge'])){
     exit();
 }
 
-$key = $dbh.getUserPassHash($_SESSION['Username']);
+$key = $dbh->getUserPassHash($_SESSION['Username']);
 $data = $_SESSION['challengeString'];
 
 $challengeResponse = openssl_encrypt($data, 'aes-256-gcm', $key, OPENSSL_RAW_DATA);
