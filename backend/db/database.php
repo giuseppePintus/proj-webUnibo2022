@@ -75,7 +75,7 @@ class DatabaseHelper{
     }
 
     public function checkUserExist($username){
-        $query = "SELECT count( username) FROM `user_profile` where username=?";
+        $query = "SELECT count(username) FROM `user_profile` where username=?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
         $stmt->execute();
@@ -125,6 +125,17 @@ class DatabaseHelper{
         $stmt->execute();
 
         $result = $stmt->get_result();
+        return $result;
+    }
+    public function getUserId($username){ // da controllare se funziona bene
+    
+        
+        $stmt = $this->db->prepare("SELECT `Ass_userid` FROM `user_profile` WHERE `username` = ? ;");
+       
+        $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_row();
 }
 
 

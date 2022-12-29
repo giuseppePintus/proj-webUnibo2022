@@ -5,11 +5,12 @@ if(!isset($_GET["user"])){
 }
 
     
-    if( $dbh->checkUserExist($_GET["user"])[0] != '1'){
+    if( $dbh->checkUserExist($_GET["user"]) == 0){
         //print_r($_GET["user"]. "_");
         //print_r($dbh->checkUserExist($_GET["user"]));
 
-        $arrayName = array('user' => ($_GET["user"])[0], 'res' =>  "userNotFound");
+        $arrayName = array( 'user' => ($_GET["user"]), 
+                            'res' =>  "userNotFound");
         echo json_encode($arrayName);
         exit();
     }
@@ -19,7 +20,8 @@ if(!isset($_GET["user"])){
     
     $_SESSION['challengeString']= $randomString;
     $_SESSION['Username'] = $_GET["user"];
+    $_SESSION['userid'] = $dbh->getUserId($_SESSION['Username']);
     header("Content-Type: application/json");    
     echo json_encode(array('string' => $randomString));
-
+    exit();
 ?>

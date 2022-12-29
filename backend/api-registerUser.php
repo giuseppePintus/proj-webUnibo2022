@@ -19,6 +19,8 @@
 
     $dbh -> addAccount($_GET['username'], $_GET['email'], $_GET['username'], $_GET['password']);
     
+    sendEmail($_GET['email']);
+    echo ("GO");
     exit();
 
 ?>

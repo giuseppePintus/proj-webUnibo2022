@@ -89,4 +89,19 @@ function uploadImage($path, $image){
     return array($result, $msg);
 }
 
+function sendEmail($email){
+    
+    $subject = 'Welcome to Tachyon';
+    $message = 'Thank you for your subscription';
+    $headers = 'From: noreply@tachyon.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+    if (mail($email, $subject, $message, $headers)) {
+        echo 'Email sent successfully!';
+    } else {
+        echo 'Error sending email.';
+    }
+    exit();
+}
+
 ?>

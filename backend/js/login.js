@@ -6,10 +6,10 @@ async function login() {
     return;
   }
 
-  const promiseResp = await axios.get('../backend/api-checkUser.php?user='+user);
+  const promiseResp = await axios.get('../backend/api-checkUser.php?user=' + user);
   const resp = promiseResp.data;
 // console.log("stampa tutto__________")
-//   console.log(resp);
+ console.log(resp);
 //   console.log(" stampa res");
 //   console.log(resp['res']);
 
@@ -27,27 +27,61 @@ async function login() {
   console.log('hashpwd: ' + hashpwd);
 
   //sing hashed password as key for AES encription of challenge
-  const encChallenge = await encodeChallenge(hashpwd,challengeString);
-  console.log('cal challenge response: ' + encChallenge);
+  //const encChallenge = await encodeChallenge(hashpwd,challengeString);
+  //console.log('cal challenge response: ' + encChallenge);
 
   // const resp = await axios.get('../backend/login.php?challenge='+encChallenge);
-
+  //console.log(encChallenge);
   //send back the response
-  axios.post('../backend/api-challengeResponse.php', {
-    chalenge: + encChallenge
-  })
-  .then(function (response) {
-    console.log("tutto ok, dovrebbe reindirizzare ----------");
-    console.log(response);
-    //window.location.replace("../backend/index.php");
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
 
 
-  console.log(resp);
+
+
+
+  // let encChallenge= "sdhifgdks";
+  // axios.post("./api-challengeResponse.php?challenge="+ encChallenge , {
+  //   challenge: encChallenge
+  // }).then(function (response) {
+  //  // console.log("tutto ok, dovrebbe reindirizzare ----------");
+  //   console.log(response.data);   
+  //   if(response.data == 'OK'){
+  //     window.location.replace("../backend/index.php");
+  //   }
+  // }).catch(function (error) {
+  //   console.log(error);
+  // });
+
+  let encChallenge = "sdhifgdks";
+
+axios.post('./api-challengeResponse.php', {
+  challenge: encChallenge
+}).then(function (response) {
+  console.log(response.data);   
+  if(response.data == 'OK'){
+    window.location.replace("../backend/index.php");
+  }
+}).catch(function (error) {
+  console.log(error);
+});
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  //generate sha256 locally using SubtleCrypto ref: https://remarkablemark.medium.com/how-to-generate-a-sha-256-hash-with-javascript-d3b2696382fd
 
 

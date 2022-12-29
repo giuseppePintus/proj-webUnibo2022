@@ -12,7 +12,10 @@ console.log(hashPassword);
 const promiseResp = await axios.get('../backend/api-registerUser.php?email='+ email + '&username='+ username +'&password='+ hashPassword);
 const resp = promiseResp.data;
 console.log(resp);
+if(resp == 'GO'){
 
+    window.location.replace("../backend/login.php");
+}
 
 }
 
