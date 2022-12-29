@@ -33,13 +33,13 @@ async function login() {
   // const resp = await axios.get('../backend/login.php?challenge='+encChallenge);
 
   //send back the response
-  axios.post('../backend/login.php', {
+  axios.post('../backend/api-challengeResponse.php', {
     chalenge: + encChallenge
   })
   .then(function (response) {
     console.log("tutto ok, dovrebbe reindirizzare");
     console.log(response);
-    window.location.replace("../backend/index.php");
+    //window.location.replace("../backend/index.php");
   })
   .catch(function (error) {
     console.log(error);
