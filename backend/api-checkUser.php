@@ -5,7 +5,14 @@ if(!isset($_GET["user"])){
 }
 
     
-    //$userExist = $dbh->checkUser($_GET["user"]);
+    if( $dbh->checkUserExist($_GET["user"])[0] != '1'){
+        //print_r($_GET["user"]. "_");
+        //print_r($dbh->checkUserExist($_GET["user"]));
+
+        $arrayName = array('user' => ($_GET["user"])[0], 'res' =>  "userNotFound");
+        echo json_encode($arrayName);
+        exit();
+    }
    
     $bytes = random_bytes(5); // genera 5 byte casuali
     $randomString = bin2hex($bytes); // converte i byte in una stringa esadecimale
@@ -13,6 +20,6 @@ if(!isset($_GET["user"])){
     header("Content-Type: application/json");    
     $_SESSION['challengeString']= $randomString;
     $_SESSION['Username'] = $_GET["user"];
-    echo json_encode($randomString);
+    echo json_encode(array('string' => $randomString));
 
 ?>
