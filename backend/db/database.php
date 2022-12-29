@@ -74,6 +74,16 @@ class DatabaseHelper{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getPostComments($postid){
+        $query = "SELECT cp.commentid, cp.commenttext, cp.Com_userid as userid, up.usericon, up.username FROM POST p, COMMENTPOST cp,  USER_PROFILE up
+        WHERE p.postid = cp.postid AND cp.Com_userid = up.userid AND p.postid = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $postid);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function checkUserExist($username){
         $query = "SELECT count(username) FROM `user_profile` where username=?";
         $stmt = $this->db->prepare($query);
