@@ -84,6 +84,16 @@ class DatabaseHelper{
         return $result->fetch_row();
     }
 
+    public function checkEmailExist($email){ //da controllare se funziona bene
+        $query = "SELECT count(useremail) FROM `user_credential` where useremail=?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_row();
+    }
+
     public function getUserPassHash($username){
         $query = " SELECT uc.passwordhash 
                     FROM `user_profile`up, `user_credential` uc 
@@ -96,14 +106,24 @@ class DatabaseHelper{
         return $result->fetch_row();
     }
 
-    public function addAccount($userName, $email, $nickname, $password){
+    public function addAccount($username, $useremail, $usernickname, $passwordhash){ // da controllare se funziona bene
     
-        $sql = "INSERT INTO `user_credential` (`userid`, `useremail`, `passwordhash`, `active`) VALUES (NULL,?, ? , '1');
-        SET @id = (SELECT `userid` FROM `user_credential` WHERE `useremail` = ?);
-        INSERT INTO `user_profile` (`userid`, `Ass_userid`, `username`, `usernickname`, `usericon`, `userbiography`) VALUES (NULL, @id, ?, ?, 'default.png', ' ')";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$email, $password, $email, $userName, $nickname);
-   //   $stmt->execute();
+        $stmt = $this->db->prepare("INSERT INTO `user_credential` (`userid`, `useremail`, `passwordhash`, `active`) 
+                                VALUES (NULL, ?, ?, '1')");
+  
+        $stmt->bind_param('ss',$useremail, $passwordhash);
+        $stmt->execute();
+        $stmt = $this->db->prepare("SET @id = (SELECT `userid` 
+                                FROM `user_credential` 
+                                WHERE `useremail` = ?)");
+       
+        $stmt->bind_param('s',$useremail);
+        $stmt->execute();
+        $stmt = $this->db->prepare("INSERT INTO `user_profile` (`userid`, `Ass_userid`, `username`, `usernickname`, `usericon`, `userbiography`) 
+                                VALUES (NULL, @id, ?, ?, 'default.png', ' ')");
+        $stmt->bind_param('ss',$username, $usernickname);
+        $stmt->execute();
+
         $result = $stmt->get_result();
 }
 

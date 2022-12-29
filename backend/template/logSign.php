@@ -17,7 +17,7 @@
                 <input type="password"  name="PasswordIn"  id="passInput" class="passIn" placeholder="Password">
                 <input type="button"    name="LoginButton" value="Login"  onclick="login()">
             </form>
-            <a href="register.html"> sign up</a> 
+            <a href="register.php"> sign up</a> 
         </div>
         <?php
 
