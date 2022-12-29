@@ -40,24 +40,45 @@ function generatePosts(posts) {
 }
 
 /*retrieve posts from the database*/
-async function postInteractionsListeners() {
-    const main = document.querySelector("main");
+const main = document.querySelector("main");
+const mainInitialHtml = main.innerHTML;
+
+async function getPageElements(){
     let postIds = [];
     try {
         const response = await axios.get('./api-post.php');
+        main.innerHTML = mainInitialHtml + generatePosts(response.data);
         response.data.forEach(element => postIds.push(element["postid"]));
-        main.innerHTML += generatePosts(response.data);;
     } catch (error) {
         console.error(error);
     }
+    return postIds;
+}
 
+async function postInteractionsListeners(postIds) {
     /*Interaction with posts */
     postIds.forEach(postid => {
-        document.getElementById("like" + postid).addEventListener("click", () => console.log(postid));
+        document.getElementById("like" + postid).addEventListener("click", () => {
+            axios.post('./api-userLikedPost.php', {
+                userLikedPostId: postid
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                responseType: 'json',
+                timeout: 5000
+            }).then(response =>{
+                mainFunc();
+            });
+        });
     });
 
 }
 
-/*main*/
-postInteractionsListeners();
+async function mainFunc(){
+    let postIds = await getPageElements();
+    postInteractionsListeners(postIds);
+}
 
+/*main*/
+mainFunc();

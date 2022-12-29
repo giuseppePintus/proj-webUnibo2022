@@ -33,6 +33,31 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
+    public function userLikedPost($userid, $postid){
+        $stmt = $this->db->prepare("INSERT INTO LIKED(postid, userid) VALUES(?, ?)");
+        $stmt->bind_param('ii', $postid, $userid);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    public function userUnLikedPost($userid, $postid){
+        $stmt = $this->db->prepare("DELETE FROM LIKED
+        WHERE postid = ? AND userid = ?");
+        $stmt->bind_param('ii', $postid, $userid);
+        $stmt->execute();
+    }
+
+    public function readIfUserLikedPost($postid, $userid){
+        $query = "SELECT COUNT(*) as likes
+        FROM LIKED l
+        WHERE l.postid = ? AND l.userid = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ii', $postid, $userid);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
 
     /*------------------------------------------end our file--------------------------------------*/
    
