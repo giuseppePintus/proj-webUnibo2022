@@ -3,7 +3,7 @@
 -- *--------------------------------------------
 -- * DB-MAIN version: 11.0.2              
 -- * Generator date: Sep 20 2021              
--- * Generation date: Wed Dec 28 22:02:15 2022 
+-- * Generation date: Thu Dec 29 17:43:31 2022 
 -- * LUN file: /home/zaks/university_projects/proj-webUnibo2022/projweb.lun 
 -- * Schema: TachyonDB/1-1-1 
 -- ********************************************* 
@@ -11,18 +11,13 @@
 
 -- Database Section
 -- ________________ 
-
+drop database TachyonDB;
 create database TachyonDB;
 use TachyonDB;
 
 
 -- Tables Section
 -- _____________ 
-
-create table POSTCATEGORY (
-     categoryid bigint not null AUTO_INCREMENT,
-     postid bigint not null,
-     constraint IDbelongsto primary key (categoryid, postid));
 
 create table CATEGORY (
      categoryid bigint not null AUTO_INCREMENT,
@@ -46,15 +41,14 @@ create table COMMENTPOST (
      postid bigint not null,
      constraint IDCOMMENT primary key (commentid));
 
-create table FOLLOWER (
-     followerid bigint not null AUTO_INCREMENT,
+create table OTHERUSER (
      userid bigint not null,
-     constraint IDfollower primary key (followerid));
+     FOL_userid bigint not null);
 
-create table FOLLOWING (
-     followingid bigint not null AUTO_INCREMENT,
+create table LIKED (
+     postid bigint not null,
      userid bigint not null,
-     constraint IDfollowing primary key (followingid));
+     constraint IDLIKE primary key (postid, userid));
 
 create table NOTIFICATION (
      notificationid bigint not null AUTO_INCREMENT,
@@ -72,10 +66,10 @@ create table POST (
      userid bigint not null,
      constraint IDPOST primary key (postid));
 
-create table LIKED (
+create table POSTCATEGORY (
+     categoryid bigint not null,
      postid bigint not null,
-     userid bigint not null,
-     constraint IDLIKE primary key (postid, userid));
+     constraint IDbelongsto primary key (categoryid, postid));
 
 create table SAVED (
      postid bigint not null,
@@ -108,14 +102,6 @@ create table USER_PROFILE (
 -- Constraints Section
 -- ___________________ 
 
-alter table POSTCATEGORY add constraint FKbel_POS
-     foreign key (postid)
-     references POST (postid);
-
-alter table POSTCATEGORY add constraint FKbel_CAT
-     foreign key (categoryid)
-     references CATEGORY (categoryid);
-
 alter table COMMENTCOMMENT add constraint FKcommentedcomment
      foreign key (userid)
      references USER_PROFILE (userid);
@@ -132,20 +118,12 @@ alter table COMMENTPOST add constraint FKbecommented
      foreign key (postid)
      references POST (postid);
 
-alter table FOLLOWER add constraint FKhasfollower
+alter table OTHERUSER add constraint FKFOLLOWING
      foreign key (userid)
      references USER_PROFILE (userid);
 
-alter table FOLLOWING add constraint FKhasfollowing
-     foreign key (userid)
-     references USER_PROFILE (userid);
-
-alter table NOTIFICATION add constraint FKnotify
-     foreign key (userid)
-     references USER_PROFILE (userid);
-
-alter table POST add constraint FKusersendpost
-     foreign key (userid)
+alter table OTHERUSER add constraint FKFOLLOWER
+     foreign key (FOL_userid)
      references USER_PROFILE (userid);
 
 alter table LIKED add constraint FKLIK_USE
@@ -155,6 +133,22 @@ alter table LIKED add constraint FKLIK_USE
 alter table LIKED add constraint FKLIK_POS
      foreign key (postid)
      references POST (postid);
+
+alter table NOTIFICATION add constraint FKnotify
+     foreign key (userid)
+     references USER_PROFILE (userid);
+
+alter table POST add constraint FKusersendpost
+     foreign key (userid)
+     references USER_PROFILE (userid);
+
+alter table POSTCATEGORY add constraint FKbel_POS
+     foreign key (postid)
+     references POST (postid);
+
+alter table POSTCATEGORY add constraint FKbel_CAT
+     foreign key (categoryid)
+     references CATEGORY (categoryid);
 
 alter table SAVED add constraint FKSAV_USE
      foreign key (userid)
