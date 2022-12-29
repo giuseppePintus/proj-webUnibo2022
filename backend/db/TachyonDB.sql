@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 28, 2022 alle 22:59
+-- Creato il: Dic 29, 2022 alle 15:54
 -- Versione del server: 10.4.24-MariaDB
 -- Versione PHP: 8.1.6
 
@@ -11,7 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
+drop database TachyonDB;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -99,7 +99,8 @@ CREATE TABLE `LIKED` (
 --
 
 INSERT INTO `LIKED` (`postid`, `userid`) VALUES
-(2, 0);
+(2, 0),
+(3, 0);
 
 -- --------------------------------------------------------
 
@@ -135,7 +136,9 @@ CREATE TABLE `POST` (
 
 INSERT INTO `POST` (`postid`, `posttext`, `postdate`, `postimage`, `userid`) VALUES
 (1, '456165', '2022-12-28', NULL, 0),
-(2, 'asdsadasdas', '2022-12-28', 'upload/giubby/01d3d181-965b-463c-b4fc-fa8a3bb0fe82.jpeg', 0);
+(2, 'asdsadasdas', '2022-12-28', 'upload/giubby/01d3d181-965b-463c-b4fc-fa8a3bb0fe82.jpeg', 0),
+(3, 'dfgfdgdfdfgdfg', '2022-12-28', NULL, 0),
+(4, 'asfasfasfas', '2022-12-28', 'upload/giubby/img.png', 0);
 
 -- --------------------------------------------------------
 
@@ -351,7 +354,7 @@ ALTER TABLE `NOTIFICATION`
 -- AUTO_INCREMENT per la tabella `POST`
 --
 ALTER TABLE `POST`
-  MODIFY `postid` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `postid` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `POSTCATEGORY`
