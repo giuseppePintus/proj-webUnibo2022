@@ -157,7 +157,7 @@ function generateNotifications() {
         const notifications = response.data;
         let asideHTML = ``;
         notificationIds = new Array(notifications.length);
-        for(let i = 0; i < notifications.length; i++){
+        for (let i = 0; i < notifications.length; i++) {
             notificationIds[i] = notifications[i]["notificationid"];
             let notification = `
             <div id="notification${notifications[i]["notificationid"]}" class="notification${notifications[i]["alreadyread"]}">
@@ -177,7 +177,7 @@ function generateNotifications() {
         aside.innerHTML = asideInitialHTML + asideHTML + `</section>`;
 
         notificationIds.forEach(element => {
-            document.getElementById("notification" + element).addEventListener('click', event =>{
+            document.getElementById("notification" + element).addEventListener('click', event => {
                 axios.post('./api-readNotification.php', {
                     notificationid: element
                 }, {
@@ -187,7 +187,13 @@ function generateNotifications() {
                     responseType: 'json',
                     timeout: 5000
                 }).then(response => {
-                    notificationNumber.innerHTML = "" + response.data[0]["number"];
+                    //notificationNumber.innerHTML = "";
+                    if (response.data[0]["number"] > 0 && notificationNumber != null)
+                        notificationNumber.innerHTML = response.data[0]["number"];
+                    else{
+                        document.getElementById("notification-container").innerHTML = `
+                        <a href="#"><img src="upload/notification.png" alt="notification"></a>`;
+                    }
                     generateNotifications();
                 });
             });

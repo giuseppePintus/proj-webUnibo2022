@@ -17,9 +17,11 @@
                 <button type="submit" name="submitsearch">Go</button>
             </div>
         </form>
-        <div class="notification-container">
+        <div id="notification-container" class="notification-container">
         <a href="#"><img src="upload/notification.png" alt="notification"></a>
-        <div id="notificationNumber" class="notificationNumber"><?php echo $templateParams["notificationNumber"]; ?></div>
+        <?php if($templateParams["notificationNumber"] > 0)
+            echo '<div id="notificationNumber" class="notificationNumber">'.$templateParams["notificationNumber"].'</div>';
+        ?>
         </div>
 
         <div class="searchResult">
