@@ -27,8 +27,8 @@ async function login() {
   console.log('hashpwd: ' + hashpwd);
 
   //sing hashed password as key for AES encription of challenge
-  //const encChallenge = await encodeChallenge(hashpwd,challengeString);
-  //console.log('cal challenge response: ' + encChallenge);
+  const encChallenge = await encodeChallenge(hashpwd,challengeString);
+  console.log('cal challenge response: ' + encChallenge);
 
   // const resp = await axios.get('../backend/login.php?challenge='+encChallenge);
   //console.log(encChallenge);
@@ -51,19 +51,12 @@ async function login() {
   //   console.log(error);
   // });
 
-  let encChallenge = "sdhifgdks";
 
-axios.post('./api-challengeResponse.php', {
-  challenge: encChallenge
-}).then(function (response) {
-  console.log(response.data);   
-  if(response.data == 'OK'){
-    window.location.replace("../backend/index.php");
-  }
-}).catch(function (error) {
-  console.log(error);
-});
 
+  const result = await axios.get("./api-challengeResponse.php?challenge="+ encChallenge);
+  console.log(result.data);
+
+  return;
 }
 
 
