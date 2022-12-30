@@ -1,5 +1,5 @@
 
-async function getCommentsByPostId(postid){
+async function getCommentsByPostId(postid) {
     const response = await axios.post('./api-getPostComments.php', {
         commentById: postid
     }, {
@@ -50,22 +50,22 @@ async function generatePosts(posts) {
         `;
         let comments = await getCommentsByPostId(posts[i]['postid']);
         //console.log(comments);
-        article += generateCommentsHTML(comments);
+        article += generateCommentsHTML(comments, posts[i]['postid']);
         result += article;
         result += `</article>`;
     }
-  
+
     return result;
 }
 
-function generateCommentsHTML(comments) {
+function generateCommentsHTML(comments, postid) {
     let result = `<div class="writeCommentArea">
-                    <input id="comment" type="text" placeholder="comment this post.." required>
-                        <button type="submit">send</button>
+                    <input id="commentBox${postid}" type="text" placeholder="comment this post.." required>
+                    <button id="commentButton${postid}" type="submit">send</button>
                 </div>`;
-               
-    for(let i = 0; i < comments.length; i++){
-        const commentHtml =`
+
+    for (let i = 0; i < comments.length; i++) {
+        const commentHtml = `
         <div class="postComment">
             <ul>
                 <li> <img src="${comments[i]["usericon"]}" alt="usericon" /></li>
@@ -76,7 +76,7 @@ function generateCommentsHTML(comments) {
 
         result += commentHtml;
     }
-    
+
     return result;
 }
 
@@ -99,6 +99,7 @@ async function getPageElements() {
 async function postInteractionsListeners(postIds) {
     /*Interaction with posts */
     postIds.forEach(postid => {
+        /*like button listeners*/
         document.getElementById("like" + postid).addEventListener("click", () => {
             axios.post('./api-userLikedPost.php', {
                 userLikedPostId: postid
@@ -112,6 +113,26 @@ async function postInteractionsListeners(postIds) {
                 mainFunc();
             });
         });
+        /*comment button listeners*/
+        document.getElementById("commentButton" + postid).addEventListener('click', () => {
+            const commentTextBox = document.getElementById("commentBox" + postid);
+            if (commentTextBox && commentTextBox.value) {
+                axios.post('./api-userSendComment.php', {
+                    commentPostId: postid,
+                    commentText: commentTextBox.value
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    responseType: 'json',
+                    timeout: 5000
+                }).then(response => {
+                    mainFunc();
+                });
+            }
+
+        });
+
     });
 
 }

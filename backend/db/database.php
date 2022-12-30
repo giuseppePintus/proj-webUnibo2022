@@ -1,15 +1,18 @@
 <?php
-class DatabaseHelper{
+class DatabaseHelper
+{
     private $db;
 
-    public function __construct($servername, $username, $password, $dbname, $port){
+    public function __construct($servername, $username, $password, $dbname, $port)
+    {
         $this->db = new mysqli($servername, $username, $password, $dbname, $port);
         if ($this->db->connect_error) {
             die("Connection failed: " . $this->db->connect_error);
-        }        
+        }
     }
 
-    public function getRandomPost($n){
+    public function getRandomPost($n)
+    {
         $stmt = $this->db->prepare("SELECT p.postid, usericon, usernickname, username, postdate, posttext, postimage, COUNT(l.postid) as liked 
         FROM POST p
         INNER JOIN USER_PROFILE up on up.userid = p.userid
@@ -23,8 +26,9 @@ class DatabaseHelper{
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    public function searchUser($start,$end,$string,$username){
-        
+    public function searchUser($start, $end, $string, $username)
+    {
+
         $stmt = $this->db->prepare("SELECT username,usernickname ,usericon, 
         (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(?) * 100 AS similarity 
         FROM USER_PROFILE 
@@ -32,38 +36,42 @@ class DatabaseHelper{
         ORDER BY similarity DESC 
         LIMIT ? ,?");
 
-        $string2 = "%".$string."%";
-        $stmt->bind_param('ssssii',$string, $string, $string2, $username, $start, $end);
+        $string2 = "%" . $string . "%";
+        $stmt->bind_param('ssssii', $string, $string, $string2, $username, $start, $end);
         $stmt->execute();
         $result = $stmt->get_result();
-        
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function sendNewPost($userid, $posttext, $postImageUrl){
+    public function sendNewPost($userid, $posttext, $postImageUrl)
+    {
         $query = "INSERT INTO POST (posttext, postdate, postimage, userid) VALUES (?,  current_timestamp(), ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssi',$posttext, $postImageUrl, $userid);
+        $stmt->bind_param('ssi', $posttext, $postImageUrl, $userid);
         $stmt->execute();
-        
+
         return $stmt->insert_id;
     }
 
-    public function userLikedPost($userid, $postid){
+    public function userLikedPost($userid, $postid)
+    {
         $stmt = $this->db->prepare("INSERT INTO LIKED(postid, userid) VALUES(?, ?)");
         $stmt->bind_param('ii', $postid, $userid);
         $stmt->execute();
         return $stmt->insert_id;
     }
 
-    public function userUnLikedPost($userid, $postid){
+    public function userUnLikedPost($userid, $postid)
+    {
         $stmt = $this->db->prepare("DELETE FROM LIKED
         WHERE postid = ? AND userid = ?");
         $stmt->bind_param('ii', $postid, $userid);
         $stmt->execute();
     }
 
-    public function readIfUserLikedPost($postid, $userid){
+    public function readIfUserLikedPost($postid, $userid)
+    {
         $query = "SELECT COUNT(*) as likes
         FROM LIKED l
         WHERE l.postid = ? AND l.userid = ?";
@@ -74,7 +82,8 @@ class DatabaseHelper{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostComments($postid){
+    public function getPostComments($postid)
+    {
         $query = "SELECT cp.commentid, cp.commenttext, cp.Com_userid as userid, up.usericon, up.username FROM POST p, COMMENTPOST cp,  USER_PROFILE up
         WHERE p.postid = cp.postid AND cp.Com_userid = up.userid AND p.postid = ?";
         $stmt = $this->db->prepare($query);
@@ -84,75 +93,90 @@ class DatabaseHelper{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function checkUserExist($username){
+    public function insertCommentToPost($postid, $commentText, $userid)
+    {
+        $query = "INSERT INTO COMMENTPOST(commenttext, commentdate, Com_userid, postid) VALUES(?, current_timestamp(), ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sii', $commentText, $userid, $postid);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    public function checkUserExist($username)
+    {
         $query = "SELECT count(username) FROM `user_profile` where username=?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_row();
     }
 
-    public function checkEmailExist($email){ //da controllare se funziona bene
+    public function checkEmailExist($email)
+    { //da controllare se funziona bene
         $query = "SELECT count(useremail) FROM `user_credential` where useremail=?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_row();
     }
 
-    public function getUserPassHash($username){
+    public function getUserPassHash($username)
+    {
         $query = " SELECT uc.passwordhash 
                     FROM `user_profile`up, `user_credential` uc 
                     where up.userid = uc.userid and up.username = ?; ";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s',$username);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_row();
     }
 
-    public function addAccount($username, $useremail, $usernickname, $passwordhash){ // da controllare se funziona bene
-    
+    public function addAccount($username, $useremail, $usernickname, $passwordhash)
+    { // da controllare se funziona bene
+
         $stmt = $this->db->prepare("INSERT INTO `user_credential` (`userid`, `useremail`, `passwordhash`, `active`) 
                                 VALUES (NULL, ?, ?, '1')");
-  
-        $stmt->bind_param('ss',$useremail, $passwordhash);
+
+        $stmt->bind_param('ss', $useremail, $passwordhash);
         $stmt->execute();
         $stmt = $this->db->prepare("SET @id = (SELECT `userid` 
                                 FROM `user_credential` 
                                 WHERE `useremail` = ?)");
-       
-        $stmt->bind_param('s',$useremail);
+
+        $stmt->bind_param('s', $useremail);
         $stmt->execute();
         $stmt = $this->db->prepare("INSERT INTO `user_profile` (`userid`, `Ass_userid`, `username`, `usernickname`, `usericon`, `userbiography`) 
                                 VALUES (NULL, @id, ?, ?, 'default.png', ' ')");
-        $stmt->bind_param('ss',$username, $usernickname);
+        $stmt->bind_param('ss', $username, $usernickname);
         $stmt->execute();
 
         $result = $stmt->get_result();
         return $result;
     }
-    public function getUserId($username){ // da controllare se funziona bene
-    
-        
+    public function getUserId($username)
+    { // da controllare se funziona bene
+
+
         $stmt = $this->db->prepare("SELECT `Ass_userid` FROM `user_profile` WHERE `username` = ? ;");
-       
-        $stmt->bind_param('s',$username);
+
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_row();
-}
+    }
 
 
     /*------------------------------------------end our file--------------------------------------*/
-   
+
     /*These functions are useful to us as riferiment, they will be deleted later.....*/
-    public function getCategories(){
+    public function getCategories()
+    {
         $stmt = $this->db->prepare("SELECT * FROM categoria");
         $stmt->execute();
         $result = $stmt->get_result();
@@ -160,23 +184,25 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getCategoryById($idcategory){
+    public function getCategoryById($idcategory)
+    {
         $stmt = $this->db->prepare("SELECT nomecategoria FROM categoria WHERE idcategoria=?");
-        $stmt->bind_param('i',$idcategory);
+        $stmt->bind_param('i', $idcategory);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPosts($n=-1){
+    public function getPosts($n = -1)
+    {
         $query = "SELECT idarticolo, titoloarticolo, imgarticolo, anteprimaarticolo, dataarticolo, nome FROM articolo, autore WHERE autore=idautore ORDER BY dataarticolo DESC";
-        if($n > 0){
+        if ($n > 0) {
             $query .= " LIMIT ?";
         }
         $stmt = $this->db->prepare($query);
-        if($n > 0){
-            $stmt->bind_param('i',$n);
+        if ($n > 0) {
+            $stmt->bind_param('i', $n);
         }
         $stmt->execute();
         $result = $stmt->get_result();
@@ -184,94 +210,105 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostById($id){
+    public function getPostById($id)
+    {
         $query = "SELECT idarticolo, titoloarticolo, imgarticolo, testoarticolo, dataarticolo, nome FROM articolo, autore WHERE idarticolo=? AND autore=idautore";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$id);
+        $stmt->bind_param('i', $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostByCategory($idcategory){
+    public function getPostByCategory($idcategory)
+    {
         $query = "SELECT idarticolo, titoloarticolo, imgarticolo, anteprimaarticolo, dataarticolo, nome FROM articolo, autore, articolo_ha_categoria WHERE categoria=? AND autore=idautore AND idarticolo=articolo";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$idcategory);
+        $stmt->bind_param('i', $idcategory);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostByIdAndAuthor($id, $idauthor){
+    public function getPostByIdAndAuthor($id, $idauthor)
+    {
         $query = "SELECT idarticolo, anteprimaarticolo, titoloarticolo, imgarticolo, testoarticolo, dataarticolo, (SELECT GROUP_CONCAT(categoria) FROM articolo_ha_categoria WHERE articolo=idarticolo GROUP BY articolo) as categorie FROM articolo WHERE idarticolo=? AND autore=?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ii',$id, $idauthor);
+        $stmt->bind_param('ii', $id, $idauthor);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostByAuthorId($id){
+    public function getPostByAuthorId($id)
+    {
         $query = "SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo WHERE autore=?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$id);
+        $stmt->bind_param('i', $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function insertArticle($titoloarticolo, $testoarticolo, $anteprimaarticolo, $dataarticolo, $imgarticolo, $autore){
+    public function insertArticle($titoloarticolo, $testoarticolo, $anteprimaarticolo, $dataarticolo, $imgarticolo, $autore)
+    {
         $query = "INSERT INTO articolo (titoloarticolo, testoarticolo, anteprimaarticolo, dataarticolo, imgarticolo, autore) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sssssi',$titoloarticolo, $testoarticolo, $anteprimaarticolo, $dataarticolo, $imgarticolo, $autore);
+        $stmt->bind_param('sssssi', $titoloarticolo, $testoarticolo, $anteprimaarticolo, $dataarticolo, $imgarticolo, $autore);
         $stmt->execute();
-        
+
         return $stmt->insert_id;
     }
 
-    public function updateArticleOfAuthor($idarticolo, $titoloarticolo, $testoarticolo, $anteprimaarticolo, $imgarticolo, $autore){
+    public function updateArticleOfAuthor($idarticolo, $titoloarticolo, $testoarticolo, $anteprimaarticolo, $imgarticolo, $autore)
+    {
         $query = "UPDATE articolo SET titoloarticolo = ?, testoarticolo = ?, anteprimaarticolo = ?, imgarticolo = ? WHERE idarticolo = ? AND autore = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssssii',$titoloarticolo, $testoarticolo, $anteprimaarticolo, $imgarticolo, $idarticolo, $autore);
-        
+        $stmt->bind_param('ssssii', $titoloarticolo, $testoarticolo, $anteprimaarticolo, $imgarticolo, $idarticolo, $autore);
+
         return $stmt->execute();
     }
 
-    public function deleteArticleOfAuthor($idarticolo, $autore){
+    public function deleteArticleOfAuthor($idarticolo, $autore)
+    {
         $query = "DELETE FROM articolo WHERE idarticolo = ? AND autore = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ii',$idarticolo, $autore);
+        $stmt->bind_param('ii', $idarticolo, $autore);
         $stmt->execute();
         var_dump($stmt->error);
         return true;
     }
 
-    public function insertCategoryOfArticle($articolo, $categoria){
+    public function insertCategoryOfArticle($articolo, $categoria)
+    {
         $query = "INSERT INTO articolo_ha_categoria (articolo, categoria) VALUES (?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ii',$articolo, $categoria);
+        $stmt->bind_param('ii', $articolo, $categoria);
         return $stmt->execute();
     }
 
-    public function deleteCategoryOfArticle($articolo, $categoria){
+    public function deleteCategoryOfArticle($articolo, $categoria)
+    {
         $query = "DELETE FROM articolo_ha_categoria WHERE articolo = ? AND categoria = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ii',$articolo, $categoria);
+        $stmt->bind_param('ii', $articolo, $categoria);
         return $stmt->execute();
     }
 
-    public function deleteCategoriesOfArticle($articolo){
+    public function deleteCategoriesOfArticle($articolo)
+    {
         $query = "DELETE FROM articolo_ha_categoria WHERE articolo = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$articolo);
+        $stmt->bind_param('i', $articolo);
         return $stmt->execute();
     }
 
-    public function getAuthors(){
+    public function getAuthors()
+    {
         $query = "SELECT username, nome, GROUP_CONCAT(DISTINCT nomecategoria) as argomenti FROM categoria, articolo, autore, articolo_ha_categoria WHERE idarticolo=articolo AND categoria=idcategoria AND autore=idautore AND attivo=1 GROUP BY username, nome";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
@@ -280,15 +317,14 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function checkLogin($username, $password){
+    public function checkLogin($username, $password)
+    {
         $query = "SELECT idautore, username, nome FROM autore WHERE attivo=1 AND username = ? AND password = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ss',$username, $password);
+        $stmt->bind_param('ss', $username, $password);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
-    }    
-
+    }
 }
-?>
