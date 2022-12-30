@@ -5,26 +5,26 @@ if(!isset($_POST['challenge'])){
     //exit();
 }
 
-$key = $dbh->getUserPassHash($_SESSION['Username']);
 $data = $_SESSION['challengeString'];
+$key = $dbh->getUserPassHash($_SESSION['Username']);
+$sha256_bin = hex2bin($key[0]);
+$keyStr = implode('',$key);
 
-$sha256_bin = hex2bin($key);
 
 // Extract the first 16 bytes of the binary data as the IV
 $iv = substr($sha256_bin, 0, 16);
 
 openssl_cipher_iv_length('aes-256-gcm');
+$tagg = null;
 
-$challengeResponse = openssl_encrypt($data, 'aes-256-gcm', $key, OPENSSL_RAW_DATA, $iv);
+$challengeResponse = openssl_encrypt($data, 'aes-256-gcm', $keyStr, OPENSSL_RAW_DATA, $iv, $tagg);
 
 //header('Location: ../backend/index.php', true, 301);
 
 header("Content-Type: application/json");    
-if($challengeResponse == $_POST['challenge']){
+if($challengeResponse == $_GET['challenge']){
 }
-echo json_encode($_POST["challenge"]);
+echo ($challengeResponse."   ".  $_GET['challenge'] );
 
-$challenge = $_POST['challenge'];
-echo($challenge)
-//exit();
+exit();
 ?>
