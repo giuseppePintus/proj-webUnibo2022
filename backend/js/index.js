@@ -1,5 +1,5 @@
 
-async function getCommentsByPostId(postid){
+async function getCommentsByPostId(postid) {
     const response = await axios.post('./api-getPostComments.php', {
         commentById: postid
     }, {
@@ -13,7 +13,7 @@ async function getCommentsByPostId(postid){
     return commentList;
 }
 
-async function generatePosts(posts) {
+async function generatePosts(posts, showCommentBox) {
     let result = "";
     for (let i = 0; i < posts.length; i++) {
         let postiamge = "";
@@ -26,8 +26,8 @@ async function generatePosts(posts) {
                 <div class="postHeader">
                     <ul>
                         <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
-                        <li><h2>${posts[i]['usernickname']}</h2></li>
-                        <li><h3>@${posts[i]["username"]}</h3> </li>
+                        <li><h1>${posts[i]['usernickname']}</h1></li>
+                        <li><h2>@${posts[i]["username"]}</h2> </li>
                         <li><p> - ${posts[i]["postdate"]}</p></li>
                     </ul>
                 </div>
@@ -40,43 +40,46 @@ async function generatePosts(posts) {
             </section>
             <footer>
                 <ul>
-                    <li><p>${posts[i]["liked"]}</p></li>
+                    
                     <li><img id="like${posts[i]["postid"]}" src="./upload/like.png" alt="like"/></li>
-                    <li><img src="./upload/comment.png" alt="comment"/></li>
+                    <li><p>${posts[i]["liked"]}</p></li>
+                    <li><img id="comment${posts[i]["postid"]}" src="./upload/comment.png" alt="comment"/></li>
+                    <li><p>${posts[i]["commented"]}</p></li>
                     <li><img src="./upload/save.png" alt="save"/></li>
-                    <li><img src="./upload/send.png" alt="send"/></li>
+                    <li><p>${posts[i]["saved"]}</p></li>
                 </ul>
             </footer>
         `;
+
         let comments = await getCommentsByPostId(posts[i]['postid']);
-        //console.log(comments);
-        article += generateCommentsHTML(comments);
+        article += generateCommentsHTML(comments, posts[i]['postid']);
+
         result += article;
         result += `</article>`;
     }
-  
+
     return result;
 }
 
-function generateCommentsHTML(comments) {
+function generateCommentsHTML(comments, postid) {
     let result = `<div class="writeCommentArea">
-                    <input id="comment" type="text" placeholder="comment this post.." required>
-                        <button type="submit">send</button>
+                    <input id="commentBox${postid}" type="text" placeholder="comment this post.." required>
+                    <button id="commentButton${postid}" type="submit">send</button>
                 </div>`;
-               
-    for(let i = 0; i < comments.length; i++){
-        const commentHtml =`
+
+    for (let i = 0; i < comments.length; i++) {
+        const commentHtml = `
         <div class="postComment">
             <ul>
                 <li> <img src="${comments[i]["usericon"]}" alt="usericon" /></li>
                 <li><h3>@${comments[i]["username"]}</h3> </li>
-                <li><p>${comments[i]["commenttext"]}</li>
+                <li><p>${comments[i]["commenttext"]}</p></li>
             </ul>
         </div>`;
 
         result += commentHtml;
     }
-    
+
     return result;
 }
 
@@ -99,6 +102,7 @@ async function getPageElements() {
 async function postInteractionsListeners(postIds) {
     /*Interaction with posts */
     postIds.forEach(postid => {
+        /*like button listeners*/
         document.getElementById("like" + postid).addEventListener("click", () => {
             axios.post('./api-userLikedPost.php', {
                 userLikedPostId: postid
@@ -112,14 +116,96 @@ async function postInteractionsListeners(postIds) {
                 mainFunc();
             });
         });
-    });
+        /*comment button listeners*/
+        document.getElementById("commentButton" + postid).addEventListener('click', () => {
+            const commentTextBox = document.getElementById("commentBox" + postid);
+            if (commentTextBox && commentTextBox.value) {
+                axios.post('./api-userSendComment.php', {
+                    commentPostId: postid,
+                    commentText: commentTextBox.value
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    responseType: 'json',
+                    timeout: 5000
+                }).then(response => {
+                    mainFunc();
+                });
+            }
+        });
+    });/**end for each */
 
 }
 
-async function mainFunc() {
+function generateNotifications() {
+    const notificationNumber = document.getElementById("notificationNumber");
+    const aside = document.querySelector("aside");
+    const asideInitialHTML = `<section>
+    <header>
+        <h1>Notification</h1>
+    </header>`;
+
+    axios.post('./api-getUserNotifications.php', {
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        responseType: 'json',
+        timeout: 5000
+    }).then(response => {
+        const notifications = response.data;
+        let asideHTML = ``;
+        notificationIds = new Array(notifications.length);
+        for (let i = 0; i < notifications.length; i++) {
+            notificationIds[i] = notifications[i]["notificationid"];
+            let notification = `
+            <div id="notification${notifications[i]["notificationid"]}" class="notification${notifications[i]["alreadyread"]}">
+            <ul>
+                <li> <img src="${notifications[i]["usericon"]}" alt="usericon" /></li>
+                <li>
+                    <h3>${notifications[i]["usernickname"]}</h3>
+                </li>
+                <li>
+                    <p>${notifications[i]["notificationtext"]}</p>
+                </li>
+            </ul>
+            </div>
+            `;
+            asideHTML += notification;
+        }
+        aside.innerHTML = asideInitialHTML + asideHTML + `</section>`;
+
+        notificationIds.forEach(element => {
+            document.getElementById("notification" + element).addEventListener('click', event => {
+                axios.post('./api-readNotification.php', {
+                    notificationid: element
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    responseType: 'json',
+                    timeout: 5000
+                }).then(response => {
+                    //notificationNumber.innerHTML = "";
+                    if (response.data[0]["number"] > 0 && notificationNumber != null)
+                        notificationNumber.innerHTML = response.data[0]["number"];
+                    else{
+                        document.getElementById("notification-container").innerHTML = `
+                        <a href="#"><img src="upload/notification.png" alt="notification"></a>`;
+                    }
+                    generateNotifications();
+                });
+            });
+        })
+    });
+}
+
+ async function mainFunc() {
     let postIds = await getPageElements();
     postInteractionsListeners(postIds);
 }
 
 /*main*/
 mainFunc();
+generateNotifications();

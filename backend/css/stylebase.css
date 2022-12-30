@@ -98,8 +98,10 @@ body>header{
 
 
 /*main styles*/
-main {
-    margin: 2% 5% 0;
+body > main {
+    margin: 2% 2% 0;
+    float: left;
+    width: 70%;
 }
 
 body>main>article {
@@ -145,12 +147,12 @@ body>main>article>header>div>img {
     margin: 0;
 }
 
-body>main>article>header>div h2 {
+body>main>article>header>div h1 {
     padding: 0 1% 0;
     font-weight: 800;
 }
 
-body>main>article>header>ul>li>h3 {
+body>main>article>header>ul>li>h2 {
     justify-self: center;
     padding: 0 ;
     font-weight: 200;
@@ -230,6 +232,54 @@ body>main>article>footer img {
 
 .writeCommentArea{
     margin-left: 15%;
+}
+
+body > aside {
+    float: right;
+    width: 21%;
+    display: flex;
+    margin: 3% 2% 0;
+}
+body > aside > section{
+    border: 2px solid #ccc;
+}
+
+body>aside img{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+body>aside h1{
+    padding: 0 1% 0;
+    font-weight: 800;
+}
+
+.notification0{
+    background-color: #f2f2f2;
+}
+
+.notification-container{
+    position: relative;
+}
+.notificationNumber{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: rgb(255, 93, 93);
+    color: white;
+    text-align: center;
+}
+.notificationNumber img{
+    z-index: 0;
+}
+
+body>aside li{
+    display: inline-flex;
 }
 
 /* Footer styles */

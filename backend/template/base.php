@@ -11,25 +11,32 @@
     <header>
         <a href="profile.php"><img src="<?php echo $templateParams['usericon'] ?>" alt="" /></a>
         <h1><?php echo $templateParams["pagename"] ?></h1>
-        <form action="search.php" class = "searchForm">
+        <form action="search.php" class="searchForm">
             <div class="searchBar">
                 <input id="searchInfo" type="search" placeholder="Search.." name="search">
                 <button type="submit" name="submitsearch">Go</button>
             </div>
         </form>
+        <div id="notification-container" class="notification-container">
+        <a href="#"><img src="upload/notification.png" alt="notification"></a>
+        <?php if($templateParams["notificationNumber"] > 0)
+            echo '<div id="notificationNumber" class="notificationNumber">'.$templateParams["notificationNumber"].'</div>';
+        ?>
+        </div>
+
         <div class="searchResult">
         </div>
     </header>
 
     <main>
-        <?php if($templateParams["pagename"] == 'Home'){
+        <?php if ($templateParams["pagename"] == 'Home') {
             echo '<form action="uploadPostImage.php" method="post" enctype="multipart/form-data">
             <input id="newpost" type="text" placeholder="write something to share..." name="writepost" required>
             Select image to upload:
             <input type="file" name="fileToUpload" id="fileToUpload">
             <button type="submit" name="submitpost">send</button>
         </form>';
-        }?>
+        } ?>
     </main>
 
     <aside>
