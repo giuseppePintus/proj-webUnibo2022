@@ -139,6 +139,7 @@ async function postInteractionsListeners(postIds) {
 }
 
 function generateNotifications() {
+    const notificationNumber = document.getElementById("notificationNumber");
     const aside = document.querySelector("aside");
     const asideInitialHTML = `<section>
     <header>
@@ -155,7 +156,9 @@ function generateNotifications() {
     }).then(response => {
         const notifications = response.data;
         let asideHTML = ``;
+        notificationIds = new Array(notifications.length);
         for(let i = 0; i < notifications.length; i++){
+            notificationIds[i] = notifications[i]["notificationid"];
             let notification = `
             <div id="notification${notifications[i]["notificationid"]}" class="notification${notifications[i]["alreadyread"]}">
             <ul>
@@ -172,6 +175,23 @@ function generateNotifications() {
             asideHTML += notification;
         }
         aside.innerHTML = asideInitialHTML + asideHTML + `</section>`;
+
+        notificationIds.forEach(element => {
+            document.getElementById("notification" + element).addEventListener('click', event =>{
+                axios.post('./api-readNotification.php', {
+                    notificationid: element
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    responseType: 'json',
+                    timeout: 5000
+                }).then(response => {
+                    notificationNumber.innerHTML = "" + response.data[0]["number"];
+                    generateNotifications();
+                });
+            });
+        })
     });
 }
 

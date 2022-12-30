@@ -123,6 +123,15 @@ class DatabaseHelper
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function readNotification($notificationid, $userid){
+        $query = "UPDATE NOTIFICATION n
+        SET alreadyread = 1
+        WHERE n.userid = ? AND n.notificationid = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ii', $userid, $notificationid);
+        $stmt->execute();
+    }
+
     public function checkUserExist($username)
     {
         $query = "SELECT count(username) FROM `user_profile` where username=?";
