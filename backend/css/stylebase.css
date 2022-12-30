@@ -234,12 +234,14 @@ body>main>article>footer img {
     margin-left: 15%;
 }
 
-body > aside{
+body > aside {
     float: right;
     width: 21%;
     display: flex;
-    border: 2px solid #ccc;
     margin: 3% 2% 0;
+}
+body > aside > section{
+    border: 2px solid #ccc;
 }
 
 body>aside img{

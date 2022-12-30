@@ -157,7 +157,7 @@ function generateNotifications() {
         let asideHTML = ``;
         for(let i = 0; i < notifications.length; i++){
             let notification = `
-            <div class="notification${notifications[i]["alreadyread"]}">
+            <div id="notification${notifications[i]["notificationid"]}" class="notification${notifications[i]["alreadyread"]}">
             <ul>
                 <li> <img src="${notifications[i]["usericon"]}" alt="usericon" /></li>
                 <li>
