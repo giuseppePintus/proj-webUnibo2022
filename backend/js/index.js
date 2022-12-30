@@ -87,6 +87,9 @@ function generateCommentsHTML(comments, postid) {
 const main = document.querySelector("main");
 const mainInitialHtml = main.innerHTML;
 
+const aside = document.querySelector("aside");
+const asideInitialHtml = aside.innerHTML;
+
 async function getPageElements() {
     let postIds = [];
     try {
@@ -135,6 +138,10 @@ async function postInteractionsListeners(postIds) {
             }
         });
     });/**end for each */
+
+}
+
+function generateNotifications(){
 
 }
 

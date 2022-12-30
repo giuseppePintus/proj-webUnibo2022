@@ -17,7 +17,7 @@ class DatabaseHelper
             (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) as commented,
             (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) as saved
             FROM POST p
-            INNER JOIN USER_PROFILE up on up.userid = p.userid
+            INNER JOIN USER_PROFILE up on up.Ass_userid = p.userid
             LEFT JOIN LIKED l on l.postid = p.postid AND p.userid = up.userid
             GROUP BY p.postid
             ORDER BY p.postid
@@ -87,7 +87,7 @@ class DatabaseHelper
     public function getPostComments($postid)
     {
         $query = "SELECT cp.commentid, cp.commenttext, cp.Com_userid as userid, up.usericon, up.username FROM POST p, COMMENTPOST cp,  USER_PROFILE up
-        WHERE p.postid = cp.postid AND cp.Com_userid = up.userid AND p.postid = ? ORDER BY cp.commentid DESC";
+        WHERE p.postid = cp.postid AND cp.Com_userid = up.Ass_userid AND p.postid = ? ORDER BY cp.commentid DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $postid);
         $stmt->execute();
@@ -102,6 +102,15 @@ class DatabaseHelper
         $stmt->bind_param('sii', $commentText, $userid, $postid);
         $stmt->execute();
         return $stmt->insert_id;
+    }
+
+    public function getNotificationsToReadNumber($userid){
+        $query = "SELECT COUNT(*) as number FROM `NOTIFICATION` n WHERE n.userid = ? AND n.alreadyread = 0";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userid);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     public function checkUserExist($username)

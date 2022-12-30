@@ -19,7 +19,7 @@
         </form>
         <div class="notification-container">
         <a href="#"><img src="upload/notification.png" alt="notification"></a>
-        <div class="notificationNumber">2</div>
+        <div class="notificationNumber"><?php echo $templateParams["notificationNumber"]; ?></div>
         </div>
 
         <div class="searchResult">
