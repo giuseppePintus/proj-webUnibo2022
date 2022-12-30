@@ -73,7 +73,7 @@ function generateCommentsHTML(comments, postid) {
             <ul>
                 <li> <img src="${comments[i]["usericon"]}" alt="usericon" /></li>
                 <li><h3>@${comments[i]["username"]}</h3> </li>
-                <li><p>${comments[i]["commenttext"]}</li>
+                <li><p>${comments[i]["commenttext"]}</p></li>
             </ul>
         </div>`;
 

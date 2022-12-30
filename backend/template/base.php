@@ -11,28 +11,72 @@
     <header>
         <a href="profile.php"><img src="<?php echo $templateParams['usericon'] ?>" alt="" /></a>
         <h1><?php echo $templateParams["pagename"] ?></h1>
-        <form action="search.php" class = "searchForm">
+        <form action="search.php" class="searchForm">
             <div class="searchBar">
                 <input id="searchInfo" type="search" placeholder="Search.." name="search">
                 <button type="submit" name="submitsearch">Go</button>
             </div>
         </form>
+        <div class="notification-container">
+        <a href="#"><img src="upload/notification.png" alt="notification"></a>
+        <div class="notificationNumber">2</div>
+        </div>
+
         <div class="searchResult">
         </div>
     </header>
 
     <main>
-        <?php if($templateParams["pagename"] == 'Home'){
+        <?php if ($templateParams["pagename"] == 'Home') {
             echo '<form action="uploadPostImage.php" method="post" enctype="multipart/form-data">
             <input id="newpost" type="text" placeholder="write something to share..." name="writepost" required>
             Select image to upload:
             <input type="file" name="fileToUpload" id="fileToUpload">
             <button type="submit" name="submitpost">send</button>
         </form>';
-        }?>
+        } ?>
     </main>
 
     <aside>
+        <section>
+            <header>
+                <h1>Notification</h1>
+            </header>
+
+            <div class="notification0">
+                <ul>
+                    <li> <img src="upload/giubby/icon.jpg" alt="usericon" /></li>
+                    <li>
+                        <h3>Giuseppe Pintus</h3>
+                    </li>
+                    <li>
+                        <p>Has liked your post!</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="notification0">
+                <ul>
+                    <li> <img src="upload/giubby/icon.jpg" alt="usericon" /></li>
+                    <li>
+                        <h3>Giuseppe Pintus</h3>
+                    </li>
+                    <li>
+                        <p>Has liked your post!</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="notification1">
+                <ul>
+                    <li> <img src="upload/giubby/icon.jpg" alt="usericon" /></li>
+                    <li>
+                        <h3>Giuseppe Pintus</h3>
+                    </li>
+                    <li>
+                        <p>Has liked your post!</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
     </aside>
     <footer>
         <div class="footer-container">
