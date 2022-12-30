@@ -1,6 +1,10 @@
 <?php
 require_once "utils/bootstrap.php";
 
+
+
+
+
 //use Base template
 $templateParams["pagetitle"] = "Tachyon - Profile";
 $templateParams["pagename"] = "Profile";

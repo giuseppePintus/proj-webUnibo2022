@@ -25,9 +25,9 @@ async function generatePosts(posts) {
             <header>
                 <div class="postHeader">
                     <ul>
-                        <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
-                        <li><h2>${posts[i]['usernickname']}</h2></li>
-                        <li><h3>@${posts[i]["username"]}</h3> </li>
+                        <li><a href="profile.php?user=${posts[i]["username"]}"> <img src="${posts[i]["usericon"]}" alt="usericon" /></a></li>
+                        <li><a href="profile.php?user=${posts[i]["username"]}"> <h2>${posts[i]['usernickname']}</h2></a></li>
+                        <li><a href="profile.php?user=${posts[i]["username"]}"> <h3>@${posts[i]["username"]}</h3> </a></li>
                         <li><p> - ${posts[i]["postdate"]}</p></li>
                     </ul>
                 </div>

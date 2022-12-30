@@ -3,13 +3,15 @@ function generateSearchResult(posts) {
   for (let i = 0; i < posts.length; i++) {
       
       let article = `
-      <div >
-          <ul>
-              <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
-              <li><h2>${posts[i]['usernickname']}</h2></li>
-              <li><h3>@${posts[i]["username"]}</h3> </li>
-          </ul>
-      </div>`;
+      <a href="profile.php?user=${posts[i]["userid"]}">
+        <div >
+            <ul>
+                <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
+                <li><h2>${posts[i]['usernickname']}</h2></li>
+                <li><h3>@${posts[i]["username"]}</h3> </li>
+            </ul>
+        </div>
+      </a>`;
       result += article;
   }
   return result;
@@ -20,19 +22,25 @@ function generateSearchResult(posts) {
 const input = document.querySelector('#searchInfo');
 const result = document.querySelector('.searchResult');
 let offsetDB=0;
-let sizeQRes=5;
+let sizeQRes=2;
+
+
 input.addEventListener('input', function () {
-  console.log('Input is being modified');
   if(input.value != null && input.value.length!=0){
     //axios call
     offsetDB=0;
-    let queryUrl = './api-search.php?A='+offsetDB+'&B='+sizeQRes+'&S='+input.value;    
-    axios.get(queryUrl).then(response => {
+    axios.post('./api-search.php', {
+      offset: offsetDB,
+      size: sizeQRes,
+      string: input.value
+    }, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }).then(response => {
       let postshtml = generateSearchResult(response.data);
-      console.log(response.data);
-      result.innerHTML= postshtml;
+      result.innerHTML = postshtml;
     });
-    console.log(queryUrl);
   }else{
     result.innerHTML="";
   }
@@ -46,16 +54,19 @@ result.addEventListener('scroll', () =>{
   //check if there cloud be more result based on last query and check scroll position
   if(childCount >0 && offsetDB+sizeQRes<=childCount &&
     result.offsetHeight+result.scrollTop>result.scrollHeight-lastChild.offsetHeight){
-
-    console.log("  --------------------------------------");
     offsetDB+=sizeQRes;
-    let queryUrl = './api-search.php?A='+offsetDB+'&B='+sizeQRes+'&S='+input.value;    
-    axios.get(queryUrl).then(response => {
+    axios.post('./api-search.php', {
+      offset: offsetDB,
+      size: sizeQRes,
+      string: input.value
+    }, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }).then(response => {
       let postshtml = generateSearchResult(response.data);
-      console.log(response.data);
-      result.insertAdjacentHTML('beforeend', postshtml);
+      result.innerHTML += postshtml;
     });
-    console.log(queryUrl);
   }
 });
 
