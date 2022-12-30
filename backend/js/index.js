@@ -13,7 +13,7 @@ async function getCommentsByPostId(postid) {
     return commentList;
 }
 
-async function generatePosts(posts) {
+async function generatePosts(posts, showCommentBox) {
     let result = "";
     for (let i = 0; i < posts.length; i++) {
         let postiamge = "";
@@ -26,8 +26,8 @@ async function generatePosts(posts) {
                 <div class="postHeader">
                     <ul>
                         <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
-                        <li><h2>${posts[i]['usernickname']}</h2></li>
-                        <li><h3>@${posts[i]["username"]}</h3> </li>
+                        <li><h1>${posts[i]['usernickname']}</h1></li>
+                        <li><h2>@${posts[i]["username"]}</h2> </li>
                         <li><p> - ${posts[i]["postdate"]}</p></li>
                     </ul>
                 </div>
@@ -40,17 +40,20 @@ async function generatePosts(posts) {
             </section>
             <footer>
                 <ul>
-                    <li><p>${posts[i]["liked"]}</p></li>
+                    
                     <li><img id="like${posts[i]["postid"]}" src="./upload/like.png" alt="like"/></li>
-                    <li><img src="./upload/comment.png" alt="comment"/></li>
+                    <li><p>${posts[i]["liked"]}</p></li>
+                    <li><img id="comment${posts[i]["postid"]}" src="./upload/comment.png" alt="comment"/></li>
+                    <li><p>${posts[i]["commented"]}</p></li>
                     <li><img src="./upload/save.png" alt="save"/></li>
-                    <li><img src="./upload/send.png" alt="send"/></li>
+                    <li><p>${posts[i]["saved"]}</p></li>
                 </ul>
             </footer>
         `;
+
         let comments = await getCommentsByPostId(posts[i]['postid']);
-        //console.log(comments);
         article += generateCommentsHTML(comments, posts[i]['postid']);
+
         result += article;
         result += `</article>`;
     }
@@ -130,10 +133,8 @@ async function postInteractionsListeners(postIds) {
                     mainFunc();
                 });
             }
-
         });
-
-    });
+    });/**end for each */
 
 }
 

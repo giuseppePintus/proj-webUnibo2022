@@ -145,12 +145,12 @@ body>main>article>header>div>img {
     margin: 0;
 }
 
-body>main>article>header>div h2 {
+body>main>article>header>div h1 {
     padding: 0 1% 0;
     font-weight: 800;
 }
 
-body>main>article>header>ul>li>h3 {
+body>main>article>header>ul>li>h2 {
     justify-self: center;
     padding: 0 ;
     font-weight: 200;

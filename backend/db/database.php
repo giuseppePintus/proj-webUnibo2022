@@ -13,13 +13,15 @@ class DatabaseHelper
 
     public function getRandomPost($n)
     {
-        $stmt = $this->db->prepare("SELECT p.postid, usericon, usernickname, username, postdate, posttext, postimage, COUNT(l.postid) as liked 
-        FROM POST p
-        INNER JOIN USER_PROFILE up on up.userid = p.userid
-        LEFT JOIN LIKED l on l.postid = p.postid AND p.userid = up.userid
-        GROUP BY p.postid
-        ORDER BY p.postid
-        DESC LIMIT ?");
+            $stmt = $this->db->prepare("SELECT p.postid, usericon, usernickname, username, postdate, posttext, postimage, COUNT(l.postid) as liked,
+            (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) as commented,
+            (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) as saved
+            FROM POST p
+            INNER JOIN USER_PROFILE up on up.userid = p.userid
+            LEFT JOIN LIKED l on l.postid = p.postid AND p.userid = up.userid
+            GROUP BY p.postid
+            ORDER BY p.postid
+            DESC LIMIT ?");
         $stmt->bind_param('i', $n);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -85,7 +87,7 @@ class DatabaseHelper
     public function getPostComments($postid)
     {
         $query = "SELECT cp.commentid, cp.commenttext, cp.Com_userid as userid, up.usericon, up.username FROM POST p, COMMENTPOST cp,  USER_PROFILE up
-        WHERE p.postid = cp.postid AND cp.Com_userid = up.userid AND p.postid = ?";
+        WHERE p.postid = cp.postid AND cp.Com_userid = up.userid AND p.postid = ? ORDER BY cp.commentid DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $postid);
         $stmt->execute();
