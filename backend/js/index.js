@@ -201,7 +201,7 @@ function generateNotifications() {
     });
 }
 
-async function mainFunc() {
+ async function mainFunc() {
     let postIds = await getPageElements();
     postInteractionsListeners(postIds);
 }
