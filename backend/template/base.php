@@ -38,45 +38,6 @@
     </main>
 
     <aside>
-        <section>
-            <header>
-                <h1>Notification</h1>
-            </header>
-
-            <div class="notification0">
-                <ul>
-                    <li> <img src="upload/giubby/icon.jpg" alt="usericon" /></li>
-                    <li>
-                        <h3>Giuseppe Pintus</h3>
-                    </li>
-                    <li>
-                        <p>Has liked your post!</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="notification0">
-                <ul>
-                    <li> <img src="upload/giubby/icon.jpg" alt="usericon" /></li>
-                    <li>
-                        <h3>Giuseppe Pintus</h3>
-                    </li>
-                    <li>
-                        <p>Has liked your post!</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="notification1">
-                <ul>
-                    <li> <img src="upload/giubby/icon.jpg" alt="usericon" /></li>
-                    <li>
-                        <h3>Giuseppe Pintus</h3>
-                    </li>
-                    <li>
-                        <p>Has liked your post!</p>
-                    </li>
-                </ul>
-            </div>
-        </section>
     </aside>
     <footer>
         <div class="footer-container">

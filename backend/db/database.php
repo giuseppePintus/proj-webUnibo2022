@@ -113,6 +113,16 @@ class DatabaseHelper
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getNotifications($userid){
+        $query = "SELECT up.userid, up.username, up.usericon, up.usernickname, n.notificationid, n.notificationtext, n.notificationdate, n.alreadyread FROM NOTIFICATION n, USER_PROFILE up
+        WHERE n.userid = ? AND up.Ass_userid = n.userid";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userid);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function checkUserExist($username)
     {
         $query = "SELECT count(username) FROM `user_profile` where username=?";

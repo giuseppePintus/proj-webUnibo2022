@@ -87,9 +87,6 @@ function generateCommentsHTML(comments, postid) {
 const main = document.querySelector("main");
 const mainInitialHtml = main.innerHTML;
 
-const aside = document.querySelector("aside");
-const asideInitialHtml = aside.innerHTML;
-
 async function getPageElements() {
     let postIds = [];
     try {
@@ -141,8 +138,41 @@ async function postInteractionsListeners(postIds) {
 
 }
 
-function generateNotifications(){
+function generateNotifications() {
+    const aside = document.querySelector("aside");
+    const asideInitialHTML = `<section>
+    <header>
+        <h1>Notification</h1>
+    </header>`;
 
+    axios.post('./api-getUserNotifications.php', {
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        responseType: 'json',
+        timeout: 5000
+    }).then(response => {
+        const notifications = response.data;
+        let asideHTML = ``;
+        for(let i = 0; i < notifications.length; i++){
+            let notification = `
+            <div class="notification${notifications[i]["alreadyread"]}">
+            <ul>
+                <li> <img src="${notifications[i]["usericon"]}" alt="usericon" /></li>
+                <li>
+                    <h3>${notifications[i]["usernickname"]}</h3>
+                </li>
+                <li>
+                    <p>${notifications[i]["notificationtext"]}</p>
+                </li>
+            </ul>
+            </div>
+            `;
+            asideHTML += notification;
+        }
+        aside.innerHTML = asideInitialHTML + asideHTML + `</section>`;
+    });
 }
 
 async function mainFunc() {
@@ -152,3 +182,4 @@ async function mainFunc() {
 
 /*main*/
 mainFunc();
+generateNotifications();
