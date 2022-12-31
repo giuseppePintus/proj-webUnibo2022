@@ -17,7 +17,7 @@ class DatabaseHelper
             (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) as commented,
             (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) as saved
             FROM POST p
-            INNER JOIN USER_PROFILE up on up.Ass_userid = p.userid
+            INNER JOIN USER_PROFILE up on up.userid = p.userid
             LEFT JOIN LIKED l on l.postid = p.postid AND p.userid = up.userid
             GROUP BY p.postid
             ORDER BY p.postid
@@ -87,7 +87,7 @@ class DatabaseHelper
     public function getPostComments($postid)
     {
         $query = "SELECT cp.commentid, cp.commenttext, cp.Com_userid as userid, up.usericon, up.username FROM POST p, COMMENTPOST cp,  USER_PROFILE up
-        WHERE p.postid = cp.postid AND cp.Com_userid = up.Ass_userid AND p.postid = ? ORDER BY cp.commentid DESC";
+        WHERE p.postid = cp.postid AND cp.Com_userid = up.userid AND p.postid = ? ORDER BY cp.commentid DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $postid);
         $stmt->execute();
@@ -105,7 +105,7 @@ class DatabaseHelper
     }
 
     public function getNotificationsToReadNumber($userid){
-        $query = "SELECT COUNT(*) as number FROM `NOTIFICATION` n WHERE n.userid = ? AND n.alreadyread = 0";
+        $query = "SELECT COUNT(*) as number FROM `NOTIFICATION` n WHERE n.to_userid = ? AND n.alreadyread = 0";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userid);
         $stmt->execute();
@@ -115,7 +115,7 @@ class DatabaseHelper
 
     public function getNotifications($userid){
         $query = "SELECT up.userid, up.username, up.usericon, up.usernickname, n.notificationid, n.notificationtext, n.notificationdate, n.alreadyread FROM NOTIFICATION n, USER_PROFILE up
-        WHERE n.userid = ? AND up.Ass_userid = n.userid ORDER BY n.notificationid DESC";
+        WHERE n.to_userid = ? AND up.userid = n.to_userid ORDER BY n.notificationid DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userid);
         $stmt->execute();
@@ -126,16 +126,16 @@ class DatabaseHelper
     public function readNotification($notificationid, $userid){
         $query = "UPDATE NOTIFICATION n
         SET alreadyread = 1
-        WHERE n.userid = ? AND n.notificationid = ?";
+        WHERE n.to_userid = ? AND n.notificationid = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ii', $userid, $notificationid);
         $stmt->execute();
     }
 
-    public function sendNotifications($notificationtext, $userid){
-        $query = "INSERT INTO NOTIFICATION (notificationid, notificationtext, notificationdate, alreadyread, userid) VALUES (NULL, ?, NOW(), 0, ?)";
+    public function sendNotifications($notificationtext, $to_userid, $from_userid){
+        $query = "INSERT INTO NOTIFICATION (notificationid, notificationtext, notificationdate, alreadyread, to_userid, from_userid) VALUES (NULL, ?, NOW(), 0, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('si', $notificationtext, $userid);
+        $stmt->bind_param('sii', $notificationtext, $to_userid, $from_userid);
         $stmt->execute();
         return $stmt->insert_id;
     }
@@ -189,8 +189,8 @@ class DatabaseHelper
 
         $stmt->bind_param('s', $useremail);
         $stmt->execute();
-        $stmt = $this->db->prepare("INSERT INTO `user_profile` (`userid`, `Ass_userid`, `username`, `usernickname`, `usericon`, `userbiography`) 
-                                VALUES (NULL, @id, ?, ?, 'default.png', ' ')");
+        $stmt = $this->db->prepare("INSERT INTO `user_profile` (`userid`, `username`, `usernickname`, `usericon`, `userbiography`) 
+                                VALUES (@id, ?, ?, 'default.png', ' ')");
         $stmt->bind_param('ss', $username, $usernickname);
         $stmt->execute();
 
@@ -201,7 +201,7 @@ class DatabaseHelper
     { // da controllare se funziona bene
 
 
-        $stmt = $this->db->prepare("SELECT `Ass_userid` FROM `user_profile` WHERE `username` = ? ;");
+        $stmt = $this->db->prepare("SELECT `userid` FROM `user_profile` WHERE `username` = ? ;");
 
         $stmt->bind_param('s', $username);
         $stmt->execute();

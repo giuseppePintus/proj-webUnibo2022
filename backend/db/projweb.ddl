@@ -3,7 +3,7 @@
 -- *--------------------------------------------
 -- * DB-MAIN version: 11.0.2              
 -- * Generator date: Sep 20 2021              
--- * Generation date: Thu Dec 29 17:43:31 2022 
+-- * Generation date: Sat Dec 31 16:22:46 2022 
 -- * LUN file: /home/zaks/university_projects/proj-webUnibo2022/projweb.lun 
 -- * Schema: TachyonDB/1-1-1 
 -- ********************************************* 
@@ -20,12 +20,12 @@ use TachyonDB;
 -- _____________ 
 
 create table CATEGORY (
-     categoryid bigint not null AUTO_INCREMENT,
+     categoryid bigint not null auto_increment,
      categoryname varchar(100) not null,
      constraint IDCATEGORY primary key (categoryid));
 
 create table COMMENTCOMMENT (
-     commentid bigint not null AUTO_INCREMENT,
+     commentid bigint not null auto_increment,
      commenttext varchar(100) not null,
      commentdate date not null,
      userid bigint not null,
@@ -33,7 +33,7 @@ create table COMMENTCOMMENT (
      constraint IDCOMMENTCOMMENT primary key (commentid));
 
 create table COMMENTPOST (
-     commentid bigint not null AUTO_INCREMENT,
+     commentid bigint not null auto_increment,
      commenttext varchar(100) not null,
      commentdate date not null,
      userid bigint not null,
@@ -41,25 +41,26 @@ create table COMMENTPOST (
      postid bigint not null,
      constraint IDCOMMENT primary key (commentid));
 
-create table OTHERUSER (
-     userid bigint not null,
-     FOL_userid bigint not null);
-
 create table LIKED (
      postid bigint not null,
      userid bigint not null,
      constraint IDLIKE primary key (postid, userid));
 
 create table NOTIFICATION (
-     notificationid bigint not null AUTO_INCREMENT,
+     notificationid bigint not null auto_increment,
      notificationtext varchar(100) not null,
      notificationdate date not null,
      alreadyread char(1) not null,
-     userid bigint not null,
+     to_userid bigint not null,
+     from_userid bigint not null,
      constraint IDNOTIFICATION primary key (notificationid));
 
+create table OTHERUSER (
+     userid bigint not null,
+     fol_userid	 bigint not null);
+
 create table POST (
-     postid bigint not null AUTO_INCREMENT,
+     postid bigint not null auto_increment,
      posttext varchar(100) not null,
      postdate date not null,
      postimage varchar(100),
@@ -67,7 +68,7 @@ create table POST (
      constraint IDPOST primary key (postid));
 
 create table POSTCATEGORY (
-     categoryid bigint not null,
+     categoryid bigint not null ,
      postid bigint not null,
      constraint IDbelongsto primary key (categoryid, postid));
 
@@ -82,20 +83,19 @@ create table SHARED (
      constraint IDSHARED primary key (postid, userid));
 
 create table USER_CREDENTIAL (
-     userid bigint not null AUTO_INCREMENT,
+     userid bigint not null auto_increment,
      useremail varchar(100) not null,
      passwordhash varchar(100) not null,
      active char(1) not null,
      constraint IDUSER_CREDENTIAL_ID primary key (userid));
 
 create table USER_PROFILE (
-     userid bigint not null AUTO_INCREMENT,
      Ass_userid bigint not null,
      username varchar(100) not null,
      usernickname varchar(100) not null,
      usericon varchar(100) not null,
      userbiography varchar(100) not null,
-     constraint IDUSER primary key (userid),
+     constraint IDUSER primary key (Ass_userid),
      constraint FKassociate_ID unique (Ass_userid));
 
 
@@ -104,7 +104,7 @@ create table USER_PROFILE (
 
 alter table COMMENTCOMMENT add constraint FKcommentedcomment
      foreign key (userid)
-     references USER_PROFILE (userid);
+     references USER_PROFILE (Ass_userid);
 
 alter table COMMENTCOMMENT add constraint FKR
      foreign key (R_commentid)
@@ -112,35 +112,39 @@ alter table COMMENTCOMMENT add constraint FKR
 
 alter table COMMENTPOST add constraint FKcommented
      foreign key (Com_userid)
-     references USER_PROFILE (userid);
+     references USER_PROFILE (Ass_userid);
 
 alter table COMMENTPOST add constraint FKbecommented
      foreign key (postid)
      references POST (postid);
 
-alter table OTHERUSER add constraint FKFOLLOWING
-     foreign key (userid)
-     references USER_PROFILE (userid);
-
-alter table OTHERUSER add constraint FKFOLLOWER
-     foreign key (FOL_userid)
-     references USER_PROFILE (userid);
-
 alter table LIKED add constraint FKLIK_USE
      foreign key (userid)
-     references USER_PROFILE (userid);
+     references USER_PROFILE (Ass_userid);
 
 alter table LIKED add constraint FKLIK_POS
      foreign key (postid)
      references POST (postid);
 
-alter table NOTIFICATION add constraint FKnotify
+alter table NOTIFICATION add constraint FKR_101
+     foreign key (to_userid)
+     references USER_PROFILE (Ass_userid);
+
+alter table NOTIFICATION add constraint FKR_100
+     foreign key (from_userid)
+     references USER_PROFILE (Ass_userid);
+
+alter table OTHERUSER add constraint FKfollower
      foreign key (userid)
-     references USER_PROFILE (userid);
+     references USER_PROFILE (Ass_userid);
+
+alter table OTHERUSER add constraint FKfollowing
+     foreign key (fol_userid	)
+     references USER_PROFILE (Ass_userid);
 
 alter table POST add constraint FKusersendpost
      foreign key (userid)
-     references USER_PROFILE (userid);
+     references USER_PROFILE (Ass_userid);
 
 alter table POSTCATEGORY add constraint FKbel_POS
      foreign key (postid)
@@ -152,7 +156,7 @@ alter table POSTCATEGORY add constraint FKbel_CAT
 
 alter table SAVED add constraint FKSAV_USE
      foreign key (userid)
-     references USER_PROFILE (userid);
+     references USER_PROFILE (Ass_userid);
 
 alter table SAVED add constraint FKSAV_POS
      foreign key (postid)
@@ -160,7 +164,7 @@ alter table SAVED add constraint FKSAV_POS
 
 alter table SHARED add constraint FKSHA_USE
      foreign key (userid)
-     references USER_PROFILE (userid);
+     references USER_PROFILE (Ass_userid);
 
 alter table SHARED add constraint FKSHA_POS
      foreign key (postid)
