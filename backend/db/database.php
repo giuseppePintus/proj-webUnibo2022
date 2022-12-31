@@ -115,7 +115,7 @@ class DatabaseHelper
 
     public function getNotifications($userid){
         $query = "SELECT up.userid, up.username, up.usericon, up.usernickname, n.notificationid, n.notificationtext, n.notificationdate, n.alreadyread FROM NOTIFICATION n, USER_PROFILE up
-        WHERE n.userid = ? AND up.Ass_userid = n.userid";
+        WHERE n.userid = ? AND up.Ass_userid = n.userid ORDER BY n.notificationid DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userid);
         $stmt->execute();
@@ -130,6 +130,14 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ii', $userid, $notificationid);
         $stmt->execute();
+    }
+
+    public function sendNotifications($notificationtext, $userid){
+        $query = "INSERT INTO NOTIFICATION (notificationid, notificationtext, notificationdate, alreadyread, userid) VALUES (NULL, ?, NOW(), 0, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('si', $notificationtext, $userid);
+        $stmt->execute();
+        return $stmt->insert_id;
     }
 
     public function checkUserExist($username)
