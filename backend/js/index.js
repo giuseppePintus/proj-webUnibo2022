@@ -128,7 +128,13 @@ async function postInteractionsListeners(postIds) {
                 responseType: 'json',
                 timeout: 5000
             }).then(response => {
-                sendNotification('Somebody has liked your post');
+                console.log(response.data[0]['likes']);
+                if(response.data[0]['likes'] == 1){
+                    sendNotification(' has unliked it');
+                }else{
+                    sendNotification(' has liked your post');
+                }
+               
                 mainFunc();
             });
         });
@@ -146,7 +152,7 @@ async function postInteractionsListeners(postIds) {
                     responseType: 'json',
                     timeout: 5000
                 }).then(response => {
-                    sendNotification('Somebody has commented your post');
+                    sendNotification(' has commented your post');
                     mainFunc();
                 });
             }
@@ -155,8 +161,23 @@ async function postInteractionsListeners(postIds) {
 
 }
 
-function generateNotifications() {
+async function getNotificationNumber(){
+    const response = await axios.post('./api-readNotificationNumber.php', {
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        responseType: 'json',
+        timeout: 5000
+    });
+    return response.data[0]['number'];
+}
+
+async function generateNotifications() {
     const notificationNumber = document.getElementById("notificationNumber");
+    if(notificationNumber != null){
+        notificationNumber.innerHTML = await getNotificationNumber();
+    }
     const aside = document.querySelector("aside");
     const asideInitialHTML = `<section>
     <header>

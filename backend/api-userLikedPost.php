@@ -14,3 +14,6 @@ if ($like['likes'] == 1) { //delete like
 } else { //create like
     $dbh->userLikedPost($userid, $postid);
 }
+
+header("Content-Type: application/json");
+echo json_encode($result);
