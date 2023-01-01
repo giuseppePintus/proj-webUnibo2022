@@ -13,7 +13,7 @@ async function getCommentsByPostId(postid) {
     return commentList;
 }
 
-async function generatePosts(posts, showCommentBox) {
+async function generatePosts(posts) {
     let result = "";
     for (let i = 0; i < posts.length; i++) {
         let postiamge = "";
@@ -51,8 +51,10 @@ async function generatePosts(posts, showCommentBox) {
             </footer>
         `;
 
-        let comments = await getCommentsByPostId(posts[i]['postid']);
-        article += generateCommentsHTML(comments, posts[i]['postid']);
+
+        //let comments = await getCommentsByPostId(posts[i]['postid']);
+        //article += generateCommentsHTML(comments, posts[i]['postid']);
+        article += `<div id="showComment${posts[i]["postid"]}"></div>`;
 
         result += article;
         result += `</article>`;
@@ -99,8 +101,8 @@ async function getPageElements() {
     return postIds;
 }
 
-function sendNotification(message){
-   
+function sendNotification(message) {
+
     axios.post('./api-sendNotification.php', {
         notificationtext: message
     }, {
@@ -110,11 +112,11 @@ function sendNotification(message){
         responseType: 'json',
         timeout: 5000
     }).then(response => {
-       generateNotifications();
+        generateNotifications();
     });
 }
 
-async function postInteractionsListeners(postIds) {
+async function postInteractionsListeners(postIds, commentBoxStateMap) {
     /*Interaction with posts */
     postIds.forEach(postid => {
         /*like button listeners*/
@@ -128,40 +130,59 @@ async function postInteractionsListeners(postIds) {
                 responseType: 'json',
                 timeout: 5000
             }).then(response => {
-                console.log(response.data[0]['likes']);
-                if(response.data[0]['likes'] == 1){
-                    sendNotification(' has unliked it');
-                }else{
-                    sendNotification(' has liked your post');
-                }
-               
+                response.data[0]['likes'] ? sendNotification(' has unliked it') :  sendNotification(' has liked your post');
                 mainFunc();
             });
         });
-        /*comment button listeners*/
-        document.getElementById("commentButton" + postid).addEventListener('click', () => {
-            const commentTextBox = document.getElementById("commentBox" + postid);
-            if (commentTextBox && commentTextBox.value) {
-                axios.post('./api-userSendComment.php', {
-                    commentPostId: postid,
-                    commentText: commentTextBox.value
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    responseType: 'json',
-                    timeout: 5000
-                }).then(response => {
-                    sendNotification(' has commented your post');
-                    mainFunc();
-                });
-            }
+
+        /*expand comment listeners*/
+        document.getElementById("comment" + postid).addEventListener('click', async () => {
+
+            await displayComment(postid, commentBoxStateMap.get(postid));
+            commentBoxStateMap.set(postid, !commentBoxStateMap.get(postid))
+            
+            if(commentBoxStateMap.get(postid) != 0)
+                commentButtonListenr(postid);
+
         });
     });/**end for each */
 
 }
 
-async function getNotificationNumber(){
+async function displayComment(postid, isVisible) {
+    if (isVisible == 0) {
+        let comments = await getCommentsByPostId(postid);
+        document.getElementById("showComment" + postid).innerHTML
+            = generateCommentsHTML(comments, postid);
+    } else {
+        document.getElementById("showComment" + postid).innerHTML = "";
+    }
+
+}
+
+function commentButtonListenr(postid) {
+    /*comment button listeners*/
+    document.getElementById("commentButton" + postid).addEventListener('click', () => {
+        const commentTextBox = document.getElementById("commentBox" + postid);
+        if (commentTextBox && commentTextBox.value) {
+            axios.post('./api-userSendComment.php', {
+                commentPostId: postid,
+                commentText: commentTextBox.value
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                responseType: 'json',
+                timeout: 5000
+            }).then(async () => {
+                sendNotification(' has commented your post');
+                mainFunc();
+            });
+        }
+    });
+}
+
+async function getNotificationNumber() {
     const response = await axios.post('./api-readNotificationNumber.php', {
     }, {
         headers: {
@@ -176,9 +197,9 @@ async function getNotificationNumber(){
 async function generateNotifications() {
     const notificationNumber = document.getElementById("notificationNumber");
     let notiNumber = await getNotificationNumber();
-    if(notificationNumber != null){
+    if (notificationNumber != null) {
         notificationNumber.innerHTML = await getNotificationNumber();
-    }else if (notiNumber > 0){
+    } else if (notiNumber > 0) {
         document.getElementById("notification-container").innerHTML = `
         <a href="#"><img src="upload/notification.png" alt="notification"></a>
         <div id="notificationNumber" class="notificationNumber"></div>`;
@@ -234,7 +255,7 @@ async function generateNotifications() {
                     //notificationNumber.innerHTML = "";
                     if (response.data[0]["number"] > 0 && notificationNumber != null)
                         notificationNumber.innerHTML = response.data[0]["number"];
-                    else{
+                    else {
                         document.getElementById("notification-container").innerHTML = `
                         <a href="#"><img src="upload/notification.png" alt="notification"></a>`;
                     }
@@ -245,9 +266,11 @@ async function generateNotifications() {
     });
 }
 
- async function mainFunc() {
+
+async function mainFunc() {
     let postIds = await getPageElements();
-    postInteractionsListeners(postIds);
+    const commentBoxStateMap = new Map(postIds.map(key => [key, 0]));   
+    postInteractionsListeners(postIds, commentBoxStateMap);
 }
 
 /*main*/
