@@ -175,8 +175,14 @@ async function getNotificationNumber(){
 
 async function generateNotifications() {
     const notificationNumber = document.getElementById("notificationNumber");
+    let notiNumber = await getNotificationNumber();
     if(notificationNumber != null){
         notificationNumber.innerHTML = await getNotificationNumber();
+    }else if (notiNumber > 0){
+        document.getElementById("notification-container").innerHTML = `
+        <a href="#"><img src="upload/notification.png" alt="notification"></a>
+        <div id="notificationNumber" class="notificationNumber"></div>`;
+        generateNotifications();
     }
     const aside = document.querySelector("aside");
     const asideInitialHTML = `<section>
