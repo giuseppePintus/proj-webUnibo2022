@@ -1,3 +1,8 @@
+/*retrieve posts from the database*/
+const main = document.querySelector("main");
+const mainInitialHtml = main.innerHTML;
+let commentBoxStateMap = new Map();
+
 
 async function getCommentsByPostId(postid) {
     const response = await axios.post('./api-getPostComments.php', {
@@ -41,7 +46,7 @@ async function generatePosts(posts) {
             <footer>
                 <ul>
                     
-                    <li><img id="like${posts[i]["postid"]}" src="./upload/like.png" alt="like"/></li>
+                    <li><img id="like${posts[i]["postid"]}" class="posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
                     <li><p>${posts[i]["liked"]}</p></li>
                     <li><img id="comment${posts[i]["postid"]}" src="./upload/comment.png" alt="comment"/></li>
                     <li><p>${posts[i]["commented"]}</p></li>
@@ -50,7 +55,6 @@ async function generatePosts(posts) {
                 </ul>
             </footer>
         `;
-
 
         //let comments = await getCommentsByPostId(posts[i]['postid']);
         //article += generateCommentsHTML(comments, posts[i]['postid']);
@@ -85,9 +89,6 @@ function generateCommentsHTML(comments, postid) {
     return result;
 }
 
-/*retrieve posts from the database*/
-const main = document.querySelector("main");
-const mainInitialHtml = main.innerHTML;
 
 async function getPageElements() {
     let postIds = [];
@@ -130,18 +131,16 @@ async function postInteractionsListeners(postIds, commentBoxStateMap) {
                 responseType: 'json',
                 timeout: 5000
             }).then(response => {
-                response.data[0]['likes'] ? sendNotification(' has unliked it') :  sendNotification(' has liked your post');
+                response.data[0]['likes'] ? sendNotification(' has unliked it') : sendNotification(' has liked your post');
                 mainFunc();
             });
         });
 
         /*expand comment listeners*/
         document.getElementById("comment" + postid).addEventListener('click', async () => {
-
             await displayComment(postid, commentBoxStateMap.get(postid));
             commentBoxStateMap.set(postid, !commentBoxStateMap.get(postid))
-            
-            if(commentBoxStateMap.get(postid) != 0)
+            if (commentBoxStateMap.get(postid) != 0)
                 commentButtonListenr(postid);
 
         });
@@ -162,7 +161,7 @@ async function displayComment(postid, isVisible) {
 
 function commentButtonListenr(postid) {
     /*comment button listeners*/
-    document.getElementById("commentButton" + postid).addEventListener('click', () => {
+    document.getElementById("commentButton" + postid).addEventListener('click', async () => {
         const commentTextBox = document.getElementById("commentBox" + postid);
         if (commentTextBox && commentTextBox.value) {
             axios.post('./api-userSendComment.php', {
@@ -267,9 +266,11 @@ async function generateNotifications() {
 }
 
 
+
 async function mainFunc() {
     let postIds = await getPageElements();
-    const commentBoxStateMap = new Map(postIds.map(key => [key, 0]));   
+    if (commentBoxStateMap.size === 0)
+        commentBoxStateMap = new Map(postIds.map(key => [key, 0]));
     postInteractionsListeners(postIds, commentBoxStateMap);
 }
 

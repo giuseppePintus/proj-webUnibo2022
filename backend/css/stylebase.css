@@ -209,6 +209,10 @@ body>main>article>footer img {
     height: 2rem;
 }
 
+.posticon1{
+    background-color: rgb(0, 153, 255); /* fill color */
+}
+
 .postComment ul li{
     list-style-type: none;
     display: inline-block;
