@@ -98,10 +98,11 @@ body>header{
 
 
 /*main styles*/
-body > main {
+.main {
     margin: 2% 2% 0;
     float: left;
-    width: 70%;
+    width: 100%;
+    transition: width 0.5s ease-in-out; 
 }
 
 body>main>article {
@@ -226,15 +227,6 @@ body>main>article>footer img {
     margin: 3% 3% 3% 15%;
 }
 
-.uploadPostImage  input[type="text"]{
-    margin: 3% 0 0;
-    width: 71%;
-    height: 2rem;
-    border-radius: 1rem;
-    padding: 1rem;
-    display: flex;
-}
-
 .uploadPostImage  button{
     height: 2rem;
     width: 5rem;
@@ -249,7 +241,7 @@ body>main>article>footer img {
     margin-bottom: 3rem;    
 }
 
-.writeCommentArea > input[type="text"]{
+.writeCommentArea > input[type="text"], .uploadPostImage  input[type="text"]{
     margin: 3% 0 0;
     width: 71%;
     height: 2rem;

@@ -28,7 +28,7 @@
         </div>
     </header>
 
-    <main>
+    <main class="main">
         <?php if ($templateParams["pagename"] == 'Home') {
             echo '<div class = "uploadPostImage"><form action="uploadPostImage.php" method="post" enctype="multipart/form-data">
             <input id="newpost" type="text" placeholder="write something to share..." name="writepost" required>

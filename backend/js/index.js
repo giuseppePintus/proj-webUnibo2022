@@ -2,7 +2,7 @@
 const main = document.querySelector("main");
 const mainInitialHtml = main.innerHTML;
 let commentBoxStateMap = new Map();
-let showNotification = 1;
+let showNotification = 0;
 
 
 async function getCommentsByPostId(postid) {
@@ -59,7 +59,7 @@ async function generatePosts(posts) {
 
         //let comments = await getCommentsByPostId(posts[i]['postid']);
         //article += generateCommentsHTML(comments, posts[i]['postid']);
-        article += `<div id="showComment${posts[i]["postid"]}"></div>`;
+        article += `<div id="showComment${posts[i]["postid"]}" class="showComment"></div>`;
 
         result += article;
         result += `</article>`;
@@ -157,8 +157,10 @@ async function displayComment(postid, isVisible) {
         let comments = await getCommentsByPostId(postid);
         document.getElementById("showComment" + postid).innerHTML
             = generateCommentsHTML(comments, postid);
+    
     } else {
         document.getElementById("showComment" + postid).innerHTML = "";
+       
     }
 
 }
@@ -276,7 +278,9 @@ function addNotificationBellListener(){
         if(showNotification){
             document.querySelector("aside").innerHTML = "";
             showNotification = 0;
+            document.querySelector(".main").style.width = '100%'; 
         }else{
+            document.querySelector(".main").style.width = '70%'; 
             showNotification = 1;
             generateNotifications();
         }
