@@ -30,12 +30,12 @@
 
     <main>
         <?php if ($templateParams["pagename"] == 'Home') {
-            echo '<form action="uploadPostImage.php" method="post" enctype="multipart/form-data">
+            echo '<div class = "uploadPostImage"><form action="uploadPostImage.php" method="post" enctype="multipart/form-data">
             <input id="newpost" type="text" placeholder="write something to share..." name="writepost" required>
             Select image to upload:
             <input type="file" name="fileToUpload" id="fileToUpload">
-            <button type="submit" name="submitpost">send</button>
-        </form>';
+            <button type="submit" name="submitpost">post</button>
+        </form></div>';
         } ?>
     </main>
 

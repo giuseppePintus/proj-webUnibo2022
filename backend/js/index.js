@@ -70,7 +70,7 @@ async function generatePosts(posts) {
 function generateCommentsHTML(comments, postid) {
     let result = `<div class="writeCommentArea">
                     <input id="commentBox${postid}" type="text" placeholder="comment this post.." required>
-                    <button id="commentButton${postid}" type="submit">send</button>
+                    <button id="commentButton${postid}" type="submit">comment</button>
                 </div>`;
 
     for (let i = 0; i < comments.length; i++) {
