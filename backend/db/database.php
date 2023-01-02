@@ -46,6 +46,17 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getUserIdFromPostId($postid){
+        $query = "SELECT up.userid FROM POST p, USER_PROFILE up
+        WHERE p.userid = up.userid AND postid = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $postid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+
+    }
+
     public function sendNewPost($userid, $posttext, $postImageUrl)
     {
         $query = "INSERT INTO POST (posttext, postdate, postimage, userid) VALUES (?,  current_timestamp(), ?, ?)";

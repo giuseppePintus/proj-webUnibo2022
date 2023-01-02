@@ -102,10 +102,12 @@ async function getPageElements() {
     return postIds;
 }
 
-function sendNotification(message) {
+function sendNotification(message, who, how) {
 
     axios.post('./api-sendNotification.php', {
-        notificationtext: message
+        notificationtext: message,
+        fromwho : who,
+        inWhichWay: how
     }, {
         headers: {
             'Content-Type': 'application/json'
@@ -113,6 +115,7 @@ function sendNotification(message) {
         responseType: 'json',
         timeout: 5000
     }).then(response => {
+        //console.log(response.data);
         generateNotifications();
     });
 }
@@ -131,7 +134,7 @@ async function postInteractionsListeners(postIds, commentBoxStateMap) {
                 responseType: 'json',
                 timeout: 5000
             }).then(response => {
-                response.data[0]['likes'] ? sendNotification(' has unliked it') : sendNotification(' has liked your post');
+                response.data[0]['likes'] ? sendNotification(' has unliked it', postid, 'like') : sendNotification(' has liked your post', postid, 'like');
                 mainFunc();
             });
         });
@@ -174,7 +177,7 @@ function commentButtonListenr(postid) {
                 responseType: 'json',
                 timeout: 5000
             }).then(async () => {
-                sendNotification(' has commented your post');
+                sendNotification(' has commented your post', postid, 'comment');
                 mainFunc();
             });
         }
