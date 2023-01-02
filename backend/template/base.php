@@ -18,7 +18,7 @@
             </div>
         </form>
         <div id="notification-container" class="notification-container">
-        <a href="#"><img src="upload/notification.png" alt="notification"></a>
+        <img id="notificationBellIcon" src="upload/notification.png" alt="notification">
         <?php if($templateParams["notificationNumber"] > 0)
             echo '<div id="notificationNumber" class="notificationNumber">'.$templateParams["notificationNumber"].'</div>';
         ?>

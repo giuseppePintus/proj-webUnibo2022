@@ -2,6 +2,7 @@
 const main = document.querySelector("main");
 const mainInitialHtml = main.innerHTML;
 let commentBoxStateMap = new Map();
+let showNotification = 1;
 
 
 async function getCommentsByPostId(postid) {
@@ -203,10 +204,12 @@ async function generateNotifications() {
         notificationNumber.innerHTML = await getNotificationNumber();
     } else if (notiNumber > 0) {
         document.getElementById("notification-container").innerHTML = `
-        <a href="#"><img src="upload/notification.png" alt="notification"></a>
+        <img id="notificationBellIcon" src="upload/notification.png" alt="notification">
         <div id="notificationNumber" class="notificationNumber"></div>`;
         generateNotifications();
     }
+    if(!showNotification)
+    return;
     const aside = document.querySelector("aside");
     const asideInitialHTML = `<section>
     <header>
@@ -268,7 +271,18 @@ async function generateNotifications() {
     });
 }
 
-
+function addNotificationBellListener(){
+    document.getElementById("notificationBellIcon").addEventListener('click', event =>{
+        if(showNotification){
+            document.querySelector("aside").innerHTML = "";
+            showNotification = 0;
+        }else{
+            showNotification = 1;
+            generateNotifications();
+        }
+        //console.log(showNotification);
+    });
+}
 
 async function mainFunc() {
     let postIds = await getPageElements();
@@ -280,3 +294,6 @@ async function mainFunc() {
 /*main*/
 mainFunc();
 generateNotifications();
+addNotificationBellListener();
+
+

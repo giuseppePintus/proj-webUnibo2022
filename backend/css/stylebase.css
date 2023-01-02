@@ -213,6 +213,10 @@ body>main>article>footer img {
     border-radius: 1rem;
 }
 
+.homePost{
+    margin-top: 5%;
+}
+
 .posticon1{
     background-color: rgb(0, 153, 255); /* fill color */
 }
@@ -232,8 +236,6 @@ body>main>article>footer img {
 }
 
 .uploadPostImage  button{
-    float: right;
-    margin-right: 25%;
     height: 2rem;
     width: 5rem;
     border-radius: 0.5rem;
