@@ -12,9 +12,8 @@ console.log(hashPassword);
 const promiseResp = await axios.get('../backend/api-registerUser.php?email='+ email + '&username='+ username +'&password='+ hashPassword);
 const resp = promiseResp.data;
 console.log(resp);
-if(resp == "Email sent successfully!"){
-    window.location.replace("./login.php");
-}
+window.location.replace("./login.php");
+
 return;
 }
 

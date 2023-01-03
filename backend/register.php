@@ -2,8 +2,8 @@
 require_once 'utils/bootstrap.php';
 
 //use Base template
-$templateParams["pagetitle"] = "Tachyon - Register";
-$templateParams["pagename"] = "Register";
+$templateParams["pagetitle"] = "Tachyon - SignUp";
+$templateParams["pagename"] = "SignUp";
 $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/register.js");
 
 ?>
@@ -12,7 +12,7 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/re
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Tachyon-Login</title>
+        <title>Tachyon-SignUp</title>
         <link rel="icon" href="../img/logo.ico" type="image/x-icon">
         <link rel="stylesheet" href="../backend/css/login.css">
         
@@ -20,14 +20,14 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/re
     <body>
         <div class="loginDiv" id="loginDiv">
             <img src="../img/logo.png"/>
-            <h1> Welcome to Tachyon</h1>
+            <h1> Welcome to Tachyon</h1> 
+            <h2> Sign Up </h2>
             <form id="LoginForm">
                 <input type="text"      name="EmailIn"  id="emailInput" class="emailIn"  placeholder="Email" >
                 <input type="text"      name="UsernameIn"  id="userInput" class="usrIn"  placeholder="Username" >
                 <input type="password"  name="PasswordIn"  id="passInput" class="passIn" placeholder="Password">
-                <input type="button"    name="LoginButton" value="Login"  onclick="register()">
-            </form>
-            <a href="register.php"> sign up</a> 
+                <input type="button"    name="LoginButton" value="Register"  onclick="register()">
+            </form> 
         </div>
         <?php
 

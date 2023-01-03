@@ -12,6 +12,7 @@
         <div class="loginDiv" id="loginDiv">
             <img src="../img/logo.png"/>
             <h1> Welcome to Tachyon</h1>
+            <h2> Login </h2>
             <form id="LoginForm">
                 <input type="text"      name="UsernameIn"  id="userInput" class="usrIn"  placeholder="Username" >
                 <input type="password"  name="PasswordIn"  id="passInput" class="passIn" placeholder="Password">
