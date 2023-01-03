@@ -3,16 +3,14 @@ class DatabaseHelper
 {
     private $db;
 
-    public function __construct($servername, $username, $password, $dbname, $port)
-    {
+    public function __construct($servername, $username, $password, $dbname, $port){
         $this->db = new mysqli($servername, $username, $password, $dbname, $port);
         if ($this->db->connect_error) {
             die("Connection failed: " . $this->db->connect_error);
         }
     }
 
-    public function getRandomPost($n)
-    {
+    public function getRandomPost($n){
             $stmt = $this->db->prepare("SELECT p.postid, usericon, usernickname, username, postdate, posttext, postimage, COUNT(l.postid) as liked,
             (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) as commented,
             (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) as saved
@@ -28,8 +26,7 @@ class DatabaseHelper
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    public function searchUser($start, $end, $string, $username)
-    {
+    public function searchUser($start, $end, $string, $username){
 
         $stmt = $this->db->prepare("SELECT username,usernickname ,usericon, 
         (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(?) * 100 AS similarity 
@@ -67,24 +64,21 @@ class DatabaseHelper
         return $stmt->insert_id;
     }
 
-    public function userLikedPost($userid, $postid)
-    {
+    public function userLikedPost($userid, $postid){
         $stmt = $this->db->prepare("INSERT INTO LIKED(postid, userid) VALUES(?, ?)");
         $stmt->bind_param('ii', $postid, $userid);
         $stmt->execute();
         return $stmt->insert_id;
     }
 
-    public function userUnLikedPost($userid, $postid)
-    {
+    public function userUnLikedPost($userid, $postid){
         $stmt = $this->db->prepare("DELETE FROM LIKED
         WHERE postid = ? AND userid = ?");
         $stmt->bind_param('ii', $postid, $userid);
         $stmt->execute();
     }
 
-    public function readIfUserLikedPost($postid, $userid)
-    {
+    public function readIfUserLikedPost($postid, $userid){
         $query = "SELECT COUNT(*) as likes
         FROM LIKED l
         WHERE l.postid = ? AND l.userid = ?";
@@ -95,8 +89,7 @@ class DatabaseHelper
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPostComments($postid)
-    {
+    public function getPostComments($postid){
         $query = "SELECT cp.commentid, cp.commenttext, cp.Com_userid as userid, up.usericon, up.username FROM POST p, COMMENTPOST cp,  USER_PROFILE up
         WHERE p.postid = cp.postid AND cp.Com_userid = up.userid AND p.postid = ? ORDER BY cp.commentid DESC";
         $stmt = $this->db->prepare($query);
@@ -106,8 +99,7 @@ class DatabaseHelper
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function insertCommentToPost($postid, $commentText, $userid)
-    {
+    public function insertCommentToPost($postid, $commentText, $userid){
         $query = "INSERT INTO COMMENTPOST(commenttext, commentdate, Com_userid, postid) VALUES(?, current_timestamp(), ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sii', $commentText, $userid, $postid);
@@ -151,8 +143,7 @@ class DatabaseHelper
         return $stmt->insert_id;
     }
 
-    public function checkUserExist($username)
-    {
+    public function checkUserExist($username){
         $query = "SELECT count(username) FROM `user_profile` where username=?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
@@ -162,8 +153,7 @@ class DatabaseHelper
         return $result->fetch_row();
     }
 
-    public function checkEmailExist($email)
-    { //da controllare se funziona bene
+    public function checkEmailExist($email){ //da controllare se funziona bene
         $query = "SELECT count(useremail) FROM `user_credential` where useremail=?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
@@ -173,8 +163,7 @@ class DatabaseHelper
         return $result->fetch_row();
     }
 
-    public function getUserPassHash($username)
-    {
+    public function getUserPassHash($username){
         $query = " SELECT uc.passwordhash 
                     FROM `user_profile`up, `user_credential` uc 
                     where up.userid = uc.userid and up.username = ?; ";
@@ -186,8 +175,7 @@ class DatabaseHelper
         return $result->fetch_row();
     }
 
-    public function addAccount($username, $useremail, $usernickname, $passwordhash)
-    { // da controllare se funziona bene
+    public function addAccount($username, $useremail, $usernickname, $passwordhash){ // da controllare se funziona bene
 
         $stmt = $this->db->prepare("INSERT INTO `user_credential` (`userid`, `useremail`, `passwordhash`, `active`) 
                                 VALUES (NULL, ?, ?, '1')");
@@ -208,8 +196,7 @@ class DatabaseHelper
         $result = $stmt->get_result();
         return $result;
     }
-    public function getUserId($username)
-    { // da controllare se funziona bene
+    public function getUserId($username){ // da controllare se funziona bene
 
 
         $stmt = $this->db->prepare("SELECT `userid` FROM `user_profile` WHERE `username` = ? ;");
