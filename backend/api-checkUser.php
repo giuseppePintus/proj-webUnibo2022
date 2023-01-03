@@ -1,27 +1,39 @@
 <?php
-require_once "utils/bootstrap.php";
-if(!isset($_GET["user"])){
-    exit();
-}
-
+    require_once "utils/bootstrap.php";
     
-    if( $dbh->checkUserExist($_GET["user"]) == 0){
-        //print_r($_GET["user"]. "_");
-        //print_r($dbh->checkUserExist($_GET["user"]));
+    $request_body = file_get_contents('php://input');
+    $data = json_decode($request_body, true);
 
-        $arrayName = array( 'user' => ($_GET["user"]), 
-                            'res' =>  "userNotFound");
-        echo json_encode($arrayName);
+    if(!isset($data['username']) || !isset($data['password'])){
+        http_response_code(401);  // set the response code to 401 Unauthorized
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'post data not set']);
+
         exit();
     }
-   
-    $bytes = random_bytes(5); // genera 5 byte casuali
-    $randomString = bin2hex($bytes); // converte i byte in una stringa esadecimale
-    
-    $_SESSION['challengeString']= $randomString;
-    $_SESSION['Username'] = $_GET["user"];
-    $_SESSION['userid'] = $dbh->getUserId($_SESSION['Username']);
-    header("Content-Type: application/json");    
-    echo json_encode(array('string' => $randomString));
+
+    //Username not valid
+    if( $dbh->checkUserExist($data['username']) == 0){
+        http_response_code(401);  // set the response code to 401 Unauthorized
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'Invalid username ']);
+        exit();
+    }
+    $expectPwd = strval($dbh -> getUserPassHash($data['username'])[0]);
+    $equals = strcmp($expectPwd,  strval($data['password'] ));
+    //check for password correctness
+    if( $equals !== 0){
+        http_response_code(401);  // set the response code to 401 Unauthorized
+        header('Content-Type: application/json');
+        echo json_encode(['error' =>  $equals ]);
+        exit();
+    }
+
+    $_SESSION['Username'] = $data['username'];
+    $_SESSION['userid'] = $dbh->getUserId($data['username']);
+    $_SESSION['isAuth'] = true;
+
+    header('Content-Type: application/json');
+        echo json_encode(['response' => 'ok']);
     exit();
 ?>
