@@ -29,9 +29,10 @@
         exit();
     }
 
-    $_SESSION['Username'] = $data['username'];
-    $_SESSION['userid'] = $dbh->getUserId($data['username']);
-    $_SESSION['isAuth'] = true;
+    $_SESSION["Username"] = $data['username'];
+    $_SESSION["userid"] = $dbh->getUserId($data['username'])[0];
+    $_SESSION["isAuth"] = true;
+    $_SESSION["userfolder"] = $data['username'].'/';
 
     header('Content-Type: application/json');
         echo json_encode(['response' => 'ok']);

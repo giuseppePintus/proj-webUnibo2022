@@ -1,3 +1,9 @@
+<?php
+    $result = $dbh->getNotificationsToReadNumber($_SESSION["userid"]);
+    $notiNumber = count($result) == 1 ? $result[0] : 0;
+    $templateParams["notificationNumber"] = $notiNumber["number"];
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 
