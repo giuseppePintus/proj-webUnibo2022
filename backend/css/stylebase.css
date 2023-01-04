@@ -1,4 +1,11 @@
+:root{
+    --primary-color: ;
+    --secondary-color: ;
+    --post-width: ;
+    --notif-width: ;
 
+
+}
 
 /* Reset styles */
 body{
@@ -14,36 +21,20 @@ body{
     border: 0;
 
     font: inherit;
-    box-sizing: border-box;
-
-}
-/*big device*/
-@media only screen and (min-width: 768px)  {
-    body{
-     width: 100vw;
-     height: 100vh;
     
-    }
- }
+    width: 100%;
+    height: 100%;
 
-/*smartphone and tablet*/
-@media only screen and (max-width: 767px)  {
-   body{
-    width: 99vw;
-    height: 100vh;
-   }
-}
-
-
-/* Basic styles */
-body {
+    min-width: 333px;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1rem;
     line-height: 1.5;
     color: #333; 
     background-color: #fff;
-
 }
+
+
+/* Basic styles */
 
 a {
     color: #333;
@@ -61,23 +52,17 @@ h4,
 h5,
 h6 {
     font-weight: normal;
-    margin: 0 0 1rem 0;
+    margin: 0;
 }
+
 
 
 /* Header styles */
-body>header {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    border-radius: 0 0 0 0;
-
-    background-color: #da0505;
-}
 
 
 body>header {
-    width: 100vw;
+    width:auto;
+    max-height: 10vh;
     margin: 0;
     display: flex;
     flex-direction: row;
@@ -87,7 +72,7 @@ body>header {
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
+    
 }
 body>header>a>img {
     width: 3rem;
@@ -109,6 +94,7 @@ body>header>a>img {
 }
 .searchBar {
     width:90%;
+    min-width: 20vmin;
     display: inline-flex;
     align-content: center;
     justify-items: center;
@@ -132,6 +118,31 @@ body>header>a>img {
     background-color: #fff;
     cursor: pointer;
 }
+
+
+/*search style*/
+body>main{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    align-self: center;
+
+    width: 80%;
+
+}
+
+body>main>article {
+    display: flex;
+    border: 1px solid #e41d1d;
+    margin-bottom: 5%;
+
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
 
 
 /*main styles*/
@@ -167,6 +178,7 @@ body>main>article>header{
 }
 
 
+
 body>main>article>header>div{
     display: flex;
     flex-direction: row;
@@ -197,7 +209,7 @@ body>main>article>header>div>ul>li{
     margin: 0 1%;
 }
 
-body>main>article>header>div>ul>li>img{
+body>main>article>header>div>ul>li>a>img{
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
@@ -264,21 +276,6 @@ body>main>article>footer img {
     height: 2rem;
 }
 
-
-@media only screen and (min-width: 768px)  {
-    body>main{
-        width: 80%;
-        
-    }
- }
-
-/*smartphone and tablet*/
-@media only screen and (max-width: 767px)  {
-    body>main{
-        width: 100%;
-       
-    }
-}
 
 
 .postHeader, .homePost, .postComment{
@@ -481,42 +478,70 @@ body>aside li{
 
 
 .searchResult {
-    
+
+    display:flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
     position: absolute;
-    top: 7%;
-    left: 20%;
-    display:none;
+    top: 10vh;  
+
     
-    width: 30vw;
+
+    max-height: 40vh;
+    width: 80vw;
 
     overflow-y: scroll;
     overflow-x: hidden;
-    max-height: 40%;
-    
 
+    border-radius: 1vmin;
+
+    border:3px solid rgb(0, 0, 0) ;
 
     background-color: white;
+
     transition: opacity 2.0s;
-    
-    }  
 
-    .searchResult.open {
+}  
+.searchResult>a{
+    width: 100%;
+}
+.searchResult>a>div{
     display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    opacity: 1;
-   
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+
+    box-sizing: border-box;
+    width: 100%;
+    
+    padding: 1vmin 0;
+    background-color: #838383;
+    white-space: nowrap;
+}
+.searchResult>a>div>ul{
+    list-style-type: none;
+}
+
+.searchResult img{
+    width: 30px;
+}
+
+
+
+.searchResult>article{
     border-radius: 1vmin;
-    
-    border:3px solid rgb(0, 0, 0) ;
-    }
-    
-    .searchResult>article{
-        border-radius: 1vmin;
-    }
+}
 
 
-    .searchResult.closing {
-    opacity: 0;
+.searchResult.closing {
+opacity: 0;
+}
+.searchResult.open {
+    opacity: 1;
     }
+        
     

@@ -12,7 +12,7 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/lo
 <html lang="it-IT">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.00">
         <title>Tachyon-Login</title>
         <link rel="icon" href="../img/logo.ico" type="image/x-icon">
         <link rel="stylesheet" href="../backend/css/login.css">
@@ -40,15 +40,15 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/lo
                 endforeach;
             endif;
         ?>
+        <footer>
+            <p>
+                <a href="privacy.html"> Informativa Privacy </a> 
+                |
+                <a href="cookie.html"> Cookie </a>       
+                | ©2022 -
+                <a href="credit.html"> Credit </a>
+                
+            </p>
+        </footer>
     </body>
-    <footer>
-        <p>
-            <a href="privacy.html"> Informativa Privacy </a> 
-            |
-            <a href="cookie.html"> Cookie </a>       
-            | ©2022 -
-            <a href="credit.html"> Credit </a>
-
-        </p>
-    </footer>
 </html>
