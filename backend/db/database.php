@@ -26,17 +26,38 @@ class DatabaseHelper
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    public function searchUser($start, $end, $string, $username){
 
-        $stmt = $this->db->prepare("SELECT username,usernickname ,usericon, 
+    public function searchUser($offset,$size,$string,$username){
+        
+        $stmt = $this->db->prepare("SELECT userid, username ,usernickname ,usericon, 
         (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(?) * 100 AS similarity 
         FROM USER_PROFILE 
         WHERE username LIKE ? AND username != ? 
         ORDER BY similarity DESC 
         LIMIT ? ,?");
 
-        $string2 = "%" . $string . "%";
-        $stmt->bind_param('ssssii', $string, $string, $string2, $username, $start, $end);
+        $string2 = "%".$string."%";
+        $stmt->bind_param('ssssii',$string, $string, $string2, $username, $offset, $size);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    //TO-DO
+    public function searchUserInfo($userid){        
+        $stmt = $this->db->prepare("SELECT * FROM `USER_PROFILE` WHERE `userid`= ?;");
+        $stmt->bind_param('i',$userid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
+    }
+    public function searchUserPost($offset,$size, $userid){      
+        $stmt = $this->db->prepare("SELECT `postid`,`posttext`,`postdate`,`postimage` FROM `POST`
+            WHERE `userid`= ? 
+            ORDER BY `postdate` ASC    
+            LIMIT ? , ?;");
+        $stmt->bind_param('iii',$userid, $offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -78,6 +99,7 @@ class DatabaseHelper
         $stmt->execute();
     }
 
+
     public function readIfUserLikedPost($postid, $userid){
         $query = "SELECT COUNT(*) as likes
         FROM LIKED l
@@ -87,6 +109,36 @@ class DatabaseHelper
         $stmt->execute();
 
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function userFollow($userid ,$followID){
+        $stmt = $this->db->prepare("INSERT INTO OTHERUSER(`userid`, `fol_userid`) VALUES(?, ?)");
+        $stmt->bind_param('ii',  $userid ,$followID);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    public function userUnfollow($userid ,$followID){
+        $stmt = $this->db->prepare("DELETE FROM OTHERUSER
+        WHERE fol_userid = ? AND userid = ?");
+        $stmt->bind_param('ii', $followID  ,$userid );
+        $stmt->execute();
+    }
+
+    public function checkUserFollow($userid ,$followID){
+        $query = "SELECT * FROM `OTHERUSER` WHERE `userid` = ? and `fol_userid` = ?;";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ii',  $userid ,$followID);
+        $stmt->execute();
+
+       
+        $result = $stmt->get_result();
+
+        if (mysqli_num_rows($result) > 0) {
+        return true;
+        } 
+        return false;
+
     }
 
     public function getPostComments($postid){

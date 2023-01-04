@@ -214,9 +214,9 @@ CREATE TABLE `USER_CREDENTIAL` (
 --
 -- Dump dei dati per la tabella `USER_CREDENTIAL`
 --
-
+-- password: 14
 INSERT INTO `USER_CREDENTIAL` (`userid`, `useremail`, `passwordhash`, `active`) VALUES
-(0, '123.23', '14', '1');
+(0, '123.23', '8527a891e224136950ff32ca212b45bc93f69fbb801c3b1ebedac52775f99e61', '1');
 
 -- --------------------------------------------------------
 
