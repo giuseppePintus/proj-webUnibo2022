@@ -5,17 +5,26 @@
 }
 
 body{
-    min-height: 100vh;
+   height: 100vh;
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
 
     margin: 0;
     padding: 0;
     background-color: var(--backgroundColor);
     
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333; 
+    background-color: #fff;
 }
 
 
 .loginDiv {
+    flex: auto;
     display: flex;
     justify-items: center;
     text-align: center;
@@ -28,8 +37,9 @@ body{
 }
 .loginDiv>img{
     filter: invert(var(--invert));
-    max-width: 40%;   
-    aspect-ratio: 1;
+    width: 30%;   
+    max-width: 200px;
+   
 }
 
 .loginDiv>form{
@@ -64,9 +74,8 @@ p{
 
 footer{
     position: absolute;
-    bottom: 0;
+    bottom: 1vh;
     width: 100%;
-   
-    text-align: center;
-   
+
+    text-align: center;   
 }

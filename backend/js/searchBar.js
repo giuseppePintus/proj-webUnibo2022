@@ -3,9 +3,9 @@ function generateSearchResult(posts) {
   for (let i = 0; i < posts.length; i++) {
       
       let article = `
-      <div >
+      <div>
           <ul>
-              <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
+              <li><img src="${posts[i]["usericon"]}" alt="usericon" /></li>
               <li><h2>${posts[i]['usernickname']}</h2></li>
               <li><h3>@${posts[i]["username"]}</h3> </li>
           </ul>
