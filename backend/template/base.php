@@ -48,7 +48,7 @@
                 <li><a <?php isActive("index.php"); ?> href="index.php"><img src="upload/home.png" alt="home" /></a></li>
                 <li><a <?php isActive("search.php"); ?> href="search.php"><img src="upload/search.png" alt="search" /></a></li>
                 <li><a <?php isActive("contatti.php"); ?> href="profile.php"><img src="upload/user.png" alt="profile" /></a></li>
-                <li><a <?php isActive("login.php"); ?> href="login.php"><img src="upload/setting.png" alt="setting" /></a></li>
+                <li><a <?php isActive("login.php"); ?> href="settings.php"><img src="upload/setting.png" alt="setting" /></a></li>
             </ul>
         </div>
     </footer>
