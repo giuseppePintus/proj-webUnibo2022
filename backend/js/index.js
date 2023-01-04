@@ -278,9 +278,9 @@ function addNotificationBellListener(){
         if(showNotification){
             document.querySelector("aside").innerHTML = "";
             showNotification = 0;
-            document.querySelector(".main").style.width = '100%'; 
+            // document.querySelector(".main").style.width = '100%'; 
         }else{
-            document.querySelector(".main").style.width = '70%'; 
+            // document.querySelector(".main").style.width = '70%'; 
             showNotification = 1;
             generateNotifications();
         }

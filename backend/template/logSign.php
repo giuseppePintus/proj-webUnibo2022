@@ -40,7 +40,5 @@
             <a href="credit.html"> Credit </a>
 
         </p>
-        
-        
     </footer>
 </html>
