@@ -42,8 +42,19 @@ class DatabaseHelper
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
+    public function searchRandomUser($offset,$size,$username){
+        
+        $stmt = $this->db->prepare("SELECT userid, username ,usernickname ,usericon 
+            FROM USER_PROFILE 
+            WHERE username != ? 
+            ORDER BY RAND() LIMIT ? ,?;");
+        $stmt->bind_param('sii',$username, $offset, $size);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
-    //TO-DO
     public function searchUserInfo($userid){        
         $stmt = $this->db->prepare("SELECT * FROM `USER_PROFILE` WHERE `userid`= ?;");
         $stmt->bind_param('i',$userid);
