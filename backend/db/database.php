@@ -259,6 +259,19 @@ class DatabaseHelper
         return $result->fetch_row();
     }
 
+    public function getCurrentUserInfo(){
+        $stmt = $this->db->prepare("SELECT useremail , username, usernickname ,usericon, userbiography 
+                                    FROM `user_credential` uc , `user_profile` up 
+                                    WHERE uc.userid = up.userid and up.username = ?;
+                                    ");
+
+        $stmt->bind_param('s', $_SESSION['Username']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result-> fetch_row();
+
+    }
+
 
     /*------------------------------------------end our file--------------------------------------*/
 
