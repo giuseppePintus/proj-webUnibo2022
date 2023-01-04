@@ -26,17 +26,48 @@ class DatabaseHelper
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+<<<<<<< HEAD
     public function searchUser($start, $end, $string, $username){
 
         $stmt = $this->db->prepare("SELECT username,usernickname ,usericon, 
+=======
+    public function searchUser($offset,$size,$string,$username){
+        
+        $stmt = $this->db->prepare("SELECT userid, username ,usernickname ,usericon, 
+>>>>>>> pintus/front-end
         (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(?) * 100 AS similarity 
         FROM USER_PROFILE 
         WHERE username LIKE ? AND username != ? 
         ORDER BY similarity DESC 
         LIMIT ? ,?");
 
+<<<<<<< HEAD
         $string2 = "%" . $string . "%";
         $stmt->bind_param('ssssii', $string, $string, $string2, $username, $start, $end);
+=======
+        $string2 = "%".$string."%";
+        $stmt->bind_param('ssssii',$string, $string, $string2, $username, $offset, $size);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    //TO-DO
+    public function searchUserInfo($userid){        
+        $stmt = $this->db->prepare("SELECT * FROM `USER_PROFILE` WHERE `userid`= ?;");
+        $stmt->bind_param('i',$userid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
+    }
+    public function searchUserPost($offset,$size, $userid){      
+        $stmt = $this->db->prepare("SELECT `postid`,`posttext`,`postdate`,`postimage` FROM `POST`
+            WHERE `userid`= ? 
+            ORDER BY `postdate` DESC    
+            LIMIT ? , ?;");
+        $stmt->bind_param('iii',$userid, $offset, $size);
+>>>>>>> pintus/front-end
         $stmt->execute();
         $result = $stmt->get_result();
 
