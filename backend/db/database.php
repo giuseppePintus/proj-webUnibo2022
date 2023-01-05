@@ -180,7 +180,8 @@ class DatabaseHelper
     }
 
     public function getNotifications($userid){
-        $query = "SELECT up.userid, up.username, up.usericon, up.usernickname, n.notificationid, n.notificationtext, n.notificationdate, n.alreadyread FROM NOTIFICATION n, USER_PROFILE up
+        $query = "SELECT up.userid, up.username, up.usericon, up.usernickname, n.notificationid, n.notificationtext, n.notificationdate, n.alreadyread 
+        FROM `NOTIFICATION` n, `USER_PROFILE` up
         WHERE n.to_userid = ? AND up.userid = n.to_userid ORDER BY n.alreadyread, n.notificationid DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userid);
@@ -207,17 +208,20 @@ class DatabaseHelper
     }
 
     public function checkUserExist($username){
-        $query = "SELECT count(username) FROM `user_profile` where username=?";
+        $query = "SELECT count(username) FROM `USER_PROFILE` where username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        return $result->fetch_row();
+        if (mysqli_num_rows($result) > 0) {
+        return true;
+        } 
+        return false;
     }
 
     public function checkEmailExist($email){ //da controllare se funziona bene
-        $query = "SELECT count(useremail) FROM `user_credential` where useremail=?";
+        $query = "SELECT count(useremail) FROM `USER_CREDENTIAL` where useremail=?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -228,7 +232,7 @@ class DatabaseHelper
 
     public function getUserPassHash($username){
         $query = " SELECT uc.passwordhash 
-                    FROM `user_profile`up, `user_credential` uc 
+                    FROM `USER_PROFILE` up, `USER_CREDENTIAL` uc 
                     where up.userid = uc.userid and up.username = ?; ";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
@@ -240,13 +244,13 @@ class DatabaseHelper
 
     public function addAccount($username, $useremail, $usernickname, $passwordhash){ // da controllare se funziona bene
 
-        $stmt = $this->db->prepare("INSERT INTO `user_credential` (`userid`, `useremail`, `passwordhash`, `active`) 
+        $stmt = $this->db->prepare("INSERT INTO `USER_CREDENTIAL` (`userid`, `useremail`, `passwordhash`, `active`) 
                                 VALUES (NULL, ?, ?, '1')");
 
         $stmt->bind_param('ss', $useremail, $passwordhash);
         $stmt->execute();
         $stmt = $this->db->prepare("SET @id = (SELECT `userid` 
-                                FROM `user_credential` 
+                                FROM `USER_CREDENTIAL` 
                                 WHERE `useremail` = ?)");
 
         $stmt->bind_param('s', $useremail);
@@ -262,7 +266,7 @@ class DatabaseHelper
     public function getUserId($username){ // da controllare se funziona bene
 
 
-        $stmt = $this->db->prepare("SELECT `userid` FROM `user_profile` WHERE `username` = ? ;");
+        $stmt = $this->db->prepare("SELECT `userid` FROM `USER_PROFILE` WHERE `username` = ? ;");
 
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -272,7 +276,7 @@ class DatabaseHelper
 
     public function getCurrentUserInfo(){
         $stmt = $this->db->prepare("SELECT useremail , username, usernickname ,usericon, userbiography 
-                                    FROM `user_credential` uc , `user_profile` up 
+                                    FROM `USER_CREDENTIAL` uc , `user_profile` up 
                                     WHERE uc.userid = up.userid and up.username = ?;
                                     ");
 

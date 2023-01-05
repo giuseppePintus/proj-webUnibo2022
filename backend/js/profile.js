@@ -10,55 +10,55 @@ function generatePostOfUser(posts, userInfo) {
         let article = `
         <article class="homePost">
             <header>
-                <div >
-                    <ul>
-                        <li> <img src="${userInfo["usericon"]}" alt="usericon" /></li>
-                        <li> <h2>${userInfo['usernickname']}</h2></li>
-                        <li> <h3>@${userInfo["username"]}</h3> </li>
-                        <li><p> - ${posts[i]["postdate"]}</p></li>
-                    </ul>
+                <div class="postHeader">
+                <ul>
+                    <li> <img src="${userInfo["usericon"]}" alt="usericon" /></li>
+                    <li> <h2>${userInfo['usernickname']}</h2></li>
+                    <li> <h3>@${userInfo["username"]}</h3> </li>
+                    <li><p> - ${posts[i]["postdate"]}</p></li>
+                </ul>
                 </div>
             </header>
             <section>
                 <p>${posts[i]["posttext"]}</p>
                 <div class="postimage">
-                ${postimage}
+                ${postiamge}
                 </div>
             </section>
             <footer>
                 <ul>
-                   
-                    <li><img id="like${posts[i]["postid"]}" src="./upload/like.png" alt="like"/></li>
-                    <li><img src="./upload/comment.png" alt="comment"/></li>
+                    
+                    <li><img id="like${posts[i]["postid"]}" class="posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
+                    <li><p>${posts[i]["liked"]}</p></li>
+                    <li><img id="comment${posts[i]["postid"]}" src="./upload/comment.png" alt="comment"/></li>
+                    <li><p>${posts[i]["commented"]}</p></li>
                     <li><img src="./upload/save.png" alt="save"/></li>
-                    <li><img src="./upload/send.png" alt="send"/></li>
+                    <li><p>${posts[i]["saved"]}</p></li>
                 </ul>
             </footer>
-        </article>
-        `;// <li><p>${posts[i]["liked"]}</p></li>
+        `;
+        article += `<div id="showComment${posts[i]["postid"]}" class="showComment"></div>`;
+
         result += article;
+        result += `</article>`;
     }
     return result;
 }
 
 function generateInfoUser(userInfo) {
-    let fol = `` ;
+    let fol = ``;
     if (user != null) {
         fol = '<li id="follow"><img  src="./upload/friend.png" alt="follow"/><p>follow</p></li>';
     }
-    let result = `
-        <article >
-            <header>
-                <div >
-                    <ul>
-                        <li> <img src="${userInfo["usericon"]}" alt="usericon" /></li>
-                        <li> <h2>${userInfo['usernickname']}</h2></li>
-                        <li> <h3>@${userInfo["username"]}</h3></li>
-                        ${fol} 
-                    </ul>
-                </div>
-            </header>
-        </article>
+    let result = `        
+        <div >
+            <ul>
+                <li> <img src="${userInfo["usericon"]}" alt="usericon" /></li>
+                <li> <h2>${userInfo['usernickname']}</h2></li>
+                <li> <h3>@${userInfo["username"]}</h3></li>
+                ${fol} 
+            </ul>
+        </div>
         `;// <li><p>${posts[i]["liked"]}</p></li>
 
     return result;
@@ -185,7 +185,7 @@ axios.post('./api-getUser.php', {
     }
 }).then((response) => {
     userInfo = response.data;
-    user=userInfo["userid"];
+    user = userInfo["userid"];
     userInitialPost();
     userScrollingPost();
 });

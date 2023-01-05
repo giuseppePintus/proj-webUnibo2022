@@ -5,11 +5,4 @@ require_once("utils/functions.php");
 require_once("db/database.php");
 $dbh = new DatabaseHelper("localhost", "root", "", "TachyonDB", 3306);
 
-
-$_SESSION['userid'] = '0';
-$_SESSION["userfolder"] = 'giubby/';
-$_SESSION["Username"]= "giubby";
-$result = $dbh->getNotificationsToReadNumber($_SESSION["userid"]);
-$notiNumber = count($result) == 1 ? $result[0] : 0;
-$templateParams["notificationNumber"] = $notiNumber["number"];
 ?>
