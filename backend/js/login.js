@@ -18,16 +18,18 @@ async function login() {
       'Content-Type': 'application/json'
     },
     responseType: 'json'
-  })
-    .then(response => {
+  }).then(response => {
       // handle success
-      console.log(response);
-      location.href = './index.php';
-      if(response.data[response] == 'ok'){
+      if(response.data == 'ok'){
+        window.location.replace('./index.php');
+      }
+      else{
+        console.log(response.data);
       }
     })
     .catch(error => {
       // handle error
+      console.log("errore usr:"+user+"  pass: "+hashpwd);
       console.log(error);
       addErrElem('Username or Password');
     });
