@@ -208,32 +208,38 @@ class DatabaseHelper
     }
 
     public function checkUserExist($username){
-        $query = "SELECT count(username) FROM `USER_PROFILE` where username = ?";
+        $query = "SELECT count(username) FROM `USER_PROFILE` where username = ? ";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if (mysqli_num_rows($result) > 0) {
-        return true;
+        if ($result->fetch_row()[0] > 0) {
+            return true; 
         } 
+
         return false;
     }
 
-    public function checkEmailExist($email){ //da controllare se funziona bene
-        $query = "SELECT count(useremail) FROM `USER_CREDENTIAL` where useremail=?";
+    public function checkEmailExist($email){ //da controllare se funziona bene      
+        $query = "SELECT count(useremail) FROM `USER_CREDENTIAL` where useremail = ? ";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();
+       
+       if ($result->fetch_row()[0] > 0) {
+            return true; 
+        } 
 
-        return $result->fetch_row();
+        return false;
+  
     }
 
     public function getUserPassHash($username){
         $query = " SELECT uc.passwordhash 
                     FROM `USER_PROFILE` up, `USER_CREDENTIAL` uc 
-                    where up.userid = uc.userid and up.username = ?; ";
+                    where up.userid = uc.userid and up.username = ? ; ";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
