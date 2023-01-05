@@ -27,7 +27,7 @@ async function generatePosts(posts) {
             postiamge = "<img src=" + posts[i]["postimage"] + " alt=" + "postimage" + "/>";
         }
         let article = `
-        <article class="homePost">
+        <article id="${posts[i]["postid"]}" class="homePost">
             <header>
                 <div class="postHeader">
                     <ul>
@@ -47,12 +47,12 @@ async function generatePosts(posts) {
             <footer>
                 <ul>
                     
-                    <li><img id="like${posts[i]["postid"]}" class="posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
-                    <li><p>${posts[i]["liked"]}</p></li>
-                    <li><img id="comment${posts[i]["postid"]}" src="./upload/comment.png" alt="comment"/></li>
-                    <li><p>${posts[i]["commented"]}</p></li>
-                    <li><img src="./upload/save.png" alt="save"/></li>
-                    <li><p>${posts[i]["saved"]}</p></li>
+                    <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
+                    <li><p class="nLike">${posts[i]["liked"]}</p></li>
+                    <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
+                    <li><p class="nComment">${posts[i]["commented"]}</p></li>
+                    <li><img class="save" src="./upload/save.png" alt="save"/></li>
+                    <li><p class="nSave">${posts[i]["saved"]}</p></li>
                 </ul>
             </footer>
         `;
@@ -192,7 +192,7 @@ async function mainFunc() {
     let postIds = await getPageElements();
     if (commentBoxStateMap.size === 0)
         commentBoxStateMap = new Map(postIds.map(key => [key, 0]));
-    postInteractionsListeners(postIds, commentBoxStateMap);
+    //postInteractionsListeners(postIds, commentBoxStateMap);
 }
 
 /*main*/
