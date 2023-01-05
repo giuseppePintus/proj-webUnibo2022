@@ -1,0 +1,13 @@
+body{
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    
+}
+.AccountInfo{
+    width: 50vh;
+    
+
+    display: flex;
+}

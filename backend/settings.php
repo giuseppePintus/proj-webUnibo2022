@@ -13,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.00">
         <title>Tachyon-Login</title>
         <link rel="icon" href="../img/logo.ico" type="image/x-icon">
-        <link rel="stylesheet" href="../backend/css/login.css">
+        <link rel="stylesheet" href="./css/settings.css">
         
     </head>
     <body>
