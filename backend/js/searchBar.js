@@ -65,7 +65,7 @@ result.addEventListener('scroll', () =>{
       }
     }).then(response => {
       let postshtml = generateSearchResult(response.data);
-      result.innerHTML += postshtml;
+      result.insertAdjacentHTML('beforeend', postshtml);
     });
   }
 });
