@@ -1,20 +1,42 @@
 async function register(){
-const email = document.getElementById('emailInput').value;
-console.log(email);
-const username = document.getElementById('userInput').value;
-console.log(username);
-const password = document.getElementById('passInput').value;
-console.log(password);
 
-const hashPassword = await digestMessage(password);
-console.log(hashPassword);
+  const email = document.getElementById('emailInput').value;
+  const user = document.getElementById('userInput').value;
+  const password = document.getElementById('passInput').value;
 
-const promiseResp = await axios.get('../backend/api-registerUser.php?email='+ email + '&username='+ username +'&password='+ hashPassword);
-const resp = promiseResp.data;
-console.log(resp);
-window.location.replace("./login.php");
+  if(email == '' || user == '' || password == '' ){
+    if(document.getElementsByClassName("errorMsg")!=null){  
+    }else{
+      const node = document.createElement("p");
+      const textnode = document.createTextNode( "Missing data");
+      node.appendChild(textnode);
+      node.setAttribute("class", "errorMsg" );
+      //aggiungo elemento al dom
+      document.getElementById("loginDiv").appendChild(node);  
+    }
+    console.log("Missing data");
+    return;
+  }
 
-return;
+
+  const hashPassword = await digestMessage(password);
+
+  console.log("email: " + email + " | username: " + user + " | passwordHash: " + hashPassword);
+
+  const result = await axios.post("./api-registerUser.php", {
+                                    email: email,
+                                    username: user,
+                                    password: hashPassword
+                                  });
+
+  console.log(result.data);
+
+  if( result.data == "OK")
+  {
+    window.location.replace("./login.php");
+  }
+
+  return;
 }
 
 async function digestMessage(message) {
