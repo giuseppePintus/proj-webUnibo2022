@@ -7,9 +7,9 @@ function generateInfoUser(userInfo) {
             <header>
                 <div class="userinfo">
                     <ul>
-                        <li> <img src="${userInfo[i]["usericon"]}" alt="usericon" /></li>
-                        <li> <h2>${userInfo[i]['usernickname']}</h2></li>
-                        <li> <h3>@${userInfo[i]["username"]}</h3></li>
+                    <li><a href="profile.php?user=${userInfo[i]["userid"]}"> <img src="${userInfo[i]["usericon"]}" alt="usericon" /></a></li>
+                    <li><a href="profile.php?user=${userInfo[i]["userid"]}"> <h2>${userInfo[i]['usernickname']}</h2></a></li>
+                    <li><a href="profile.php?user=${userInfo[i]["userid"]}"> <h3>@${userInfo[i]["username"]}</h3></a> </li>
                         <li id="follow${userInfo[i]["userid"]}"><img  src="./upload/friend.png" alt="follow"/>
                         <p>follow</p></li>
                     </ul>
