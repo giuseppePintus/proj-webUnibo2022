@@ -1,29 +1,77 @@
+
 function generateInfoUser(userInfo) {
-    let article = "";
+
     for (let i = 0; i < userInfo.length; i++) {
         let result = `
         <article >
             <header>
-                <div class="postHeader">
+                <div class="userinfo">
                     <ul>
                         <li> <img src="${userInfo[i]["usericon"]}" alt="usericon" /></li>
                         <li> <h2>${userInfo[i]['usernickname']}</h2></li>
                         <li> <h3>@${userInfo[i]["username"]}</h3></li>
-                        <li id="follow"><img  src="./upload/friend.png" alt="follow"/>
+                        <li id="follow${userInfo[i]["userid"]}"><img  src="./upload/friend.png" alt="follow"/>
                         <p>follow</p></li>
                     </ul>
                 </div>
             </header>
         </article>
         `;// <li><p>${posts[i]["liked"]}</p></li>
-        article += result;
+        main.insertAdjacentHTML('beforeend', result);
+        followInteractionsListeners(userInfo[i]["userid"]);
     }
-    return article;
+    return;
+}
+
+async function followInteractionsListeners(idUserToFollow) {
+    document.getElementById("follow" + idUserToFollow).addEventListener("click", () => {
+        axios.post('./api-userFollow.php', {
+            user: idUserToFollow
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            responseType: 'json',
+            timeout: 5000
+        }).then(response => {
+            const p = document.querySelector('li#follow' + idUserToFollow + ' p');
+            p.innerHTML = "" + response.data;
+        });
+    });
+}
+
+function randomUser() {
+    axios.post('./api-randomSearch.php', {
+        offset: randomOffsetDB,
+        size: sizeQRes
+    }, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then(response => {
+        generateInfoUser(response.data);
+    });
+    randomOffsetDB += sizeQRes;
+    return;
 }
 
 
-
-
+function searchUser() {
+    axios.post('./api-search.php', {
+        offset: offsetDB,
+        size: sizeQRes,
+        string: input.value
+    }, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then(response => {
+        main.innerHTML = "";
+        generateInfoUser(response.data);
+    });
+    offsetDB+=sizeQRes;
+    return;
+}
 
 // Get the current URL
 let url = window.location.search;
@@ -38,12 +86,9 @@ const search = urlParams.get('search');
 const input = document.querySelector('#searchInfo');
 
 let offsetDB = 0, randomOffsetDB = 0;
-let sizeQRes = 2;
+let sizeQRes = 5;
 
 
-
-console.log(search);
-console.log(input.value);
 if (search != null) {
     input.value = search;
     axios.post('./api-search.php', {
@@ -55,33 +100,24 @@ if (search != null) {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
-        let postshtml = generateInfoUser(response.data);
-        main.innerHTML = postshtml;
+        generateInfoUser(response.data);
     });
 
 
 }
-console.log(input.value);
+else {
+    randomUser();
+}
 
 input.addEventListener('input', function () {
+    offsetDB = 0;
+    randomOffsetDB = 0;
+    main.innerHTML = "";
     if (input.value != null && input.value.length != 0) {
         //axios call
-        offsetDB = 0;
-        randomOffsetDB = 0;
-        axios.post('./api-search.php', {
-            offset: offsetDB,
-            size: sizeQRes,
-            string: input.value
-        }, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }).then(response => {
-            let postshtml = generateInfoUser(response.data);
-            main.innerHTML = postshtml;
-        });
-    } else {
-        main.innerHTML = "";
+        searchUser();
+    } else {        
+        randomUser();
     }
 });
 
@@ -89,46 +125,15 @@ input.addEventListener('input', function () {
 window.addEventListener('scroll', () => {
     const lastChild = main.lastElementChild;
     const childCount = main.childElementCount;
-
-    console.log("diff "+(main.offsetHeight - window.innerHeight));
-    console.log("windows scroll y "+window.scrollY);
-
-    //check if there cloud be more main based on last query and check scroll position
-    //offsetDB + sizeQRes > childCount means there are no more result to query
-    if ( offsetDB + sizeQRes +randomOffsetDB <= childCount  &&
-        window.scrollY > main.offsetHeight - window.innerHeight) {
-        offsetDB += sizeQRes;
-        console.log("offsetDB "+offsetDB);
-        axios.post('./api-search.php', {
-            offset: offsetDB,
-            size: sizeQRes,
-            string: input.value
-        }, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+    if (window.scrollY > main.offsetHeight - window.innerHeight) {
+        if (offsetDB + randomOffsetDB === childCount) {
+            if (randomOffsetDB === 0) {
+                searchUser();
             }
-        }).then(response => {
-            let postshtml = generateInfoUser(response.data);
-            main.insertAdjacentHTML('beforeend', postshtml);
-        });
-    } else {
-        if ( offsetDB + sizeQRes +randomOffsetDB <= childCount  &&
-            window.scrollY > main.offsetHeight - window.innerHeight) {
-            
-            console.log("here");
-            axios.post('./api-randomSearch.php', {
-                offset: randomOffsetDB,
-                size: sizeQRes
-            }, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).then(response => {
-                console.log("data");
-                let postshtml = generateInfoUser(response.data);
-                main.insertAdjacentHTML('beforeend', postshtml);
-            });
-            randomOffsetDB += sizeQRes;
+            else {
+                randomUser();
+            }
+
         }
     }
 });

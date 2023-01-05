@@ -22,7 +22,7 @@ function generateSearchResult(posts) {
 const input = document.querySelector('#searchInfo');
 const result = document.querySelector('.searchResult');
 let offsetDB=0;
-let sizeQRes=2;
+let sizeQRes=5;
 
 
 input.addEventListener('input', function () {
