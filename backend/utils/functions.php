@@ -104,16 +104,21 @@ function sendEmail($email){
     exit();
 }
 
-function checkSesison(){
-    if(isset($_SESSION['userid'], $_SESSION['isAuth'], $_SESSION["Username"],$_SESSION["userfolder"])){
-        $user_browser = $_SERVER['HTTP_USER_AGENT'];
+function checkSession(){
+    //se cookie non esiste o sessione e stata eliminata rifare login
+    session_commit();
+    if(!isset($_COOKIE['SID']) || (isset($_COOKIE['SID']) && session_id($_COOKIE['SID']) === '')){
+        header('Location: login.php');
+        exit;
     }
+    session_start(); 
 }
 
 function setIni(){
     ini_set("session.save_path" , "./SESSION");
     ini_set("session.use_strict_mode" , "1");
     ini_set("session.cookie_httponly" , "1");
+    ini_set('session.use_only_cookies', "2"); // limite Cookies
     //file_upload on by default
 }
 

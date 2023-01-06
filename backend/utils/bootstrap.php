@@ -3,17 +3,20 @@ require_once("utils/functions.php");
 require_once("db/database.php");
 
 setIni(); // change configuration of php.ini file, | "functions.php"
+session_start(); // Avvia nuova sessione php.   
 
-$session_name = 'sec_session_id'; // Imposta un nome di sessione
-$secure = false; // uso http
-$httponly = true; // Questo impedirà ad un javascript di essere in grado di accedere all'id di sessione.
-ini_set('session.use_only_cookies', 1); // limite Coockie
-$cookieParams = session_get_cookie_params(); // Legge i parametri correnti relativi ai cookie.
-session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly); 
-session_name($session_name); // Imposta il nome di sessione con quello prescelto all'inizio della funzione.
-session_start(); // Avvia la sessione php.
 
-session_regenerate_id(); // Rigenera la sessione e cancella quella creata in precedenza.
+if($_SERVER["SCRIPT_NAME"] == "/backend/login.php" || $_SERVER["SCRIPT_NAME"] == "/backend/register.php" || $_SERVER["SCRIPT_NAME"] == "/backend/api-checkUser.php" ){
+    if (isset($_COOKIE['SID'])) {
+        unset($_COOKIE['SID']); 
+    }
+}else{
+    checkSession(); // close current session an
+
+}
+
+//session_regenerate_id(); // Rigenera la sessione e cancella quella creata in precedenza. usato per aumentare sicurezza
+
 
 
 
