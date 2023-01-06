@@ -75,6 +75,31 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function searchUserHomePost($offset,$size, $userid){      
+        $stmt = $this->db->prepare("SELECT DISTINCT p.*,u.* 
+            FROM `POST` as p, `OTHERUSER` as o , `USER_PROFILE` as u 
+            WHERE p.`userid` = o.fol_userid AND o.userid = ? AND u.userid = o.fol_userid
+            ORDER BY p.`postdate` DESC     
+            LIMIT ? , ?;");
+        $stmt->bind_param('iii',$userid, $offset, $size);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function searchRandomPost($offset,$size, $userid){      
+        $stmt = $this->db->prepare("SELECT DISTINCT p.*,u.* 
+            FROM `POST` as p, `OTHERUSER` as o , `USER_PROFILE` as u 
+            WHERE p.`userid` != o.fol_userid AND p.`userid` != ?  AND o.userid = ? AND u.userid = o.fol_userid 
+            ORDER BY p.`postdate` DESC     
+            LIMIT ? , ?;");
+        $stmt->bind_param('iiii',$userid ,$userid, $offset, $size);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getUserIdFromPostId($postid){
         $query = "SELECT up.userid FROM POST p, USER_PROFILE up
         WHERE p.userid = up.userid AND postid = ?";
