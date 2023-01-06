@@ -121,15 +121,4 @@ function setIni(){
     //file_upload on by default
 }
 
-function logOut(){
-    //elimino cookie e sessione
-    if (isset($_COOKIE['SID'])) {
-        unset($_COOKIE['SID']); 
-    }    
-    session_destroy();
-    //
-    header('location: ../login.php');
-    
-    exit;
-}
 ?>
