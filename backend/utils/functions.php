@@ -104,4 +104,17 @@ function sendEmail($email){
     exit();
 }
 
+function checkSesison(){
+    if(isset($_SESSION['userid'], $_SESSION['isAuth'], $_SESSION["Username"],$_SESSION["userfolder"])){
+        $user_browser = $_SERVER['HTTP_USER_AGENT'];
+    }
+}
+
+function setIni(){
+    ini_set("session.save_path" , "./SESSION");
+    ini_set("session.use_strict_mode" , "1");
+    ini_set("session.cookie_httponly" , "1");
+    //file_upload on by default
+}
+
 ?>
