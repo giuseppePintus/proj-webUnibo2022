@@ -40,7 +40,6 @@ function getAction($action){
     return $result;
 }
 
-
 function uploadImage($path, $image){
     $imageName = basename($image["name"]);
     $fullPath = $path.$imageName;
@@ -122,4 +121,15 @@ function setIni(){
     //file_upload on by default
 }
 
+function logOut(){
+    //elimino cookie e sessione
+    if (isset($_COOKIE['SID'])) {
+        unset($_COOKIE['SID']); 
+    }    
+    session_destroy();
+    //
+    header('location: ../login.php');
+    
+    exit;
+}
 ?>
