@@ -45,7 +45,6 @@ function generatePosts(posts) {
         result += article;
         result += `</article>`;
     }
-    console.log(result);
     return result;
 }
 
@@ -61,7 +60,7 @@ function randomPost() {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
-        generatePosts(response.data);
+        main.insertAdjacentHTML('beforeend', generatePosts(response.data));
     });
     randomoffsetUserPostQuery += sizeUserPostQueryResult;
     return;
@@ -122,6 +121,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const search = urlParams.get('search');
 
 let offsetUserPostQuery = 0;
+let randomoffsetUserPostQuery= 0;
 let sizeUserPostQueryResult = 5;
 let userInfo;
 axios.post('./api-getUser.php', {
@@ -135,6 +135,9 @@ axios.post('./api-getUser.php', {
     user = userInfo["userid"];
     //userHome();//generate user info(?)
     feedUserPost();
-    //userScrollingHomePost();
+    if(main.querySelectorAll('.homePost').length<=2){
+        randomPost();
+    }
+    userScrollingHomePost();
 }); 
 
