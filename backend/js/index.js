@@ -1,25 +1,6 @@
-/*retrieve posts from the database*/
-const main = document.querySelector("main");
-const mainInitialHtml = main.innerHTML;
-let commentBoxStateMap = new Map();
-let showNotification = 0;
 
 
-async function getCommentsByPostId(postid) {
-    const response = await axios.post('./api-getPostComments.php', {
-        commentById: postid
-    }, {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        responseType: 'json',
-        timeout: 5000
-    });
-    const commentList = response.data === undefined ? [] : response.data;
-    return commentList;
-}
-
-async function generatePosts(posts) {
+function generatePosts(posts) {
     let result = "";
     for (let i = 0; i < posts.length; i++) {
         let postiamge = "";
@@ -27,7 +8,7 @@ async function generatePosts(posts) {
             postiamge = "<img src=" + posts[i]["postimage"] + " alt=" + "postimage" + "/>";
         }
         let article = `
-        <article class="homePost">
+        <article id="${posts[i]["postid"]}" class="homePost">
             <header>
                 <div class="postHeader">
                     <ul>
@@ -47,12 +28,12 @@ async function generatePosts(posts) {
             <footer>
                 <ul>
                     
-                    <li><img id="like${posts[i]["postid"]}" class="posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
-                    <li><p>${posts[i]["liked"]}</p></li>
-                    <li><img id="comment${posts[i]["postid"]}" src="./upload/comment.png" alt="comment"/></li>
-                    <li><p>${posts[i]["commented"]}</p></li>
-                    <li><img src="./upload/save.png" alt="save"/></li>
-                    <li><p>${posts[i]["saved"]}</p></li>
+                    <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
+                    <li><p class="nLike">${posts[i]["liked"]}</p></li>
+                    <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
+                    <li><p class="nComment">${posts[i]["commented"]}</p></li>
+                    <li><img class="save" src="./upload/save.png" alt="save"/></li>
+                    <li><p class="nSave">${posts[i]["saved"]}</p></li>
                 </ul>
             </footer>
         `;
@@ -64,138 +45,99 @@ async function generatePosts(posts) {
         result += article;
         result += `</article>`;
     }
-
-    return result;
-}
-
-function generateCommentsHTML(comments, postid) {
-    let result = `<div class="writeCommentArea">
-                    <input id="commentBox${postid}" type="text" placeholder="comment this post.." required>
-                    <button id="commentButton${postid}" type="submit">comment</button>
-                </div>`;
-
-    for (let i = 0; i < comments.length; i++) {
-        const commentHtml = `
-        <div class="postComment">
-            <ul>
-                <li> <img src="${comments[i]["usericon"]}" alt="usericon" /></li>
-                <li><h3>@${comments[i]["username"]}</h3> </li>
-                <li><p>${comments[i]["commenttext"]}</p></li>
-            </ul>
-        </div>`;
-
-        result += commentHtml;
-    }
-
     return result;
 }
 
 
-async function getPageElements() {
-    let postIds = [];
-    try {
-        const response = await axios.get('./api-post.php');
-        main.innerHTML = mainInitialHtml + await generatePosts(response.data);
-        response.data.forEach(element => postIds.push(element["postid"]));
-    } catch (error) {
-        console.error(error);
-    }
-    return postIds;
-}
 
-function sendNotification(message, who, how) {
 
-    axios.post('./api-sendNotification.php', {
-        notificationtext: message,
-        fromwho : who,
-        inWhichWay: how
+function randomPost() {
+    axios.post('./api-randomPost.php', {
+        offset: randomoffsetUserPostQuery,
+        size: sizeUserPostQueryResult
     }, {
         headers: {
-            'Content-Type': 'application/json'
-        },
-        responseType: 'json',
-        timeout: 5000
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
     }).then(response => {
-        //console.log(response.data);
-        generateNotifications();
+        main.insertAdjacentHTML('beforeend', generatePosts(response.data));
     });
+    randomoffsetUserPostQuery += sizeUserPostQueryResult;
+    return;
 }
 
-async function postInteractionsListeners(postIds, commentBoxStateMap) {
-    /*Interaction with posts */
-    postIds.forEach(postid => {
-        /*like button listeners*/
-        document.getElementById("like" + postid).addEventListener("click", () => {
-            axios.post('./api-userLikedPost.php', {
-                userLikedPostId: postid
-            }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                responseType: 'json',
-                timeout: 5000
-            }).then(response => {
-                response.data[0]['likes'] ? sendNotification(' has unliked it', postid, 'like') : sendNotification(' has liked your post', postid, 'like');
-                mainFunc();
-            });
-        });
 
-        /*expand comment listeners*/
-        document.getElementById("comment" + postid).addEventListener('click', async () => {
-            await displayComment(postid, commentBoxStateMap.get(postid));
-            commentBoxStateMap.set(postid, !commentBoxStateMap.get(postid))
-            if (commentBoxStateMap.get(postid) != 0)
-                commentButtonListenr(postid);
-
-        });
-    });/**end for each */
-
+function feedUserPost() {
+    console.log("here");
+    console.log("offsetUserPostQuery :"+offsetUserPostQuery);
+    console.log("sizeUserPostQueryResult :"+sizeUserPostQueryResult);
+    axios.post('./api-homePost.php', {
+        offset: offsetUserPostQuery,
+        size: sizeUserPostQueryResult,
+    }, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then(response => {
+        main.insertAdjacentHTML('beforeend', generatePosts(response.data));
+        //console.log(response.data);
+    });
+    offsetUserPostQuery+=sizeUserPostQueryResult;
+    return;
 }
 
-async function displayComment(postid, isVisible) {
-    if (isVisible == 0) {
-        let comments = await getCommentsByPostId(postid);
-        document.getElementById("showComment" + postid).innerHTML
-            = generateCommentsHTML(comments, postid);
+function userHome() {
+}
+
+function userScrollingHomePost() {
+    window.addEventListener('scroll', () => {
+        const childCount = main.querySelectorAll('.homePost').length;
+        if (window.scrollY > main.offsetHeight - window.innerHeight) {
+            if (offsetUserPostQuery + randomoffsetUserPostQuery >= childCount) {
+                if (randomoffsetUserPostQuery === 0) {
+                    feedUserPost();
+                }
+                else {
+                    randomPost();
+                }
     
-    } else {
-        document.getElementById("showComment" + postid).innerHTML = "";
-       
-    }
-
-}
-
-function commentButtonListenr(postid) {
-    /*comment button listeners*/
-    document.getElementById("commentButton" + postid).addEventListener('click', async () => {
-        const commentTextBox = document.getElementById("commentBox" + postid);
-        if (commentTextBox && commentTextBox.value) {
-            axios.post('./api-userSendComment.php', {
-                commentPostId: postid,
-                commentText: commentTextBox.value
-            }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                responseType: 'json',
-                timeout: 5000
-            }).then(async () => {
-                sendNotification(' has commented your post', postid, 'comment');
-                mainFunc();
-            });
+            }
         }
     });
 }
 
 
-async function mainFunc() {
-    let postIds = await getPageElements();
-    if (commentBoxStateMap.size === 0)
-        commentBoxStateMap = new Map(postIds.map(key => [key, 0]));
-    postInteractionsListeners(postIds, commentBoxStateMap);
-}
+/*retrieve posts from the database*/
+let showNotification = 0;
+// Get the current URL
+let url = window.location.search;
+// Create a new URLSearchParams object from the URL
+let params = new URLSearchParams(url);
+// Get the value of the "user" parameter
+let user = params.get('user');
 
-/*main*/
-mainFunc();
+const main = document.querySelector("main");
+const urlParams = new URLSearchParams(window.location.search);
+const search = urlParams.get('search');
 
+let offsetUserPostQuery = 0;
+let randomoffsetUserPostQuery= 0;
+let sizeUserPostQueryResult = 5;
+let userInfo;
+axios.post('./api-getUser.php', {
+    userID: user
+}, {
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+}).then((response) => {
+    userInfo = response.data;
+    user = userInfo["userid"];
+    //userHome();//generate user info(?)
+    feedUserPost();
+    if(main.querySelectorAll('.homePost').length<=2){
+        randomPost();
+    }
+    userScrollingHomePost();
+}); 
 
