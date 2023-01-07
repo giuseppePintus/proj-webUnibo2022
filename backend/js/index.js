@@ -107,8 +107,6 @@ function userScrollingHomePost() {
 }
 
 
-/*retrieve posts from the database*/
-let showNotification = 0;
 // Get the current URL
 let url = window.location.search;
 // Create a new URLSearchParams object from the URL

@@ -64,10 +64,15 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC)[0];
     }
     public function searchUserPost($offset,$size, $userid){      
-        $stmt = $this->db->prepare("SELECT `postid`,`posttext`,`postdate`,`postimage` FROM `POST`
-            WHERE `userid`= ? 
-            ORDER BY `postdate` ASC    
-            LIMIT ? , ?;");
+        $stmt = $this->db->prepare("SELECT p.*, u.*,
+        (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid) AS liked,
+        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) AS commented,
+        (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) AS saved
+        FROM `POST` p
+        JOIN `USER_PROFILE` u ON u.userid = p.userid AND u.userid = ?
+        GROUP BY p.postid
+        ORDER BY p.`postdate` DESC   
+        LIMIT ? , ?;");
         $stmt->bind_param('iii',$userid, $offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();

@@ -109,6 +109,8 @@ function addNotificationBellListener(){
 
 
 
+/*retrieve posts from the database*/
+let showNotification = 0;
 
 generateNotifications();
 addNotificationBellListener();

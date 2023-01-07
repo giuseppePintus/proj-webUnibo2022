@@ -8,35 +8,38 @@ function generatePostOfUser(posts, userInfo) {
             postimage = "<img src=" + posts[i]["postimage"] + " alt=" + "postimage" + "/>";
         }
         let article = `
-        <article class="homePost">
+        <article id="${posts[i]["postid"]}" class="homePost">
             <header>
                 <div class="postHeader">
-                <ul>
-                    <li> <img src="${userInfo["usericon"]}" alt="usericon" /></li>
-                    <li> <h2>${userInfo['usernickname']}</h2></li>
-                    <li> <h3>@${userInfo["username"]}</h3> </li>
-                    <li><p> - ${posts[i]["postdate"]}</p></li>
-                </ul>
+                    <ul>
+                        <li><a href="profile.php?user=${posts[i]["username"]}"> <img src="${posts[i]["usericon"]}" alt="usericon" /></a></li>
+                        <li><a href="profile.php?user=${posts[i]["username"]}"> <h2>${posts[i]['usernickname']}</h2></a></li>
+                        <li><a href="profile.php?user=${posts[i]["username"]}"> <h3>@${posts[i]["username"]}</h3> </a></li>
+                        <li><p> - ${posts[i]["postdate"]}</p></li>
+                    </ul>
                 </div>
             </header>
             <section>
                 <p>${posts[i]["posttext"]}</p>
                 <div class="postimage">
-                ${postiamge}
+                ${postimage}
                 </div>
             </section>
             <footer>
                 <ul>
                     
-                    <li><img id="like${posts[i]["postid"]}" class="posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
-                    <li><p>${posts[i]["liked"]}</p></li>
-                    <li><img id="comment${posts[i]["postid"]}" src="./upload/comment.png" alt="comment"/></li>
-                    <li><p>${posts[i]["commented"]}</p></li>
-                    <li><img src="./upload/save.png" alt="save"/></li>
-                    <li><p>${posts[i]["saved"]}</p></li>
+                    <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
+                    <li><p class="nLike">${posts[i]["liked"]}</p></li>
+                    <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
+                    <li><p class="nComment">${posts[i]["commented"]}</p></li>
+                    <li><img class="save" src="./upload/save.png" alt="save"/></li>
+                    <li><p class="nSave">${posts[i]["saved"]}</p></li>
                 </ul>
             </footer>
         `;
+
+        //let comments = await getCommentsByPostId(posts[i]['postid']);
+        //article += generateCommentsHTML(comments, posts[i]['postid']);
         article += `<div id="showComment${posts[i]["postid"]}" class="showComment"></div>`;
 
         result += article;
@@ -85,7 +88,9 @@ async function getUserInfo(user) {
     return userInfo;
 }
 function userInitialPost() {
-
+    let postshtml = generateInfoUser(userInfo);
+        main.insertAdjacentHTML('afterbegin', postshtml);
+    console.log("ok");
     axios.post('./api-getUserPost.php', {
         offset: offsetUserPostQuery,
         size: sizeUserPostQueryResult,
@@ -95,13 +100,13 @@ function userInitialPost() {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
-        let postshtml = generateInfoUser(userInfo);
-        main.insertAdjacentHTML('afterbegin', postshtml);
+        
         if (user != null) {
             followInteractionsListeners(userInfo["userid"]);
         }
         postshtml = generatePostOfUser(response.data, userInfo);
         main.insertAdjacentHTML('beforeend', postshtml);
+        console.log(postshtml);
     });
 }
 
