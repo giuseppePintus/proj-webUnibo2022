@@ -544,4 +544,67 @@ opacity: 0;
     opacity: 1;
     }
         
+
+/*start profile css*/
+
+.profileInfo{
+    padding: 3%;
+    margin: 0 3% 5%;
+}
+
+.profileInfo > header img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    border: 5px solid #ddd;
+    padding: 10px;
+    z-index: 0;
+}
+
+.profileInfo > section > div > img{
+    position: relative  ;
+    z-index: 0;
+    top: -5rem;
+    left: 0rem;
+    width: 30%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.profileInfo > section ul{
+    list-style-type: none;
+    display: block;
+    text-align: center;
+    margin: 0;
+}
+
+.profileInfo h2 {
+    color: rgb(6, 132, 242);
+}
+
+.profileInfo p{
+    display: block;
+}
+
+.followSection li{
+    display: inline-block;
+    text-align: center;
+    margin: 0 3% 0;
+}
+
+.profilePosts{
+    background-color: #ddd;
+}
+.profilePosts > div > ul > li{
+    display: inline-block;
+    width: 30%;
+    height: 3rem;
+   
     
+}
+.profilePosts > div > ul button{
+    width: 100%;
+    height: 100%;
+}
+
+/*end profile css*/
