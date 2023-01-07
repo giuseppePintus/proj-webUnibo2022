@@ -1,11 +1,10 @@
 <?php
 require_once "utils/bootstrap.php";
 
-if(!isset($_POST["offset"]) || !isset($_POST["size"]) || !isset($_POST["user"])){
-    echo json_encode(" ".$_POST["offset"]);
-    exit(0);
-}
-$posts = $dbh->searchUserPost($_POST["offset"],$_POST["size"], $_POST["user"]);
+$rawData = file_get_contents('php://input');
+$data = json_decode($rawData, true);
+
+$posts = $dbh->searchUserPost($data["offset"],$data["size"], $data["userid"]);
 //from user
 
 

@@ -28,4 +28,5 @@ define("UPLOAD_DIR", "./upload/");
 $dbh = new DatabaseHelper("localhost", "root", "", "TachyonDB", 3306);
 
 $_SESSION["userid"] = 0;
+
 ?>
