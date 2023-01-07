@@ -72,7 +72,7 @@ if (isset($_SESSION["userid"])) {
 if (empty($_FILES["fileToUpload"]["tmp_name"]))
   $target_file = null;
 
-header("Location: index.php");
+header("Location: ".$_SERVER['HTTP_REFERER']);
 
 $dbh->sendNewPost($_SESSION["userid"], $posttext, $target_file);
 

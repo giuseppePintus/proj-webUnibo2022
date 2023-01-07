@@ -86,10 +86,10 @@ class DatabaseHelper
             (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) AS commented,
             (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) AS saved
             FROM `POST` p
-            JOIN `OTHERUSER` o ON p.`userid` = o.fol_userid AND p.`userid` != o.userid 
-            JOIN `USER_PROFILE` u ON u.userid = p.userid AND u.userid != ?
+            JOIN `OTHERUSER` o ON p.`userid` = o.fol_userid OR p.`userid` = o.userid AND o.userid = ?
+            JOIN `USER_PROFILE` u ON u.userid = p.userid 
             GROUP BY p.postid
-            ORDER BY p.`postdate` DESC   
+            ORDER BY p.`postdate` DESC ,p.postid DESC   
             LIMIT ? , ?;");
         $stmt->bind_param('iii',$userid, $offset, $size);
         $stmt->execute();
