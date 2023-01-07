@@ -5,4 +5,5 @@ require_once("utils/functions.php");
 require_once("db/database.php");
 $dbh = new DatabaseHelper("localhost", "root", "", "TachyonDB", 3306);
 
+$_SESSION["userid"] = 0;
 ?>
