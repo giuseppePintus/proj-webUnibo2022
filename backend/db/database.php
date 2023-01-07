@@ -92,17 +92,18 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function searchRandomPost($offset,$size, $userid){      
+    public function searchRandomPost($offset,$size, $userid){     
         $stmt = $this->db->prepare("SELECT p.*, u.*,
           (SELECT COUNT(*) FROM LIKED l WHERE l.postid = p.postid) AS liked,
           (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) AS commented,
           (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) AS saved
         FROM POST p
-        JOIN USER_PROFILE u ON u.userid = p.userid AND u.userid != ? AND u.userid not in (select o.fol_userid from otheruser o where o.userid = ?)
+        JOIN USER_PROFILE u ON u.userid = p.userid AND u.userid != ? AND u.userid not in (select o.fol_userid from OTHERUSER o where o.userid = ?)
         LEFT JOIN OTHERUSER o ON o.userid != ? 
         GROUP BY p.postid
         ORDER BY p.postdate DESC
         LIMIT ?, ?;");
+        
         $stmt->bind_param('iiiii',$userid ,$userid ,$userid , $offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();
