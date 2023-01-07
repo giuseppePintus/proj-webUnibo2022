@@ -37,6 +37,9 @@ async function profilePageTemplate(userInfo) {
             </div>
         <section>
         </div>
+
+        <div id="profilePostArea">
+        </div>
         `;
         return html;
     });
@@ -74,8 +77,26 @@ function userInitialPost() {
         }
     }).then(response => {
         console.log(response.data);
+        profilePageTemplate(userInfo);
         postshtml = generatePostOfUser(response.data, userInfo);
         mainNode.insertAdjacentHTML('beforeend', postshtml);
+    });
+}
+
+async function followInteractionsListeners(idUserToFollow) {
+    document.getElementById("follow").addEventListener("click", () => {
+        axios.post('./api-userFollow.php', {
+            user: idUserToFollow
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            responseType: 'json',
+            timeout: 5000
+        }).then(response => {
+            const p = document.querySelector('li#follow p');
+            p.innerHTML = "" + response.data;
+        });
     });
 }
 
@@ -151,20 +172,27 @@ function userScrollingPost() {
 }
 
 function addProfilePageListenrs(){
-    document.getElementById('myPostsButton').addEventListener('click', ()=>{
+    document.getElementById('myPostsButton').addEventListener('click', (aa)=>{
         postDisplaySelector = 0;
+        cleanPosts();
         userInitialPost();
     });
 
     document.getElementById('likedPostsButton').addEventListener('click', ()=>{
         postDisplaySelector = 1;
+        cleanPosts();
         userInitialPost();
     });
 
     document.getElementById('CommentedPostsButton').addEventListener('click', ()=>{
         postDisplaySelector = 2;
+        cleanPosts();
         userInitialPost();
     });
+}
+
+function cleanPosts(){
+    document.querySelectorAll("article").forEach(x => x.remove());
 }
 
 const mainNode = document.querySelector("main");
@@ -192,6 +220,7 @@ userInfo = getUserInfo().then(result => {
 profilePageTemplate(userInfo).then(result => {
     mainNode.innerHTML = result;
     userInitialPost();
-    //userScrollingPost();
     addProfilePageListenrs();   
+    //userScrollingPost();
+    //followInteractionsListeners();
 });

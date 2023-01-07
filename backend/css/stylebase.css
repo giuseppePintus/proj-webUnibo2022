@@ -125,7 +125,7 @@ body>header>a>img {
 
 
 /*search style*/
-body>main {
+ body>main {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -136,7 +136,7 @@ body>main {
 
 }
 
-body>main>article {
+.profilePostArea body>main>article {
     display: flex;
     border: 1px solid #e41d1d;
     margin-bottom: 5%;
