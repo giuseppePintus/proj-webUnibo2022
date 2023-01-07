@@ -40,7 +40,6 @@ function getAction($action){
     return $result;
 }
 
-
 function uploadImage($path, $image){
     $imageName = basename($image["name"]);
     $fullPath = $path.$imageName;
@@ -102,6 +101,24 @@ function sendEmail($email){
         echo 'Error sending email.';
     }
     exit();
+}
+
+function checkSession(){
+    //se cookie non esiste o sessione e stata eliminata rifare login
+    session_commit();
+    if(!isset($_COOKIE['SID']) || (isset($_COOKIE['SID']) && session_id($_COOKIE['SID']) === '')){
+        header('Location: login.php');
+        exit;
+    }
+    session_start(); 
+}
+
+function setIni(){
+    ini_set("session.save_path" , "./SESSION");
+    ini_set("session.use_strict_mode" , "1");
+    ini_set("session.cookie_httponly" , "1");
+    ini_set('session.use_only_cookies', "2"); // limite Cookies
+    //file_upload on by default
 }
 
 ?>

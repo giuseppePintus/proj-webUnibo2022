@@ -1,5 +1,6 @@
 <?php
     require_once "utils/bootstrap.php";
+    
     $request_body = file_get_contents('php://input');
     $data = json_decode($request_body, true);
 
@@ -28,6 +29,10 @@
         echo json_encode('Invalid username or password');
         exit();
     }
+    
+//cookie per memorizzare sessione di login
+    setcookie("SID", session_id(), 0);
+
     $_SESSION["Username"] =  $data['username'];
     $_SESSION["userid"] = $dbh->getUserId($data['username'])[0];
     $_SESSION["isAuth"] = true;

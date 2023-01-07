@@ -13,11 +13,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.00">
         <title>Tachyon-Login</title>
         <link rel="icon" href="../img/logo.ico" type="image/x-icon">
-        <link rel="stylesheet" href="./css/settings.css">
+        <link rel="stylesheet" href="./css/stylebase.css">
         
     </head>
     <body>
-        <div id="AccountInfo">                      
+        <div id = "logOut">
+            <input type="button" class="pressButton" name="LogoutButton" value="Log out"  onclick="logout()">
+        </div>
+        <div id="settings">                      
         </div>
 
         <?php

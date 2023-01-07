@@ -1,5 +1,5 @@
 async function login() {
-  let user = document.getElementById("userInput").value;
+  const user = document.getElementById("userInput").value;
   let pwd =  document.getElementById("passInput").value;
 
   if (!checkInput(user, pwd)) {
@@ -10,7 +10,7 @@ async function login() {
   const hashpwd = await digestMessage(pwd);
   console.log('hashpwd: ' + hashpwd);
 
-  axios.post('./api-checkUser.php', {
+  const response  = await axios.post('./api-checkUser.php', {
     username: user,
     password: hashpwd
   }, {
@@ -18,23 +18,14 @@ async function login() {
       'Content-Type': 'application/json'
     },
     responseType: 'json'
-  }).then(response => {
-      // handle success
-      if(response.data == 'ok'){
-        window.location.replace('./index.php');
-      }
-      else{
-        console.log(response.data);
-      }
-    })
-    .catch(error => {
-      // handle error
-      console.log("errore usr:"+user+"  pass: "+hashpwd);
-      console.log(error);
-      addErrElem('Username or Password');
-    });
+  });
 
-    return;
+  console.log(response);
+  if(response.data == "ok"){
+    window.location.href = './index.php';
+
+  }
+  return;
 }
 
 async function digestMessage(message) {
@@ -87,3 +78,12 @@ function remErrElem(msg){
       document.getElementById("err" + msg).remove();
   }
 }
+
+
+let form = document.querySelector("#LoginForm");
+
+form.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    login();
+  }
+});
