@@ -50,9 +50,9 @@ function randomUser() {
         }
     }).then(response => {
         generateInfoUser(response.data);
+        lock = true;
+        randomOffsetDB += sizeQRes;
     });
-    randomOffsetDB += sizeQRes;
-    return;
 }
 
 
@@ -68,9 +68,9 @@ function searchUser() {
     }).then(response => {
         main.innerHTML = "";
         generateInfoUser(response.data);
+        lock = true;
+        offsetDB+=sizeQRes;
     });
-    offsetDB+=sizeQRes;
-    return;
 }
 
 // Get the current URL
@@ -87,7 +87,7 @@ const input = document.querySelector('#searchInfo');
 
 let offsetDB = 0, randomOffsetDB = 0;
 let sizeQRes = 5;
-
+let lock = true;
 
 if (search != null) {
     input.value = search;
@@ -125,8 +125,9 @@ input.addEventListener('input', function () {
 window.addEventListener('scroll', () => {
     const lastChild = main.lastElementChild;
     const childCount = main.childElementCount;
-    if (window.scrollY > main.offsetHeight - window.innerHeight) {
+    if (window.scrollY > main.offsetHeight - window.innerHeight  && lock) {
         if (offsetDB + randomOffsetDB === childCount) {
+            lock = false;
             if (randomOffsetDB === 0) {
                 searchUser();
             }
