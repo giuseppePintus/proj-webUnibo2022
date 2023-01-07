@@ -31,8 +31,8 @@ async function profilePageTemplate(userInfo) {
             <div>
                 <ul>
                     <li><button id="myPostsButton" type="button">My Posts</button></li>
-                    <li><button type="likedPostsButton">Liked Posts</button></li>
-                    <li><button type="CommentedPostsButton">Commented Posts</button></li>
+                    <li><button id="likedPostsButton" type="button">Liked Posts</button></li>
+                    <li><button id="CommentedPostsButton" type="button">Commented Posts</button></li>
                 </ul>
             </div>
         <section>
@@ -66,7 +66,8 @@ function userInitialPost() {
     axios.post('./api-getUserPost.php', {
         offset: offsetUserPostQuery,
         size: sizeUserPostQueryResult,
-        userid: user
+        userid: user,
+        display: postDisplaySelector
     }, {
         headers: {
             'Content-Type': 'application/json'
@@ -115,9 +116,6 @@ function generatePostOfUser(posts, userInfo) {
                 </ul>
             </footer>
         `;
-
-        //let comments = await getCommentsByPostId(posts[i]['postid']);
-        //article += generateCommentsHTML(comments, posts[i]['postid']);
         article += `<div id="showComment${posts[i]["postid"]}" class="showComment"></div>`;
 
         result += article;
@@ -152,6 +150,22 @@ function userScrollingPost() {
     });
 }
 
+function addProfilePageListenrs(){
+    document.getElementById('myPostsButton').addEventListener('click', ()=>{
+        postDisplaySelector = 0;
+        userInitialPost();
+    });
+
+    document.getElementById('likedPostsButton').addEventListener('click', ()=>{
+        postDisplaySelector = 1;
+        userInitialPost();
+    });
+
+    document.getElementById('CommentedPostsButton').addEventListener('click', ()=>{
+        postDisplaySelector = 2;
+        userInitialPost();
+    });
+}
 
 const mainNode = document.querySelector("main");
 // Get the current URL
@@ -179,4 +193,5 @@ profilePageTemplate(userInfo).then(result => {
     mainNode.innerHTML = result;
     userInitialPost();
     //userScrollingPost();
+    addProfilePageListenrs();   
 });
