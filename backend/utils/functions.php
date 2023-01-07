@@ -114,7 +114,7 @@ function checkSession(){
 }
 
 function setIni(){
-    ini_set("session.save_path" , "./SESSION");
+    //ini_set("session.save_path" , "./SESSION");
     ini_set("session.use_strict_mode" , "1");
     ini_set("session.cookie_httponly" , "1");
     ini_set('session.use_only_cookies', "2"); // limite Cookies
