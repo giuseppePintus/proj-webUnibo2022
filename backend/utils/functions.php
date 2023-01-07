@@ -106,8 +106,8 @@ function sendEmail($email){
 function checkSession(){
     //se cookie non esiste o sessione e stata eliminata rifare login
     session_commit();
-    if(!isset($_COOKIE['SID']) || (isset($_COOKIE['SID']) && session_id($_COOKIE['SID']) === '')){
-        header('Location: login.php');
+    if(!isset($_COOKIE['SID']) || (isset($_COOKIE['SID']) && session_id($_COOKIE['SID']) == '')){
+        header('Location: ./login.php');
         exit;
     }
     session_start(); 
