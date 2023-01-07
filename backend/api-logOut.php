@@ -5,8 +5,8 @@
         unset($_COOKIE['SID']); 
     }    
     session_destroy();
-    //
-    header('location: ./login.php');
+
+    echo json_encode("ok");
     
     exit;
 ?>
