@@ -1,4 +1,55 @@
-//const main = document.querySelector("main").innerHTML = "";
+async function profilePageTemplate(userInfo) {
+    if (userInfo === undefined) {
+        return;
+    }
+    let fol = ``;
+    if (params.get('user') != null) {//<img  src="./upload/friend.png" alt="follow"/>
+        fol = '<li id="follow"><p>follow</p></li>';
+    }
+    let resultHtml = await userInfo.then(result => {
+        let html = `
+        <div class="profileInfo">
+        <header>
+            <div>
+                <img src="upload/html5-js-css3.png" alt="userbackground">
+            </div>
+        </header>
+        <section>
+            <div>
+                <img src="${result['usericon']}" alt="usericon">
+            </div>
+            <ul>
+                <li><h1>${result['usernickname']}</h1></li>
+                <li><h2>@${result["username"]}</h2></li>
+                <li><p>Bio: ${result["userbiography"]}</p></li>
+            </ul>
+            
+            <ul class="followSection">
+                <li><a href="search.php"><h3>${result['followedNumber']} followers<h3></a></li>
+                <li><a href="search.php"><h3>${result['followingNumber']} following<h3></a></li>
+                <li><button type="button" id="editprofile">Edit Profile</li>
+            </ul>
+        </section>
+        
+        <section id="profilePosts" class="profilePosts">
+            <div>
+                <ul>
+                    <li><button id="myPostsButton" type="button">My Posts</button></li>
+                    <li><button id="likedPostsButton" type="button">Liked Posts</button></li>
+                    <li><button id="CommentedPostsButton" type="button">Commented Posts</button></li>
+                    ${fol}
+                </ul>
+            </div>
+        <section>
+        </div>
+
+        <div id="profilePostArea">
+        </div>
+        `;
+        return html;
+    });
+    return resultHtml;
+}
 
 function generatePostOfUser(posts, userInfo) {
     let result = "";
@@ -26,8 +77,7 @@ function generatePostOfUser(posts, userInfo) {
                 </div>
             </section>
             <footer>
-                <ul>
-                    
+                <ul>                    
                     <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
                     <li><p class="nLike">${posts[i]["liked"]}</p></li>
                     <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
@@ -37,9 +87,6 @@ function generatePostOfUser(posts, userInfo) {
                 </ul>
             </footer>
         `;
-
-        //let comments = await getCommentsByPostId(posts[i]['postid']);
-        //article += generateCommentsHTML(comments, posts[i]['postid']);
         article += `<div id="showComment${posts[i]["postid"]}" class="showComment"></div>`;
 
         result += article;
@@ -48,28 +95,6 @@ function generatePostOfUser(posts, userInfo) {
     return result;
 }
 
-function generateInfoUser(userInfo) {
-    let fol = ``;
-    if (user != null) {
-        fol = '<li id="follow"><img  src="./upload/friend.png" alt="follow"/><p>follow</p></li>';
-    }
-    let result = `        
-        <div >
-            <ul>
-                <li> <img src="${userInfo["usericon"]}" alt="usericon" /></li>
-                <li> <h2>${userInfo['usernickname']}</h2></li>
-                <li> <h3>@${userInfo["username"]}</h3></li>
-                ${fol} 
-            </ul>
-        </div>
-        `;// <li><p>${posts[i]["liked"]}</p></li>
-
-    return result;
-}
-
-
-
-
 async function getUserInfo(user) {
     let userInfo;
     try {
@@ -77,35 +102,39 @@ async function getUserInfo(user) {
             userID: user
         }, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
+                'Content-Type': 'application/json'
+            },
+            responseType: 'json',
+            timeout: 5000
         });
         userInfo = response.data;
     } catch (error) {
         console.error(error);
     }
-
     return userInfo;
 }
-function userInitialPost(userID) {
-    let postshtml = generateInfoUser(userInfo);
-    main.insertAdjacentHTML('afterbegin', postshtml);
 
+function userInitialPost(userID) {  
+    lock = false;
 
     axios.post('./api-getUserPost.php', {
         offset: offsetUserPostQuery,
         size: sizeUserPostQueryResult,
+        display: postDisplaySelector,
         user: userID
     }, {
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         }
     }).then(response => {
+        console.log(response.data);
+        //profilePageTemplate(userInfo);//(?)
         postshtml = generatePostOfUser(response.data, userInfo);
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;
+        lock = true;
 
-        if(user != null){
+        if(params.get('user') != null){
             followInteractionsListeners(userID);
         }
     });
@@ -140,7 +169,7 @@ function userPost(userID) {
         user: userID
     }, {
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         }
     }).then(response => {
         let postshtml = generatePostOfUser(response.data, userInfo);
@@ -167,8 +196,33 @@ function userScrollingPost(userID) {
             userPost(userID);
         }
     });
+}  
+function addProfilePageListenrs(userID){
+    document.getElementById('myPostsButton').addEventListener('click', (aa)=>{
+        postDisplaySelector = 0;
+        cleanPosts();
+        userInitialPost(userID);
+    });
+
+    document.getElementById('likedPostsButton').addEventListener('click', ()=>{
+        postDisplaySelector = 1;
+        cleanPosts();
+        userInitialPost(userID);
+    });
+
+    document.getElementById('CommentedPostsButton').addEventListener('click', ()=>{
+        postDisplaySelector = 2;
+        cleanPosts();
+        userInitialPost(userID);
+    });
 }
 
+function cleanPosts(){
+    offsetUserPostQuery = 0;
+    document.querySelectorAll(".homePost").forEach(x => x.remove());
+}
+
+const mainNode = document.querySelector("main");
 // Get the current URL
 let url = window.location.search;
 // Create a new URLSearchParams object from the URL
@@ -184,20 +238,17 @@ let sizeUserPostQueryResult = 5;
 let lock = true;
 let userInfo;
 
-axios.post('./api-getUser.php', {
-    userID: user
-}, {
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-}).then((response) => {
-    userInfo = response.data;
-    userInitialPost(userInfo["userid"]);
-    userScrollingPost(userInfo["userid"]);
+let postDisplaySelector = 0; // 0 my posts, 1 liked posts, 2 commented posts
+
+/*get user passed in the url*/
+userInfo = getUserInfo(user).then(result => {
+    user = result["userid"];
+    return result;
 });
-
-
-
-
-
-
+profilePageTemplate(userInfo).then(result => {
+    mainNode.innerHTML = result;
+    userInitialPost(user);
+    addProfilePageListenrs(user);   
+    userScrollingPost(user);
+    //followInteractionsListeners();
+});
