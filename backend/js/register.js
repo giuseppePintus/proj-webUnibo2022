@@ -33,7 +33,7 @@ async function register(){
 
   if( result.data == "OK")
   {
-    window.location.replace("./login.php");
+    window.location.replace('http://localhost/backend/login.php');
   }
 
   return;
