@@ -76,10 +76,15 @@ class DatabaseHelper
     }
 
     public function searchUserHomePost($offset,$size, $userid){      
-        $stmt = $this->db->prepare("SELECT DISTINCT p.*,u.* 
-            FROM `POST` as p, `OTHERUSER` as o , `USER_PROFILE` as u 
-            WHERE p.`userid` = o.fol_userid AND o.userid = ? AND u.userid = o.fol_userid
-            ORDER BY p.`postdate` DESC     
+        $stmt = $this->db->prepare("SELECT p.*, u.*,
+            (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid) AS liked,
+            (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) AS commented,
+            (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) AS saved
+            FROM `POST` p
+            JOIN `OTHERUSER` o ON p.`userid` = o.fol_userid AND p.`userid` != o.userid 
+            JOIN `USER_PROFILE` u ON u.userid = p.userid AND u.userid != ?
+            GROUP BY p.postid
+            ORDER BY p.`postdate` DESC   
             LIMIT ? , ?;");
         $stmt->bind_param('iii',$userid, $offset, $size);
         $stmt->execute();
@@ -88,12 +93,17 @@ class DatabaseHelper
     }
 
     public function searchRandomPost($offset,$size, $userid){      
-        $stmt = $this->db->prepare("SELECT DISTINCT p.*,u.* 
-            FROM `POST` as p, `OTHERUSER` as o , `USER_PROFILE` as u 
-            WHERE p.`userid` != o.fol_userid AND p.`userid` != ?  AND o.userid = ? AND u.userid = o.fol_userid 
-            ORDER BY p.`postdate` DESC     
-            LIMIT ? , ?;");
-        $stmt->bind_param('iiii',$userid ,$userid, $offset, $size);
+        $stmt = $this->db->prepare("SELECT p.*, u.*,
+          (SELECT COUNT(*) FROM LIKED l WHERE l.postid = p.postid) AS liked,
+          (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) AS commented,
+          (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) AS saved
+        FROM POST p
+        JOIN USER_PROFILE u ON u.userid = p.userid AND u.userid != ? AND u.userid not in (select o.fol_userid from otheruser o where o.userid = ?)
+        LEFT JOIN OTHERUSER o ON o.userid != ? 
+        GROUP BY p.postid
+        ORDER BY p.postdate DESC
+        LIMIT ?, ?;");
+        $stmt->bind_param('iiiii',$userid ,$userid ,$userid , $offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();
 
