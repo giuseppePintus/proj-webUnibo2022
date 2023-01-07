@@ -71,7 +71,7 @@ class DatabaseHelper
         FROM `POST` p
         JOIN `USER_PROFILE` u ON u.userid = p.userid AND u.userid = ?
         GROUP BY p.postid
-        ORDER BY p.`postdate` DESC   
+        ORDER BY p.`postdate` DESC ,p.postid DESC 
         LIMIT ? , ?;");
         $stmt->bind_param('iii',$userid, $offset, $size);
         $stmt->execute();
@@ -106,7 +106,7 @@ class DatabaseHelper
         JOIN USER_PROFILE u ON u.userid = p.userid AND u.userid != ? AND u.userid not in (select o.fol_userid from OTHERUSER o where o.userid = ?)
         LEFT JOIN OTHERUSER o ON o.userid != ? 
         GROUP BY p.postid
-        ORDER BY p.postdate DESC
+        ORDER BY p.`postdate` DESC ,p.postid DESC
         LIMIT ?, ?;");
         
         $stmt->bind_param('iiiii',$userid ,$userid ,$userid , $offset, $size);
@@ -186,9 +186,10 @@ class DatabaseHelper
        
         $result = $stmt->get_result();
 
-        if (mysqli_num_rows($result) > 0) {
-        return true;
+        if ($result->fetch_row()[0] > 0) {
+            return true; 
         } 
+
         return false;
 
     }

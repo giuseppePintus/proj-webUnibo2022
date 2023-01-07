@@ -6,7 +6,7 @@ $data = json_decode($rawData, true);
 $followID = $data['user'];
 $userid = $_SESSION["userid"];
 
-if ($dbh->checkUserFollow($followID, $userid) == false) { //create follow
+if ($dbh->checkUserFollow($userid , $followID) == false) { //create follow
     $dbh->userFollow($userid, $followID);
     $result="unfollow";
 } else { //delete follow 

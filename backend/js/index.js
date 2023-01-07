@@ -52,38 +52,39 @@ function generatePosts(posts) {
 
 
 function randomPost() {
+    lock = false;
     axios.post('./api-randomPost.php', {
-        offset: randomoffsetUserPostQuery,
-        size: sizeUserPostQueryResult
+        offset: randomFeedHome,
+        size: sizeOfUserFeedQuery
     }, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
         main.insertAdjacentHTML('beforeend', generatePosts(response.data));
+        randomFeedHome += sizeOfUserFeedQuery;
+        lock = true;
     });
-    randomoffsetUserPostQuery += sizeUserPostQueryResult;
-    return;
 }
 
 
 function feedUserPost() {
-    console.log("here");
-    console.log("offsetUserPostQuery :"+offsetUserPostQuery);
-    console.log("sizeUserPostQueryResult :"+sizeUserPostQueryResult);
+    lock = false;
     axios.post('./api-homePost.php', {
-        offset: offsetUserPostQuery,
-        size: sizeUserPostQueryResult,
+        offset: userFeedHome,
+        size: sizeOfUserFeedQuery,
     }, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
         main.insertAdjacentHTML('beforeend', generatePosts(response.data));
-        //console.log(response.data);
+        if (main.querySelectorAll('.homePost').length <= 2) {
+            randomPost();
+        }
+        userFeedHome += sizeOfUserFeedQuery;
+        lock = true;
     });
-    offsetUserPostQuery+=sizeUserPostQueryResult;
-    return;
 }
 
 function userHome() {
@@ -92,16 +93,14 @@ function userHome() {
 function userScrollingHomePost() {
     window.addEventListener('scroll', () => {
         const childCount = main.querySelectorAll('.homePost').length;
-        if (window.scrollY > main.offsetHeight - window.innerHeight) {
-            if (offsetUserPostQuery + randomoffsetUserPostQuery >= childCount) {
-                if (randomoffsetUserPostQuery === 0) {
-                    feedUserPost();
-                }
-                else {
-                    randomPost();
-                }
-    
+        if (window.scrollY > main.offsetHeight - window.innerHeight && lock) {
+            if (randomFeedHome === 0 && userFeedHome === childCount) {
+                feedUserPost();
             }
+            else {
+                randomPost();
+            }
+
         }
     });
 }
@@ -114,13 +113,14 @@ let params = new URLSearchParams(url);
 // Get the value of the "user" parameter
 let user = params.get('user');
 
-const main = document.querySelector("main");
+let main = document.querySelector("main");
 const urlParams = new URLSearchParams(window.location.search);
 const search = urlParams.get('search');
 
-let offsetUserPostQuery = 0;
-let randomoffsetUserPostQuery= 0;
-let sizeUserPostQueryResult = 5;
+let userFeedHome = 0;
+let randomFeedHome = 0;
+let sizeOfUserFeedQuery = 5;
+let lock = true;
 let userInfo;
 axios.post('./api-getUser.php', {
     userID: user
@@ -133,9 +133,7 @@ axios.post('./api-getUser.php', {
     user = userInfo["userid"];
     //userHome();//generate user info(?)
     feedUserPost();
-    if(main.querySelectorAll('.homePost').length<=2){
-        randomPost();
-    }
     userScrollingHomePost();
-}); 
+});
+
 

@@ -87,33 +87,34 @@ async function getUserInfo(user) {
 
     return userInfo;
 }
-function userInitialPost() {
+function userInitialPost(userID) {
     let postshtml = generateInfoUser(userInfo);
-        main.insertAdjacentHTML('afterbegin', postshtml);
-    console.log("ok");
+    main.insertAdjacentHTML('afterbegin', postshtml);
+
+
     axios.post('./api-getUserPost.php', {
         offset: offsetUserPostQuery,
         size: sizeUserPostQueryResult,
-        user: user
+        user: userID
     }, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
-        
-        if (user != null) {
-            followInteractionsListeners(userInfo["userid"]);
-        }
         postshtml = generatePostOfUser(response.data, userInfo);
         main.insertAdjacentHTML('beforeend', postshtml);
-        console.log(postshtml);
+        offsetUserPostQuery += sizeUserPostQueryResult;
+
+        if(user != null){
+            followInteractionsListeners(userID);
+        }
     });
 }
 
-async function followInteractionsListeners(idUserToFollow) {
+async function followInteractionsListeners(userID) {
     document.getElementById("follow").addEventListener("click", () => {
         axios.post('./api-userFollow.php', {
-            user: idUserToFollow
+            user: userID
         }, {
             headers: {
                 'Content-Type': 'application/json'
@@ -129,6 +130,25 @@ async function followInteractionsListeners(idUserToFollow) {
 
 
 
+function userPost(userID) {
+
+    lock = false;
+    //POST
+    axios.post('./api-getUserPost.php', {
+        offset: offsetUserPostQuery,
+        size: sizeUserPostQueryResult,
+        user: userID
+    }, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then(response => {
+        let postshtml = generatePostOfUser(response.data, userInfo);
+        main.insertAdjacentHTML('beforeend', postshtml);
+        offsetUserPostQuery += sizeUserPostQueryResult;
+        lock = true;
+    });
+}
 
 
 
@@ -140,30 +160,11 @@ async function followInteractionsListeners(idUserToFollow) {
 
 
 
-
-function userScrollingPost() {
+function userScrollingPost(userID) {
     window.addEventListener('scroll', () => {
-        const childCount = main.childElementCount - 1;
-        if (childCount > 0 && offsetUserPostQuery + sizeUserPostQueryResult <= childCount &&
-            window.scrollY > main.offsetHeight - window.innerHeight) {
-            offsetUserPostQuery += sizeUserPostQueryResult;
-
-            //POST
-            axios.post('./api-getUserPost.php', {
-                offset: offsetUserPostQuery,
-                size: sizeUserPostQueryResult,
-                user: user
-            }, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).then(response => {
-                console.log("offset " + offsetUserPostQuery + " size " + sizeUserPostQueryResult + "  user " + user);
-                let postshtml = generatePostOfUser(response.data, userInfo);
-                main.insertAdjacentHTML('beforeend', postshtml);
-            });
-
-
+        const childCount = main.querySelectorAll('.homePost').length;
+        if (window.scrollY > main.offsetHeight - window.innerHeight && lock) {
+            userPost(userID);
         }
     });
 }
@@ -176,12 +177,13 @@ let params = new URLSearchParams(url);
 let user = params.get('user');
 
 const main = document.querySelector("main");
-const urlParams = new URLSearchParams(window.location.search);
-const search = urlParams.get('search');
+
 
 let offsetUserPostQuery = 0;
 let sizeUserPostQueryResult = 5;
+let lock = true;
 let userInfo;
+
 axios.post('./api-getUser.php', {
     userID: user
 }, {
@@ -190,9 +192,8 @@ axios.post('./api-getUser.php', {
     }
 }).then((response) => {
     userInfo = response.data;
-    user = userInfo["userid"];
-    userInitialPost();
-    userScrollingPost();
+    userInitialPost(userInfo["userid"]);
+    userScrollingPost(userInfo["userid"]);
 });
 
 
