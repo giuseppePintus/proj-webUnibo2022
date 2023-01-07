@@ -297,7 +297,7 @@ class DatabaseHelper
 
         $stmt->bind_param('s', $useremail);
         $stmt->execute();
-        $stmt = $this->db->prepare("INSERT INTO `user_profile` (`userid`, `username`, `usernickname`, `usericon`, `userbiography`) 
+        $stmt = $this->db->prepare("INSERT INTO `USER_PROFILE` (`userid`, `username`, `usernickname`, `usericon`, `userbiography`) 
                                 VALUES (@id, ?, ?, 'upload/user.png', ' ')");
         $stmt->bind_param('ss', $username, $usernickname);
         $stmt->execute();
