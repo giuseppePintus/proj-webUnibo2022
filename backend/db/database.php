@@ -96,7 +96,7 @@ class DatabaseHelper
         JOIN `LIKED` l ON l.postid = p.postid
         JOIN `USER_PROFILE` u ON u.userid = l.userid AND u.userid = ?
         GROUP BY p.postid
-        ORDER BY p.`postdate` DESC   
+        ORDER BY p.`postdate` DESC ,p.postid DESC    
         LIMIT ? , ?;");
         $stmt->bind_param('iii',$userid, $offset, $size);
         $stmt->execute();
@@ -114,7 +114,7 @@ class DatabaseHelper
         JOIN `COMMENTPOST` c ON c.postid = p.postid
         JOIN `USER_PROFILE` u ON u.userid = c.Com_userid AND u.userid = ?
         GROUP BY p.postid
-        ORDER BY p.`postdate` DESC   
+        ORDER BY p.`postdate` DESC ,p.postid DESC    
         LIMIT ? , ?;");
         $stmt->bind_param('iii',$userid, $offset, $size);
         $stmt->execute();
