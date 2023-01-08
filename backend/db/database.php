@@ -152,6 +152,25 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function modifyUserNickname($userid, $nickname){
+        $query = "UPDATE USER_PROFILE 
+        SET usernickname = ?
+        WHERE userid = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('si', $nickname, $userid);
+        $stmt->execute();
+
+    }
+
+    public function modifyUserBio($userid, $bio){
+        $query = "UPDATE USER_PROFILE 
+        SET userbiography = ?
+        WHERE userid = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('si', $bio, $userid);
+        $stmt->execute();
+    }
+
     public function searchRandomPost($offset,$size, $userid){     
         $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*,
             (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 
