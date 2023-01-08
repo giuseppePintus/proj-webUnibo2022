@@ -24,11 +24,11 @@
                 <button type="submit" name="submitsearch">Go</button>
             </div>
         </form>
-        <div id="notification-container" class="notification-container">
-        <img id="notificationBellIcon" src="upload/notification.png" alt="notification">
-        <?php if($templateParams["notificationNumber"] > 0)
-            echo '<div id="notificationNumber" class="notificationNumber">'.$templateParams["notificationNumber"].'</div>';
-        ?>
+        <div id="notification-container" class="notificationIcon">
+            <img id="notificationBellIcon" src="upload/notification.png" alt="notification">
+            <?php if($templateParams["notificationNumber"] > 0)
+                echo '<div id="notificationNumber" class="notificationNumber">'.$templateParams["notificationNumber"].'</div>';
+            ?>
         </div>
 
         <div class="searchResult">

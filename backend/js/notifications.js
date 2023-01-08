@@ -29,10 +29,10 @@ async function generateNotifications() {
     if(!showNotification)
     return;
     const aside = document.querySelector("aside");
-    const asideInitialHTML = `<section>
+    const asideInitialHTML = `<section class="notificationContainer">
     <header>
         <h1>Notification</h1>
-    </header>`;
+    </header> <div class="notificationList">`;
 
     axios.post('./api-getUserNotifications.php', {
     }, {
@@ -62,7 +62,7 @@ async function generateNotifications() {
             `;
             asideHTML += notification;
         }
-        aside.innerHTML = asideInitialHTML + asideHTML + `</section>`;
+        aside.innerHTML = asideInitialHTML + asideHTML + `</div></section>`;
 
         notificationIds.forEach(element => {
             document.getElementById("notification" + element).addEventListener('click', event => {

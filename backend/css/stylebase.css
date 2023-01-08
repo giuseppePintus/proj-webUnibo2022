@@ -66,7 +66,7 @@ ul{
 
 body>header {
     width: auto;
-    max-height: 10vh;
+    height: max-content;
     margin: 0;
     display: flex;
     flex-direction: row;
@@ -86,13 +86,7 @@ body>header>a>img {
     margin-right: 1rem;
 }
 
-.notification-container>img {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    margin-right: 1rem;
-    object-fit: scale-down;
-}
+
 
 .searchForm {
     justify-items: center;
@@ -371,14 +365,20 @@ body>main>article>footer img {
     text-overflow: clip;
 }
 
-/* nitifiche */
+/*notification*/
+
 body>aside {
-    position: absolute;
-    right: 0;
+    position: absolute; 
+    align-self: flex-end;
+    justify-self: flex-start;
     display: flex;
-    width: 21%;
-    margin: 5% 3% 0;
-    max-height: 80vh;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    width: max-content;
+    
+    max-height: 40vh;
     overflow-y: scroll;
 
     background-color: aqua;
@@ -386,17 +386,17 @@ body>aside {
 }
 
 body>aside::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
 }
 
-body>aside>section {
-    border: 2px solid #ccc;
-}
 
-body>aside img {
+
+.notificationList img {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
+
+    float: left;
 }
 
 body>aside h1 {
@@ -404,13 +404,41 @@ body>aside h1 {
     font-weight: 800;
 }
 
+
+
+.notificationContainer {
+    border: 2px solid #ccc;
+    width: fit-content;
+}
+.notificationList>div>ul{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+
+    margin: 30px;
+}
+.notificationList>div>ul>li{
+    margin: 1%;
+}
+
+.notificationIcon {
+    position: relative;
+}
+
+.notificationIcon>img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+    object-fit: scale-down;
+}
+
 .notification0 {
     background-color: #f2f2f2;
     border-radius: 1rem;
 }
-
-.notification-container {
-    position: relative;
+.notification1{
+    
 }
 
 .notificationNumber {
@@ -426,13 +454,6 @@ body>aside h1 {
     text-align: center;
 }
 
-.notificationNumber img {
-    z-index: 0;
-}
-
-body>aside li {
-    display: inline-flex;
-}
 
 /* Footer styles */
 .footer-container {
