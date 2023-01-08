@@ -2,11 +2,18 @@ async function profilePageTemplate(userInfo) {
     if (userInfo === undefined) {
         return;
     }
-    let fol = ``;
-    if (params.get('user') != null) {//<img  src="./upload/friend.png" alt="follow"/>
-        fol = '<li id="follow"><p>follow</p></li>';
-    }
     let resultHtml = await userInfo.then(result => {
+        let fol='';
+        if("follow" in result){
+            fol = '<li id="follow"><p>';
+            if (result["follow"]) {//<img  src="./upload/friend.png" alt="follow"/> follow
+                fol += 'unfollow';
+            }
+            else{
+                fol += 'follow';
+            }
+            fol += '</p></li>';
+        }
         let html = `
         <div class="profileInfo">
         <header>
@@ -95,11 +102,11 @@ function generatePostOfUser(posts, userInfo) {
     return result;
 }
 
-async function getUserInfo(user) {
+async function getUserInfo(userID) {
     let userInfo;
     try {
         let response = await axios.post('./api-getUser.php', {
-            userID: user
+            user: userID
         }, {
             headers: {
                 'Content-Type': 'application/json'

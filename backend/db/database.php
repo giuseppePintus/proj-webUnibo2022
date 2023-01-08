@@ -57,13 +57,25 @@ class DatabaseHelper
     }
 
     public function searchUserInfo($userid){        
-        $stmt = $this->db->prepare("
-        SELECT up.* ,
+        $stmt = $this->db->prepare("SELECT up.* ,
         (SELECT COUNT(*) FROM USER_PROFILE up2, OTHERUSER o2 WHERE up2.userid = o2.userid AND up2.userid = ?) as followingNumber,
         (SELECT COUNT(*) FROM USER_PROFILE up2, OTHERUSER o2 WHERE up2.userid = o2.fol_userid AND up2.userid = ?) as followedNumber
         FROM USER_PROFILE up 
         WHERE up.userid = ?;");
         $stmt->bind_param('iii',$userid, $userid, $userid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
+    }
+    public function searchOtherUserInfo($userid,$otheruser){        
+        $stmt = $this->db->prepare("SELECT up.* ,
+        (SELECT COUNT(*) FROM USER_PROFILE up2, OTHERUSER o2 WHERE up2.userid = o2.userid AND up2.userid = ?) as followingNumber,
+        (SELECT COUNT(*) FROM USER_PROFILE up2, OTHERUSER o2 WHERE up2.userid = o2.fol_userid AND up2.userid = ?) as followedNumber,
+        (SELECT COUNT(*) FROM  OTHERUSER o WHERE up.userid = o.fol_userid AND o.userid = ?) as follow
+        FROM USER_PROFILE up 
+        WHERE up.userid = ?;");
+        $stmt->bind_param('iiii',$otheruser, $otheruser, $userid,$otheruser);
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -215,25 +227,19 @@ class DatabaseHelper
 
     public function userUnfollow($userid ,$followID){
         $stmt = $this->db->prepare("DELETE FROM OTHERUSER
-        WHERE fol_userid = ? AND userid = ?");
-        $stmt->bind_param('ii', $followID  ,$userid );
+        WHERE userid = ? AND fol_userid = ?");
+        $stmt->bind_param('ii', $userid  ,$followID  );
         $stmt->execute();
     }
 
     public function checkUserFollow($userid ,$followID){
-        $query = "SELECT * FROM `OTHERUSER` WHERE `userid` = ? and `fol_userid` = ?;";
+        $query = "SELECT COUNT(*) AS count FROM `OTHERUSER` WHERE `userid` = ? and `fol_userid` = ?;";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ii',  $userid ,$followID);
         $stmt->execute();
-
-       
         $result = $stmt->get_result();
-
-        if ($result->fetch_row()[0] > 0) {
-            return true; 
-        } 
-
-        return false;
+        
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
 
     }
 
