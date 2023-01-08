@@ -1,9 +1,14 @@
 <?php
 require_once "utils/bootstrap.php";
-if(!isset($_POST["userID"])){
+
+$rawData = file_get_contents('php://input');
+$data = json_decode($rawData, true);
+$user = $data['user'];
+
+if(!isset($user) || $user === $_SESSION["userid"] ){
     $posts = $dbh->searchUserInfo($_SESSION["userid"]);
 }else{
-    $posts = $dbh->searchUserInfo($_POST["userID"]);
+    $posts = $dbh->searchOtherUserInfo($_SESSION["userid"],$user);
     //return user info
 }
 

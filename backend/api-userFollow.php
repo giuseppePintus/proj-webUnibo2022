@@ -6,13 +6,12 @@ $data = json_decode($rawData, true);
 $followID = $data['user'];
 $userid = $_SESSION["userid"];
 
-if ($dbh->checkUserFollow($followID, $userid) == false) { //create follow
-    $dbh->userFollow($userid, $followID);
-    $result="unfollow";
-} else { //delete follow 
+if ($dbh->checkUserFollow($userid , $followID)["count"] >0) { //delete follow
     $dbh->userUnfollow($userid, $followID);
     $result="follow";
+} else {  //create follow
+    $dbh->userFollow($userid, $followID);
+    $result="unfollow";
 }
-
 header("Content-Type: application/json");
 echo json_encode($result);

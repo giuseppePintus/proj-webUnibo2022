@@ -3,6 +3,17 @@ async function profilePageTemplate(userInfo) {
         return;
     }
     let resultHtml = await userInfo.then(result => {
+        let fol='';
+        if("follow" in result){
+            fol = '<li id="follow"><p>';
+            if (result["follow"]) {//<img  src="./upload/friend.png" alt="follow"/> follow
+                fol += 'unfollow';
+            }
+            else{
+                fol += 'follow';
+            }
+            fol += '</p></li>';
+        }
         let html = `
         <div class="profileInfo">
         <header>
@@ -31,6 +42,7 @@ async function profilePageTemplate(userInfo) {
                     <li><button id="myPostsButton" type="button">My Posts</button></li>
                     <li><button id="likedPostsButton" type="button">Liked Posts</button></li>
                     <li><button id="CommentedPostsButton" type="button">Commented Posts</button></li>
+                    ${fol}
                 </ul>
             </div>
             
@@ -43,60 +55,6 @@ async function profilePageTemplate(userInfo) {
         return html;
     });
     return resultHtml;
-}
-
-async function getUserInfo(user) {
-    let userInfo;
-    try {
-        let response = await axios.post('./api-getUser.php', {
-            userID: user
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            responseType: 'json',
-            timeout: 5000
-        });
-        userInfo = response.data;
-    } catch (error) {
-        console.error(error);
-    }
-    return userInfo;
-}
-
-function userInitialPost() {
-    axios.post('./api-getUserPost.php', {
-        offset: offsetUserPostQuery,
-        size: sizeUserPostQueryResult,
-        userid: user,
-        display: postDisplaySelector
-    }, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(response => {
-        console.log(response.data);
-        profilePageTemplate(userInfo);
-        postshtml = generatePostOfUser(response.data, userInfo);
-        mainNode.insertAdjacentHTML('beforeend', postshtml);
-    });
-}
-
-async function followInteractionsListeners(idUserToFollow) {
-    document.getElementById("follow").addEventListener("click", () => {
-        axios.post('./api-userFollow.php', {
-            user: idUserToFollow
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            responseType: 'json',
-            timeout: 5000
-        }).then(response => {
-            const p = document.querySelector('li#follow p');
-            p.innerHTML = "" + response.data;
-        });
-    });
 }
 
 function generatePostOfUser(posts, userInfo) {
@@ -125,8 +83,7 @@ function generatePostOfUser(posts, userInfo) {
                 </div>
             </section>
             <footer>
-                <ul>
-                    
+                <ul>                    
                     <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
                     <li><p class="nLike">${posts[i]["liked"]}</p></li>
                     <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
@@ -144,54 +101,131 @@ function generatePostOfUser(posts, userInfo) {
     return result;
 }
 
+async function getUserInfo(userID) {
+    let userInfo;
+    try {
+        let response = await axios.post('./api-getUser.php', {
+            user: userID
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            responseType: 'json',
+            timeout: 5000
+        });
+        userInfo = response.data;
+    } catch (error) {
+        console.error(error);
+    }
+    return userInfo;
+}
 
-function userScrollingPost() {
-    window.addEventListener('scroll', () => {
-        const childCount = main.childElementCount - 1;
-        if (childCount > 0 && offsetUserPostQuery + sizeUserPostQueryResult <= childCount &&
-            window.scrollY > main.offsetHeight - window.innerHeight) {
-            offsetUserPostQuery += sizeUserPostQueryResult;
+function userInitialPost(userID) {  
+    lock = false;
 
-            //POST
-            axios.post('./api-getUserPost.php', {
-                offset: offsetUserPostQuery,
-                size: sizeUserPostQueryResult,
-                user: user
-            }, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).then(response => {
-                console.log("offset " + offsetUserPostQuery + " size " + sizeUserPostQueryResult + "  user " + user);
-                let postshtml = generatePostOfUser(response.data, userInfo);
-                main.insertAdjacentHTML('beforeend', postshtml);
-            });
+    axios.post('./api-getUserPost.php', {
+        offset: offsetUserPostQuery,
+        size: sizeUserPostQueryResult,
+        display: postDisplaySelector,
+        user: userID
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        //profilePageTemplate(userInfo);//(?)
+        postshtml = generatePostOfUser(response.data, userInfo);
+        main.insertAdjacentHTML('beforeend', postshtml);
+        offsetUserPostQuery += sizeUserPostQueryResult;
+        lock = true;
+
+        if(params.get('user') != null){
+            followInteractionsListeners(userID);
         }
     });
 }
 
-function addProfilePageListenrs(){
+async function followInteractionsListeners(userID) {
+    document.getElementById("follow").addEventListener("click", () => {
+        axios.post('./api-userFollow.php', {
+            user: userID
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            responseType: 'json',
+            timeout: 5000
+        }).then(response => {
+            const p = document.querySelector('li#follow p');
+            p.innerHTML = "" + response.data;
+        });
+    });
+}
+
+
+
+function userPost(userID) {
+
+    lock = false;
+
+    axios.post('./api-getUserPost.php', {
+        offset: offsetUserPostQuery,
+        size: sizeUserPostQueryResult,
+        display: postDisplaySelector,
+        user: userID
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        postshtml = generatePostOfUser(response.data, userInfo);
+        main.insertAdjacentHTML('beforeend', postshtml);
+        offsetUserPostQuery += sizeUserPostQueryResult;
+        lock = true;
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+function userScrollingPost(userID) {
+    window.addEventListener('scroll', () => {
+        const childCount = main.querySelectorAll('.homePost').length;
+        if (window.scrollY > main.offsetHeight - window.innerHeight && lock) {
+            userPost(userID);
+        }
+    });
+}  
+function addProfilePageListenrs(userID){
     document.getElementById('myPostsButton').addEventListener('click', (aa)=>{
         postDisplaySelector = 0;
         cleanPosts();
-        userInitialPost();
+        userInitialPost(userID);
     });
 
     document.getElementById('likedPostsButton').addEventListener('click', ()=>{
         postDisplaySelector = 1;
         cleanPosts();
-        userInitialPost();
+        userInitialPost(userID);
     });
 
     document.getElementById('CommentedPostsButton').addEventListener('click', ()=>{
         postDisplaySelector = 2;
         cleanPosts();
-        userInitialPost();
+        userInitialPost(userID);
     });
 }
 
 function cleanPosts(){
-    document.querySelectorAll("article").forEach(x => x.remove());
+    offsetUserPostQuery = 0;
+    document.querySelectorAll(".homePost").forEach(x => x.remove());
 }
 
 const mainNode = document.querySelector("main");
@@ -203,23 +237,24 @@ let params = new URLSearchParams(url);
 let user = params.get('user');
 
 const main = document.querySelector("main");
-const urlParams = new URLSearchParams(window.location.search);
-const search = urlParams.get('search');
+
 
 let offsetUserPostQuery = 0;
 let sizeUserPostQueryResult = 5;
+let lock = true;
 let userInfo;
+
 let postDisplaySelector = 0; // 0 my posts, 1 liked posts, 2 commented posts
 
 /*get user passed in the url*/
-userInfo = getUserInfo().then(result => {
+userInfo = getUserInfo(user).then(result => {
     user = result["userid"];
     return result;
 });
 profilePageTemplate(userInfo).then(result => {
     mainNode.innerHTML = result;
-    userInitialPost();
-    addProfilePageListenrs();   
-    //userScrollingPost();
+    userInitialPost(user);
+    addProfilePageListenrs(user);   
+    userScrollingPost(user);
     //followInteractionsListeners();
 });
