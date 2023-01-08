@@ -23,23 +23,21 @@ async function profilePageTemplate(userInfo) {
         </header>
         <section>
             <div>
-                <img src="${result['usericon']}" alt="usericon">
+                <div>
+                    <img src="${result['usericon']}" alt="usericon">
+                    <ul>
+                        <li><h1>${result['usernickname']}</h1></li>
+                        <li><h2>@${result["username"]}</h2></li>
+                    </ul>
+                </div>
+                <p>Bio: ${result["userbiography"]}</p>
+                <ul class="followSection">
+                    <li><a href="search.php"><h3>${result['followedNumber']} followers<h3></a></li>
+                    <li><a href="search.php"><h3>${result['followingNumber']} following<h3></a></li>
+                    <li><button type="button" id="editprofile">Edit Profile</li>
+                </ul>
             </div>
-            <ul>
-                <li><h1>${result['usernickname']}</h1></li>
-                <li><h2>@${result["username"]}</h2></li>
-                <li><p>Bio: ${result["userbiography"]}</p></li>
-            </ul>
-            
-            <ul class="followSection">
-                <li><a href="search.php"><h3>${result['followedNumber']} followers<h3></a></li>
-                <li><a href="search.php"><h3>${result['followingNumber']} following<h3></a></li>
-                <li><button type="button" id="editprofile">Edit Profile</li>
-            </ul>
-        </section>
-        
-        <section id="profilePosts" class="profilePosts">
-            <div>
+            <div id="profilePosts" class="profilePosts">
                 <ul>
                     <li><button id="myPostsButton" type="button">My Posts</button></li>
                     <li><button id="likedPostsButton" type="button">Liked Posts</button></li>
@@ -47,7 +45,8 @@ async function profilePageTemplate(userInfo) {
                     ${fol}
                 </ul>
             </div>
-        <section>
+            
+            </section>
         </div>
 
         <div id="profilePostArea">
