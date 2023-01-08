@@ -6,3 +6,13 @@ async function logout(){
     
     return;
 }
+
+function nightMode(){
+    let root = document.documentElement;
+    root.addEventListener("mousemove", e => {
+    root.style.setProperty('--primaryColor', "black");
+    root.style.setProperty('--secondaryColor',  "white");
+    root.style.setProperty('--invert',  "1");
+});
+
+}
