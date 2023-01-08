@@ -162,17 +162,19 @@ async function followInteractionsListeners(userID) {
 function userPost(userID) {
 
     lock = false;
-    //POST
+
     axios.post('./api-getUserPost.php', {
         offset: offsetUserPostQuery,
         size: sizeUserPostQueryResult,
+        display: postDisplaySelector,
         user: userID
     }, {
         headers: {
             'Content-Type': 'application/json'
         }
     }).then(response => {
-        let postshtml = generatePostOfUser(response.data, userInfo);
+        console.log(response.data);
+        postshtml = generatePostOfUser(response.data, userInfo);
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;
         lock = true;
