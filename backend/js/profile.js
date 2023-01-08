@@ -127,7 +127,6 @@ function userInitialPost(userID) {
             'Content-Type': 'application/json'
         }
     }).then(response => {
-        console.log(response.data);
         //profilePageTemplate(userInfo);//(?)
         postshtml = generatePostOfUser(response.data, userInfo);
         main.insertAdjacentHTML('beforeend', postshtml);
@@ -173,7 +172,6 @@ function userPost(userID) {
             'Content-Type': 'application/json'
         }
     }).then(response => {
-        console.log(response.data);
         postshtml = generatePostOfUser(response.data, userInfo);
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;

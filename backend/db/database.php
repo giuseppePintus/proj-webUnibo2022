@@ -71,14 +71,13 @@ class DatabaseHelper
     }
 
     public function searchUserPost($offset,$size, $userid){      
-        $stmt = $this->db->prepare("SELECT p.*, u.*,
+        $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*,
         (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 
         (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid AND l.userid = ? ) AS liked, 
-        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid GROUP BY p.postid) AS commented, 
-        (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid GROUP BY p.postid) AS saved 
+        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid ) AS commented, 
+        (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid ) AS saved 
         FROM `POST` p
         JOIN `USER_PROFILE` u ON u.userid = p.userid AND u.userid = ?
-        GROUP BY p.postid
         ORDER BY p.`postdate` DESC ,p.postid DESC 
         LIMIT ? , ?;");
          $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
@@ -89,15 +88,14 @@ class DatabaseHelper
     }
 
     public function searchUserLikedPost($offset,$size, $userid){      
-        $stmt = $this->db->prepare("SELECT p.*, u.*,
+        $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*,
         (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 
         (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid AND l.userid = ? ) AS liked, 
-        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid GROUP BY p.postid) AS commented, 
-        (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid GROUP BY p.postid) AS saved 
+        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) AS commented, 
+        (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid ) AS saved 
         FROM `POST` p
         JOIN `LIKED` l ON l.postid = p.postid
         JOIN `USER_PROFILE` u ON u.userid = l.userid AND u.userid = ?
-        GROUP BY p.postid
         ORDER BY p.`postdate` DESC ,p.postid DESC    
         LIMIT ? , ?;");
           $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
@@ -108,15 +106,14 @@ class DatabaseHelper
     }
 
     public function searchUserCommentedPost($offset,$size, $userid){      
-        $stmt = $this->db->prepare("SELECT p.*, u.*,
+        $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*,
         (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 
         (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid AND l.userid = ? ) AS liked, 
-        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid GROUP BY p.postid) AS commented, 
-        (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid GROUP BY p.postid) AS saved 
+        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid ) AS commented, 
+        (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid ) AS saved 
         FROM `POST` p
         JOIN `COMMENTPOST` c ON c.postid = p.postid
         JOIN `USER_PROFILE` u ON u.userid = c.Com_userid AND u.userid = ?
-        GROUP BY p.postid
         ORDER BY p.`postdate` DESC ,p.postid DESC    
         LIMIT ? , ?;");
          $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
@@ -130,11 +127,11 @@ class DatabaseHelper
         $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*, 
             (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 
             (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid AND l.userid = ? ) AS liked, 
-            (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid GROUP BY p.postid) AS commented, 
-            (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid GROUP BY p.postid) AS saved 
+            (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid ) AS commented, 
+            (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid ) AS saved 
             FROM `POST` p 
             JOIN `OTHERUSER` o ON p.`userid` = o.fol_userid OR p.`userid` = o.userid AND o.userid = ? 
-            JOIN `USER_PROFILE` u ON u.userid = p.userid 
+            JOIN `USER_PROFILE` u ON u.userid = p.userid         
             ORDER BY p.`postdate` DESC ,p.postid DESC 
             LIMIT ? , ?;");
         $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
@@ -144,18 +141,18 @@ class DatabaseHelper
     }
 
     public function searchRandomPost($offset,$size, $userid){     
-        $stmt = $this->db->prepare("SELECT p.*, u.*,
-          (SELECT COUNT(*) FROM LIKED l WHERE l.postid = p.postid) AS liked,
-          (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) AS commented,
-          (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid) AS saved
+        $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*,
+            (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 
+            (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid AND l.userid = ? ) AS liked, 
+            (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid ) AS commented, 
+            (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid ) AS saved 
         FROM POST p
         JOIN USER_PROFILE u ON u.userid = p.userid AND u.userid != ? AND u.userid not in (select o.fol_userid from OTHERUSER o where o.userid = ?)
         LEFT JOIN OTHERUSER o ON o.userid != ? 
-        GROUP BY p.postid
         ORDER BY p.`postdate` DESC ,p.postid DESC
         LIMIT ?, ?;");
         
-        $stmt->bind_param('iiiii',$userid ,$userid ,$userid , $offset, $size);
+        $stmt->bind_param('iiiiii',$userid ,$userid , $userid ,$userid , $offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();
 
