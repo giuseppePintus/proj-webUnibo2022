@@ -55,6 +55,10 @@ h6 {
     margin: 0;
 }
 
+ul{
+    margin: 0;
+    padding: 0;
+}
 
 
 /* Header styles */
@@ -583,9 +587,6 @@ body>aside li {
     
     width:100%
 }
-.searchPage>ul>li{
-   
-}
 
 
 /*start profile css*/
@@ -594,7 +595,7 @@ body>aside li {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    align-items: stretch;
+    align-items: flex-start;
     width: 100%;
     margin: 0;
 }
@@ -617,7 +618,9 @@ body>aside li {
     margin-top: 3vmin;
 
 }
-
+.profileInfo>section{
+    width: 100%;
+}
 .profileInfo>section>div{
     position: relative;
     top: -4rem;
@@ -667,6 +670,7 @@ body>aside li {
 .followSection{
     list-style-type: none;
     width: 100%;
+   
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -674,20 +678,23 @@ body>aside li {
     justify-content: space-evenly;
     align-items: center;
 
-    margin: 0;
 }
 
 
 .profilePosts{
-   
+    margin: 0;
+    padding: 0;
     background-color: #ddd;
     border-radius: 1rem;
 }
 
 .profilePosts>ul{
+    padding: 0;
+    margin: 1em;
     width: 100%;
     list-style-type: none;
     display: flex;
+    justify-content: space-evenly;
 }
 .profilePosts>ul>li {
     display: inline-block;
