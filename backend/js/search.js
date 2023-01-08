@@ -3,19 +3,30 @@ function generateInfoUser(userInfo) {
 
     for (let i = 0; i < userInfo.length; i++) {
         let result = `
-        <article >
-            <header>
-                <div class="userinfo">
+       
+                <div class="userinfo searchPage">
                     <ul>
-                    <li><a href="profile.php?user=${userInfo[i]["userid"]}"> <img src="${userInfo[i]["usericon"]}" alt="usericon" /></a></li>
-                    <li><a href="profile.php?user=${userInfo[i]["userid"]}"> <h2>${userInfo[i]['usernickname']}</h2></a></li>
-                    <li><a href="profile.php?user=${userInfo[i]["userid"]}"> <h3>@${userInfo[i]["username"]}</h3></a> </li>
-                        <li id="follow${userInfo[i]["userid"]}"><img  src="./upload/friend.png" alt="follow"/>
-                        <p>follow</p></li>
+                        <li>
+                            <a href="profile.php?user=${userInfo[i]["userid"]}"> 
+                            <img src="${userInfo[i]["usericon"]}" alt="usericon" /></a>
+                        </li>
+                        <li>
+                            <a href="profile.php?user=${userInfo[i]["userid"]}"> 
+                                <h2>${userInfo[i]['usernickname']}</h2>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="profile.php?user=${userInfo[i]["userid"]}"> 
+                                <h3>@${userInfo[i]["username"]}</h3>
+                            </a> 
+                        </li>
+                        <li id="follow${userInfo[i]["userid"]}" class="followButton"> 
+                            <img  src="./upload/friend.png" alt="follow"/>
+                            <p>follow</p>
+                        </li>
                     </ul>
                 </div>
-            </header>
-        </article>
+    
         `;// <li><p>${posts[i]["liked"]}</p></li>
         main.insertAdjacentHTML('beforeend', result);
         followInteractionsListeners(userInfo[i]["userid"]);

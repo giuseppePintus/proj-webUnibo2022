@@ -4,7 +4,7 @@ function generateSearchResult(posts) {
       
       let article = `
       <a href="profile.php?user=${posts[i]["userid"]}">
-        <div >
+        <div class="userinfo">
             <ul>
                 <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
                 <li><h2>${posts[i]['usernickname']}</h2></li>
