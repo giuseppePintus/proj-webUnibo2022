@@ -34,7 +34,11 @@ async function profilePageTemplate(userInfo) {
                 <ul class="followSection">
                     <li><a href="search.php"><h3>${result['followedNumber']} followers<h3></a></li>
                     <li><a href="search.php"><h3>${result['followingNumber']} following<h3></a></li>
-                    <li><button type="button" id="editprofile">Edit Profile</li>
+                    <li>
+                    <form action="editProfile.php" method="get">
+                        <input type="submit" value="Edit Profile" id="editprofile">
+                    </form>
+                    </li>
                 </ul>
             </div>
             <div id="profilePosts" class="profilePosts">
