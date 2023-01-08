@@ -34,21 +34,22 @@
         <div class="searchResult">
         </div>
     </header>
+    <div class="centerPage">
+        <main class="main">
+            <?php if ($templateParams["pagename"] == 'Home' || $templateParams["pagename"] == 'Profile') {
+                echo '<div class = "uploadPostImage">
+                <form action="uploadPostImage.php" method="post" enctype="multipart/form-data">
+                <input id="newpost" type="text" placeholder="write something to share..." name="writepost" required>
+                Select image to upload:
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <button type="submit" name="submitpost">post</button>
+            </form></div>';
+            } ?>
+        </main>
 
-    <main class="main">
-        <?php if ($templateParams["pagename"] == 'Home' || $templateParams["pagename"] == 'Profile') {
-            echo '<div class = "uploadPostImage">
-            <form action="uploadPostImage.php" method="post" enctype="multipart/form-data">
-            <input id="newpost" type="text" placeholder="write something to share..." name="writepost" required>
-            Select image to upload:
-            <input type="file" name="fileToUpload" id="fileToUpload">
-            <button type="submit" name="submitpost">post</button>
-        </form></div>';
-        } ?>
-    </main>
-
-    <aside>
-    </aside>
+        <aside>
+        </aside>
+    </div>
     <footer>
         <div class="footer-container">
             <ul>

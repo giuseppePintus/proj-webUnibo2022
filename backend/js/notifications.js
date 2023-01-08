@@ -92,11 +92,21 @@ async function generateNotifications() {
 function addNotificationBellListener(){
     document.getElementById("notificationBellIcon").addEventListener('click', event =>{
         if(showNotification){
-            document.querySelector("aside").innerHTML = "";
+            
+            document.querySelector(".main").style.transform = "translateX(0%)"; 
+          
+            document.querySelector("aside").style.opacity = "0";
+            
+            setTimeout(null, 1000);
+
             showNotification = 0;
-            // document.querySelector(".main").style.width = '100%'; 
+            
         }else{
-            // document.querySelector(".main").style.width = '70%'; 
+            document.querySelector(".main").style.transform = "translateX(-5%)";          
+           
+            document.querySelector("aside").style.opacity = "1";
+            
+            document.querySelector("aside").innerHTML = ""; 
             showNotification = 1;
             generateNotifications();
         }
