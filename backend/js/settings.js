@@ -46,8 +46,15 @@ async function digestMessage(message) {
   }
 
 function nightMode(){
-    let root = document.documentElement;
+    
+    let valCookie = getCookie("nightMode");
+    if(valCookie == null || valCookie == "0"){
+        setCookie("nightMode", "1");
+    }else{
+        setCookie("nightMode", "0");
+    }
 
+    let root = document.documentElement;
     root.style.setProperty('--first-color', "black");
     root.style.setProperty('--second-color',  "white");
     root.style.setProperty('--invert',  "1");
@@ -66,6 +73,27 @@ function changePassword(){
         </div>`;
 
 }
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let cookieAray = decodedCookie.split(';');
+    for(let i = 0; i <cookieAray.length; i++) {
+      let c = cookieAray[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length); //ritorno valore del cookie
+      }
+    }
+    return null; //cookie non esiste
+  }
+
+  function setCookie(cname, cvalue) {
+    let expires = "expires = 0";
+    document.cookie = cname + "=" + cvalue + ";" + expires + "; path=/";
+  }
 
 
 
