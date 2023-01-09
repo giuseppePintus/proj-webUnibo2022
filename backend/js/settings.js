@@ -2,20 +2,16 @@ async function logout(){
     const resp = await axios.post("./api-logOut.php");
     if(resp.data == "ok"){
         window.location.href = './login.php';
-    }
-    
+    }    
     return;
 }
 
-async function sendPassword(){
-  
+async function sendPassword(){  
     const oldPass = document.getElementById("oldPassword").value;
     const newPass = document.getElementById("newPassword").value;
 
-    console.log("old: " + oldPass + " | new: " + newPass);
     const oldPassHash = await digestMessage(oldPass);
     const newPassHash = await digestMessage(newPass);
-    console.log("oldHash: " + oldPassHash + " | newHash: " + newPassHash);
 
     const response  = await axios.post('./api-changePassword.php', {
         oldPass: oldPassHash,
@@ -25,16 +21,11 @@ async function sendPassword(){
           'Content-Type': 'application/json'
         },
         responseType: 'json'
-      });
-    
-      console.log(response.data);
+      });   
 
       if(response.data == "ok"){
-        window.location.href = './profile.php';
-    
+        window.location.href = './profile.php';    
       }
-
-
 }
 
 async function digestMessage(message) {
@@ -46,18 +37,17 @@ async function digestMessage(message) {
   }
 
 function nightMode(){
-    
     let valCookie = getCookie("nightMode");
     if(valCookie == null || valCookie == "0"){
         setCookie("nightMode", "1");
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
     }else{
         setCookie("nightMode", "0");
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
     }
-
-    let root = document.documentElement;
-    root.style.setProperty('--first-color', "black");
-    root.style.setProperty('--second-color',  "white");
-    root.style.setProperty('--invert',  "1");
+    document.querySelector('input[name="NightButton"]').value = valCookie==0 ? "toggle dark" : "toggle light" ; 
 }
 
 function changePassword(){
@@ -71,7 +61,6 @@ function changePassword(){
             <hr>
             <input type="submit" value="Apply" onclick = "sendPassword()">
         </div>`;
-
 }
 
 function getCookie(cname) {
@@ -90,22 +79,22 @@ function getCookie(cname) {
     return null; //cookie non esiste
   }
 
-  function setCookie(cname, cvalue) {
+function setCookie(cname, cvalue) {
     let expires = "expires = 0";
     document.cookie = cname + "=" + cvalue + ";" + expires + "; path=/";
-  }
+}
 
-
-
-const page = document.querySelector(".settings");
 const main = document.querySelector("main");
-const search = document.querySelector(".searchForm");
 
+const search = document.querySelector(".searchForm");
 search.innerHTML =  ``;
+
 main.innerHTML = `
     <div class="settings">                      
         <input type="button"  name="LogoutButton" value="Log out"  onclick="logout()">
         <input type="button"  name="PersButton" value="Personalizza"  onclick="changeColor()">
-        <input type="button"  name="NightButton" value="Modalita' notte"  onclick="nightMode()">
+        <input type="button"  name="NightButton" value=""  onclick="nightMode()">
         <input type="button"  name="changePassButton" value="cambia password"  onclick="changePassword()">
     </div>`;
+
+document.querySelector('input[name="NightButton"]').value = getCookie("nightMode")==0 ? "toggle light" : "toggle dark" ; 
