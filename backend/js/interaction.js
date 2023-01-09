@@ -46,6 +46,7 @@ function commentButtonListenr(postid) {
       }).then(async () => {
         sendNotification(' has commented your post', postid, 'comment');
         refreshPost(postid);
+        await displayComment(postid, commentBoxStateMap.get(postid));
       });
     }
   });
@@ -64,7 +65,6 @@ function sendNotification(message, who, how) {
     responseType: 'json',
     timeout: 5000
   }).then(response => {
-    //console.log(response.data);
     generateNotifications();
   });
 }
@@ -131,9 +131,6 @@ async function refreshPost(postid) {
     responseType: 'json',
     timeout: 5000
   }).then( response => {
-    console.log(post);
-    console.log(post.querySelector(".nLike"));
-    console.log(response.data);
     post.querySelector(".nLike").innerHTML = response.data["nlike"];
     post.querySelector(".nComment").innerHTML = response.data["commented"];
     post.querySelector(".nSave").innerHTML = response.data["saved"];
