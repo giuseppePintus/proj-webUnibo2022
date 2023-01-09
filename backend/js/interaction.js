@@ -24,9 +24,6 @@ async function showComment(postid) {
   commentBoxStateMap.set(postid, !commentBoxStateMap.get(postid));
 
   await displayComment(postid, commentBoxStateMap.get(postid));
-  if (commentBoxStateMap.get(postid)) {
-    commentButtonListenr(postid);
-  }
 }
 
 function commentButtonListenr(postid) {
@@ -74,7 +71,7 @@ async function displayComment(postid, isVisible) {
     let comments = await getCommentsByPostId(postid);
     document.getElementById("showComment" + postid).innerHTML
       = generateCommentsHTML(comments, postid);
-
+    commentButtonListenr(postid);
   } else {
     document.getElementById("showComment" + postid).innerHTML = "";
 
