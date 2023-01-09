@@ -656,6 +656,8 @@ body>aside h1 {
 .searchResult>article {
     border-radius: 0.5rem;
 }
+
+
 /*search result animation*/
 
 .searchResult.close{
@@ -683,9 +685,20 @@ body>aside h1 {
 
 
 .followButton{
-    position: inherit;
+    
     float: right;
-    margin: 1rem;
+    
+
+    margin: 1em;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.followButton>p{
+    margin: 0;
+    padding: 0;
 }
 
 
