@@ -3,15 +3,19 @@ function generateSearchResult(posts) {
   for (let i = 0; i < posts.length; i++) {
       
       let article = `
-      <a href="profile.php?user=${posts[i]["userid"]}">
-        <div class="userinfo">
-            <ul>
-                <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
-                <li><h2>${posts[i]['usernickname']}</h2></li>
-                <li><h3>@${posts[i]["username"]}</h3> </li>
-            </ul>
-        </div>
-      </a>`;
+      <form action="profile.php" method="post">
+      <input type="hidden" name="user" value="${posts[i]["userid"]}">
+      <button type="submit">
+      <div class="userinfo">
+          <ul>
+              <li> <img src="${posts[i]["usericon"]}" alt="usericon" /></li>
+              <li><h2>${posts[i]['usernickname']}</h2></li>
+              <li><h3>@${posts[i]["username"]}</h3> </li>
+          </ul>
+      </div>
+      </button>
+      </form>`;
+      
       result += article;
   }
   return result;
