@@ -154,6 +154,19 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function searchPost($postid){      
+        $stmt = $this->db->prepare("SELECT DISTINCT p.*,
+            (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 
+            (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid ) AS commented, 
+            (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid ) AS saved 
+            FROM `POST` p 
+            WHERE p.postid = ? ;");
+        $stmt->bind_param('i',$postid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
+    }
+
     public function modifyUserNickname($userid, $nickname){
         $query = "UPDATE USER_PROFILE 
         SET usernickname = ?

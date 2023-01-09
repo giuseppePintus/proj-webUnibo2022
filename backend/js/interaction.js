@@ -121,7 +121,23 @@ function generateCommentsHTML(comments, postid) {
 async function refreshPost(postid) {
   //axios query to get postid info
   //and push them to tag {nLike,nComment,nSave(?)}
-
+  let post = document.getElementById(postid);
+  axios.post('./api-post.php', {
+    postid: postid
+  }, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    responseType: 'json',
+    timeout: 5000
+  }).then( response => {
+    console.log(post);
+    console.log(post.querySelector(".nLike"));
+    console.log(response.data);
+    post.querySelector(".nLike").innerHTML = response.data["nlike"];
+    post.querySelector(".nComment").innerHTML = response.data["commented"];
+    post.querySelector(".nSave").innerHTML = response.data["saved"];
+  });
 
   //document.getElementById("commentBox" + postid).innerHTML = "";
   //await displayComment(postid, commentBoxStateMap.get(postid));
@@ -158,6 +174,7 @@ document.body.addEventListener('click', function (event) {
       // If it is, do something
       console.log('save post');
     }
+
   }
 
 });

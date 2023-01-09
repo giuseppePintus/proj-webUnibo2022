@@ -61,7 +61,7 @@ async function profilePageTemplate(userInfo) {
     return resultHtml;
 }
 
-function generatePostOfUser(posts) {
+function generatePostOfUser(posts, userInfo) {
     let result = "";
     for (let i = 0; i < posts.length; i++) {
         let postimage = "";
@@ -89,7 +89,7 @@ function generatePostOfUser(posts) {
             <footer>
                 <ul>                    
                     <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
-                    <li><p class="nLike">${posts[i]["liked"]}</p></li>
+                    <li><p class="nLike">${posts[i]["nlike"]}</p></li>
                     <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
                     <li><p class="nComment">${posts[i]["commented"]}</p></li>
                     <li><img class="save" src="./upload/save.png" alt="save"/></li>
@@ -138,7 +138,7 @@ function userInitialPost(userID) {
         }
     }).then(response => {
         //profilePageTemplate(userInfo);//(?)
-        postshtml = generatePostOfUser(response.data);
+        postshtml = generatePostOfUser(response.data, userInfo);
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;
         lock = true;
@@ -182,7 +182,7 @@ function userPost(userID) {
             'Content-Type': 'application/json'
         }
     }).then(response => {
-        postshtml = generatePostOfUser(response.data);
+        postshtml = generatePostOfUser(response.data, userInfo);
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;
         lock = true;
