@@ -107,7 +107,8 @@ class DatabaseHelper
         (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid ) AS saved 
         FROM `POST` p
         JOIN `LIKED` l ON l.postid = p.postid
-        JOIN `USER_PROFILE` u ON u.userid = l.userid AND u.userid = ?
+        JOIN `USER_PROFILE` u ON  u.userid = p.userid
+        WHERE (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid AND l.userid = ? ) = 1 
         ORDER BY p.`postdate` DESC ,p.postid DESC    
         LIMIT ? , ?;");
           $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
@@ -121,12 +122,13 @@ class DatabaseHelper
         $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*,
         (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 
         (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid AND l.userid = ? ) AS liked, 
-        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid ) AS commented, 
+        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) AS commented, 
         (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid ) AS saved 
         FROM `POST` p
         JOIN `COMMENTPOST` c ON c.postid = p.postid
-        JOIN `USER_PROFILE` u ON u.userid = c.Com_userid AND u.userid = ?
-        ORDER BY p.`postdate` DESC ,p.postid DESC    
+        JOIN `USER_PROFILE` u ON  u.userid = p.userid
+        WHERE (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid AND cp.Com_userid = ?) > 0 
+        ORDER BY p.`postdate` DESC ,p.postid DESC       
         LIMIT ? , ?;");
          $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
         $stmt->execute();

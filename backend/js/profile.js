@@ -61,7 +61,7 @@ async function profilePageTemplate(userInfo) {
     return resultHtml;
 }
 
-function generatePostOfUser(posts, userInfo) {
+function generatePostOfUser(posts) {
     let result = "";
     for (let i = 0; i < posts.length; i++) {
         let postimage = "";
@@ -138,7 +138,7 @@ function userInitialPost(userID) {
         }
     }).then(response => {
         //profilePageTemplate(userInfo);//(?)
-        postshtml = generatePostOfUser(response.data, userInfo);
+        postshtml = generatePostOfUser(response.data);
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;
         lock = true;
@@ -182,7 +182,7 @@ function userPost(userID) {
             'Content-Type': 'application/json'
         }
     }).then(response => {
-        postshtml = generatePostOfUser(response.data, userInfo);
+        postshtml = generatePostOfUser(response.data);
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;
         lock = true;
