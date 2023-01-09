@@ -3,13 +3,13 @@ async function profilePageTemplate(userInfo) {
         return;
     }
     let resultHtml = await userInfo.then(result => {
-        let fol='';
-        if("follow" in result){
+        let fol = '';
+        if ("follow" in result) {
             fol = '<li id="follow"><p>';
             if (result["follow"]) {//<img  src="./upload/friend.png" alt="follow"/> follow
                 fol += 'unfollow';
             }
-            else{
+            else {
                 fol += 'follow';
             }
             fol += '</p></li>';
@@ -73,9 +73,24 @@ function generatePostOfUser(posts, userInfo) {
             <header>
                 <div class="postHeader">
                     <ul>
-                        <li><a href="profile.php?user=${posts[i]["username"]}"> <img src="${posts[i]["usericon"]}" alt="usericon" /></a></li>
-                        <li><a href="profile.php?user=${posts[i]["username"]}"> <h2>${posts[i]['usernickname']}</h2></a></li>
-                        <li><a href="profile.php?user=${posts[i]["username"]}"> <h3>@${posts[i]["username"]}</h3> </a></li>
+                    <li>
+                        <form action="profile.php" method="post">
+                        <input type="hidden" name="user" value="${posts[i]["userid"]}">
+                        <button type="submit"><img src="${posts[i]["usericon"]}" alt="usericon" /></button>
+                        </form>
+                    </li>
+                    <li>
+                        <form action="profile.php" method="post">
+                        <input type="hidden" name="user" value="${posts[i]["userid"]}">
+                        <button type="submit">${posts[i]['usernickname']}</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form action="profile.php" method="post">
+                        <input type="hidden" name="user" value="${posts[i]["userid"]}">
+                        <button type="submit">${posts[i]["username"]}</button>
+                        </form>
+                    </li>
                         <li><p> - ${posts[i]["postdate"]}</p></li>
                     </ul>
                 </div>
@@ -124,7 +139,7 @@ async function getUserInfo(userID) {
     return userInfo;
 }
 
-function userInitialPost(userID) {  
+function userInitialPost(userID) {
     lock = false;
 
     axios.post('./api-getUserPost.php', {
@@ -143,7 +158,7 @@ function userInitialPost(userID) {
         offsetUserPostQuery += sizeUserPostQueryResult;
         lock = true;
 
-        if(params.get('user') != null){
+        if (user != null) {
             followInteractionsListeners(userID);
         }
     });
@@ -206,39 +221,35 @@ function userScrollingPost(userID) {
             userPost(userID);
         }
     });
-}  
-function addProfilePageListenrs(userID){
-    document.getElementById('myPostsButton').addEventListener('click', (aa)=>{
+}
+function addProfilePageListenrs(userID) {
+    document.getElementById('myPostsButton').addEventListener('click', (aa) => {
         postDisplaySelector = 0;
         cleanPosts();
         userInitialPost(userID);
     });
 
-    document.getElementById('likedPostsButton').addEventListener('click', ()=>{
+    document.getElementById('likedPostsButton').addEventListener('click', () => {
         postDisplaySelector = 1;
         cleanPosts();
         userInitialPost(userID);
     });
 
-    document.getElementById('CommentedPostsButton').addEventListener('click', ()=>{
+    document.getElementById('CommentedPostsButton').addEventListener('click', () => {
         postDisplaySelector = 2;
         cleanPosts();
         userInitialPost(userID);
     });
 }
 
-function cleanPosts(){
+function cleanPosts() {
     offsetUserPostQuery = 0;
     document.querySelectorAll(".homePost").forEach(x => x.remove());
 }
 
 const mainNode = document.querySelector("main");
-// Get the current URL
-let url = window.location.search;
-// Create a new URLSearchParams object from the URL
-let params = new URLSearchParams(url);
-// Get the value of the "user" parameter
-let user = params.get('user');
+
+let user = variable;
 
 const main = document.querySelector("main");
 
@@ -247,7 +258,6 @@ let offsetUserPostQuery = 0;
 let sizeUserPostQueryResult = 5;
 let lock = true;
 let userInfo;
-
 let postDisplaySelector = 0; // 0 my posts, 1 liked posts, 2 commented posts
 
 /*get user passed in the url*/
@@ -258,7 +268,7 @@ userInfo = getUserInfo(user).then(result => {
 profilePageTemplate(userInfo).then(result => {
     mainNode.innerHTML = result;
     userInitialPost(user);
-    addProfilePageListenrs(user);   
+    addProfilePageListenrs(user);
     userScrollingPost(user);
     //followInteractionsListeners();
 });

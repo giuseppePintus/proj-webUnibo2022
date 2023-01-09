@@ -61,7 +61,17 @@
             </ul>
         </div>
     </footer>
+    <?php    
+    if (isset($templateParams["user"])) :        
+    ?>
+    <script>
+     let variable = <?php echo $templateParams["user"]; ?>;
+    </script>
+    <?php       
+    endif;
+    ?>
     <?php
+    
     if (isset($templateParams["js"])) :
         foreach ($templateParams["js"] as $script) :
     ?>
@@ -71,6 +81,7 @@
     endif;
     ?>
 
+    
 </body>
 
 </html>
