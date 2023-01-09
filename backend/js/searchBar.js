@@ -71,11 +71,21 @@ result.addEventListener('scroll', () =>{
 });
 
 
-input.addEventListener('click', function () {
+input.addEventListener('focus', function () {
   result.classList.add('open');
+  result.classList.remove('close'); 
 });
 
-input.addEventListener('mouseleave', function () {
-  //result.classList.add('closing'); setTimeout(() => this.classList.remove('open', 'closing'), 2000);
+input.addEventListener('blur', function () {
+  result.classList.add('closing'); 
+  //result.classList.add('close');
+  result.classList.remove('open'); 
+  setTimeout(() => {
+    result.classList.remove('closing');
+    result.classList.add('close');
+  }
+ , 500);
+
+
 });
 

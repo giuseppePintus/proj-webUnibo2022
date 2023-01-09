@@ -31,7 +31,7 @@
             ?>
         </div>
 
-        <div class="searchResult">
+        <div class="searchResult close">
         </div>
     </header>
     <div class="centerPage">
@@ -42,6 +42,7 @@
                 <input id="newpost" type="text" placeholder="write something to share..." name="writepost" required>
                 Select image to upload:
                 <input type="file" name="fileToUpload" id="fileToUpload">
+                <label for="file">Choose a file</label>
                 <button type="submit" name="submitpost">post</button>
             </form></div>';
             } ?>

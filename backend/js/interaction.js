@@ -100,7 +100,9 @@ function generateCommentsHTML(comments, postid) {
   let result = `<div class="writeCommentArea">
                   <input id="commentBox${postid}" type="text" placeholder="comment this post.." required>
                   <button id="commentButton${postid}" type="submit">comment</button>
-              </div>`;
+              </div>
+              <div class="scrollableComments">
+              `;
 
   for (let i = 0; i < comments.length; i++) {
     const commentHtml = `
@@ -114,7 +116,7 @@ function generateCommentsHTML(comments, postid) {
 
     result += commentHtml;
   }
-
+  result += `</div>`;
   return result;
 }
 

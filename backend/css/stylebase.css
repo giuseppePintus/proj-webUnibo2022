@@ -1,11 +1,9 @@
 :root {
-    --primary-color: ;
-    --secondary-color: ;
-    --post-width: ;
-    --notif-width: ;
-
-
-}
+    --first-color: rgb(0, 0, 0);
+    --second-color: #940a66 ;
+    --third-color : rgb(255, 0, 0);
+    --base-color : rgb(199, 255, 191);
+ }
 
 /* Reset styles */
 body {
@@ -25,12 +23,12 @@ body {
     width: 100%;
     height: 100%;
 
-    min-width: 333px;
+    min-width: 360px;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1rem;
     line-height: 1.5;
-    color: #333;
-    background-color: #fff;
+    color: var(--second-color);
+    background-color: var(--base-color);
 
 
 }
@@ -39,12 +37,12 @@ body {
 /* Basic styles */
 
 a {
-    color: #333;
+    color: var(--second-color);
     text-decoration: none;
 }
 
 a:hover {
-    color: #555;
+    color: var(--third-color);
 }
 
 h1,
@@ -55,6 +53,7 @@ h5,
 h6 {
     font-weight: normal;
     margin: 0;
+    color: black;
 }
 
 ul{
@@ -69,36 +68,43 @@ ul{
 body>header {
     width: auto;
     height: max-content;
+    
     margin: 0;
+    padding: 1rem;
+
     display: flex;
     flex-direction: row;
-    border-radius: 1rem;
-    padding: 1rem;
-    background-color: #f2f2f2;
+    background-color:var(--second-color);
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     
+    border-radius: 1rem;
 
 }
 
 body>header>a>img {
     width: 3rem;
     height: 3rem;
-    border-radius: 50%;
+
     margin-right: 1rem;
+    
+    border-radius: 50%;
 }
 
 
 
 .searchForm {
-    justify-items: center;
     width: 100%;
+    
+    justify-items: center;
 }
+
+
 
 .searchBar {
     width: 90%;
-    min-width: 20vmin;
+    min-width: 10em;
     display: inline-flex;
     align-content: center;
     justify-items: center;
@@ -110,7 +116,7 @@ body>header>a>img {
     width: 50%;
     height: 2rem;
     padding: 0 2% 0%;
-    border: 1px solid #ccc;
+    border: 1px solid var(--base-color);
     border-radius: 0.5rem;
     text-align: left;
 }
@@ -118,9 +124,9 @@ body>header>a>img {
 .searchBar>button {
     height: 2rem;
     padding: 0 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--first-color);
     border-radius: 0.5rem;
-    background-color: #fff;
+    background-color: var(--base-color);
     cursor: pointer;
 }
 
@@ -129,7 +135,7 @@ body>header>a>img {
 
 .profilePostArea body>main>article {
     display: flex;
-    border: 1px solid #e41d1d;
+    border: 1px solid var(--second-color);
     margin-bottom: 5%;
 
     flex-direction: column;
@@ -144,7 +150,8 @@ body>header>a>img {
 /*main styles*/
 .main {
 
-    max-width:60vmin;
+    max-width: 30em;
+    min-width: 30em;
 
 }
 .centerPage{
@@ -157,16 +164,41 @@ body>header>a>img {
    
 
 }
+
+#fileToUpload{
+   width: 0.1;
+   height: 0.1;
+   opacity: 0;
+   overflow: hidden;
+   position: absolute;
+   z-index: -1;
+}
+#fileToUpload + label {
+
+    border: solid 1px;
+    border-radius: 0.5rem;
+    height: 2rem;
+
+    background-color: var(--second-color);
+    display: inline-block;
+    cursor: pointer;
+}
+
+
 /*user post in index.php*/
 .homePost {
     display: flex;
-    border: 1px solid #e41d1d;
+    border: 1px solid var(--second-color);
     margin-bottom: 5%;
+
+    max-height: 35em;
 
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: stretch;
+
+    overflow: hidden;
 }
 
 .homePost>header {
@@ -280,6 +312,9 @@ body>header>a>img {
     height: 2rem;
 }
 
+.postHeader{
+    height: 4em;
+}
 
 
 .postHeader,
@@ -291,7 +326,11 @@ body>header>a>img {
 .homePost {
     margin-top: 5%;
     width: 100%;
+    max-height: 35em;
 }
+
+
+
 
 /*add post form*/
 .posticon1 {
@@ -321,6 +360,7 @@ body>header>a>img {
     display: block;
     margin-left: 15%;
     margin-bottom: 3rem;
+  
 }
 
 .writeCommentArea>input[type="text"],
@@ -348,6 +388,17 @@ body>header>a>img {
 }
 
 /*comment of post*/
+
+.showComment{
+    position: inherit;
+    height: 100%;
+    max-height: 100%;
+}
+.scrollableComments{
+    max-height: 15em;
+    overflow-y: scroll;
+}
+
 .postComment ul li {
     list-style-type: none;
     display: inline-block;
@@ -527,6 +578,8 @@ body>aside h1 {
 
 /* search bar and page */
 
+
+
 .searchResult {
 
     display: flex;
@@ -535,7 +588,7 @@ body>aside h1 {
     justify-content: flex-start;
     align-items: stretch;
     position: absolute;
-    top: 10vh;
+    top: 5em;
 
 
 
@@ -545,7 +598,7 @@ body>aside h1 {
     overflow-y: scroll;
     overflow-x: hidden;
 
-    border-radius: 1vmin;
+    border-radius: 0.5rem;
 
     border: 3px solid rgb(0, 0, 0);
 
@@ -587,17 +640,33 @@ body>aside h1 {
 
 
 .searchResult>article {
-    border-radius: 1vmin;
+    border-radius: 0.5rem;
+}
+/*search result animation*/
+
+.searchResult.close{
+    visibility: hidden;
+    transform: scaleY(0%);
 }
 
 
 .searchResult.closing {
+    height: 0.1;
     opacity: 0;
+    transform: scaleY(0%);
+    transition: 500ms;
 }
 
 .searchResult.open {
+    height: auto;
+    max-height: fit-content;
     opacity: 1;
+
+    transition: 500ms;
+    transform: scaleY(100%);
 }
+
+
 
 .followButton{
     position: inherit;

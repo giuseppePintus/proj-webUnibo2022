@@ -63,6 +63,8 @@ async function generateNotifications() {
             asideHTML += notification;
         }
         aside.innerHTML = asideInitialHTML + asideHTML + `</div></section>`;
+        
+       
 
         notificationIds.forEach(element => {
             document.getElementById("notification" + element).addEventListener('click', event => {
@@ -96,9 +98,8 @@ function addNotificationBellListener(){
             document.querySelector(".main").style.transform = "translateX(0%)"; 
           
             document.querySelector("aside").style.opacity = "0";
-            
-            setTimeout(null, 1000);
 
+            document.querySelector("aside").innerHTML = ""; 
             showNotification = 0;
             
         }else{
@@ -106,7 +107,6 @@ function addNotificationBellListener(){
            
             document.querySelector("aside").style.opacity = "1";
             
-            document.querySelector("aside").innerHTML = ""; 
             showNotification = 1;
             generateNotifications();
         }
@@ -114,13 +114,10 @@ function addNotificationBellListener(){
     });
 }
 
-
-
-
-
-
 /*retrieve posts from the database*/
 let showNotification = 0;
 
+
 generateNotifications();
 addNotificationBellListener();
+
