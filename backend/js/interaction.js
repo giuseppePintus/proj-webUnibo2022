@@ -24,9 +24,6 @@ async function showComment(postid) {
   commentBoxStateMap.set(postid, !commentBoxStateMap.get(postid));
 
   await displayComment(postid, commentBoxStateMap.get(postid));
-  if (commentBoxStateMap.get(postid)) {
-    commentButtonListenr(postid);
-  }
 }
 
 function commentButtonListenr(postid) {
@@ -46,6 +43,7 @@ function commentButtonListenr(postid) {
       }).then(async () => {
         sendNotification(' has commented your post', postid, 'comment');
         refreshPost(postid);
+        await displayComment(postid, commentBoxStateMap.get(postid));
       });
     }
   });
@@ -64,7 +62,6 @@ function sendNotification(message, who, how) {
     responseType: 'json',
     timeout: 5000
   }).then(response => {
-    //console.log(response.data);
     generateNotifications();
   });
 }
@@ -74,7 +71,7 @@ async function displayComment(postid, isVisible) {
     let comments = await getCommentsByPostId(postid);
     document.getElementById("showComment" + postid).innerHTML
       = generateCommentsHTML(comments, postid);
-
+    commentButtonListenr(postid);
   } else {
     document.getElementById("showComment" + postid).innerHTML = "";
 
@@ -123,7 +120,20 @@ function generateCommentsHTML(comments, postid) {
 async function refreshPost(postid) {
   //axios query to get postid info
   //and push them to tag {nLike,nComment,nSave(?)}
-
+  let post = document.getElementById(postid);
+  axios.post('./api-post.php', {
+    postid: postid
+  }, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    responseType: 'json',
+    timeout: 5000
+  }).then( response => {
+    post.querySelector(".nLike").innerHTML = response.data["nlike"];
+    post.querySelector(".nComment").innerHTML = response.data["commented"];
+    post.querySelector(".nSave").innerHTML = response.data["saved"];
+  });
 
   //document.getElementById("commentBox" + postid).innerHTML = "";
   //await displayComment(postid, commentBoxStateMap.get(postid));
@@ -160,6 +170,7 @@ document.body.addEventListener('click', function (event) {
       // If it is, do something
       console.log('save post');
     }
+
   }
 
 });
