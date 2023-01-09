@@ -1,6 +1,5 @@
 
 function generateInfoUser(userInfo) {
-    console.log(userInfo);
     for (let i = 0; i < userInfo.length; i++) {
         let result = `
        
@@ -51,7 +50,6 @@ async function followInteractionsListeners(idUserToFollow) {
         }).then(response => {
             const p = document.querySelector('li#follow' + idUserToFollow + ' p');
             p.innerHTML = "" + response.data;
-            console.log(response.data);
         });
     });
 }
@@ -82,7 +80,6 @@ function searchUser() {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
-        console.log(response.data);
         generateInfoUser(response.data);
         lock = true;
         offsetDB+=sizeQRes;

@@ -9,7 +9,11 @@ $templateParams["usericon"] = UPLOAD_DIR . "icon.png";
 
 $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/profile.js",
 "js/interaction.js" , "js/notifications.js" ,"js/searchBar.js");
-//echo $_POST["user"];
-$templateParams["user"]= $_POST["user"];
+if (isset($_POST["user"])){
+    $templateParams["userProfile"]= $_POST["user"];
+}
+else{
+    $templateParams["userProfile"] = $_SESSION["userid"];
+}
 require 'template/base.php';
 ?>

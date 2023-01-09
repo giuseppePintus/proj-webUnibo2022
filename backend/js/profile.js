@@ -157,28 +157,26 @@ function userInitialPost(userID) {
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;
         lock = true;
-
-        if (user != null) {
-            followInteractionsListeners(userID);
-        }
     });
 }
 
 async function followInteractionsListeners(userID) {
-    document.getElementById("follow").addEventListener("click", () => {
-        axios.post('./api-userFollow.php', {
-            user: userID
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            responseType: 'json',
-            timeout: 5000
-        }).then(response => {
-            const p = document.querySelector('li#follow p');
-            p.innerHTML = "" + response.data;
+    if(document.getElementById("follow")!= null){
+        document.getElementById("follow").addEventListener("click", () => {
+            axios.post('./api-userFollow.php', {
+                user: userID
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                responseType: 'json',
+                timeout: 5000
+            }).then(response => {
+                const p = document.querySelector('li#follow p');
+                p.innerHTML = "" + response.data;
+            });
         });
-    });
+    }    
 }
 
 
@@ -247,13 +245,13 @@ function cleanPosts() {
     document.querySelectorAll(".homePost").forEach(x => x.remove());
 }
 
-const mainNode = document.querySelector("main");
 
-let user = variable;
+
+
 
 const main = document.querySelector("main");
 
-
+let user = variable;
 let offsetUserPostQuery = 0;
 let sizeUserPostQueryResult = 5;
 let lock = true;
@@ -266,9 +264,9 @@ userInfo = getUserInfo(user).then(result => {
     return result;
 });
 profilePageTemplate(userInfo).then(result => {
-    mainNode.innerHTML = result;
+    main.innerHTML = result;
     userInitialPost(user);
     addProfilePageListenrs(user);
     userScrollingPost(user);
-    //followInteractionsListeners();
+    followInteractionsListeners(user);
 });

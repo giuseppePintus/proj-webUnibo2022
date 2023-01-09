@@ -21,7 +21,7 @@
         <form action="search.php" class="searchForm">
             <div class="searchBar">
                 <input id="searchInfo" type="search" placeholder="Search.." name="search">
-                <button type="submit" name="submitsearch">Go</button>
+                <button type="submit" >Go</button>
             </div>
         </form>
         <div id="notification-container" class="notificationIcon">
@@ -62,10 +62,10 @@
         </div>
     </footer>
     <?php    
-    if (isset($templateParams["user"])) :        
+    if (isset($templateParams["userProfile"])) :        
     ?>
     <script>
-     let variable = <?php echo $templateParams["user"]; ?>;
+     let variable = <?php echo $templateParams["userProfile"]; ?>;
     </script>
     <?php       
     endif;
