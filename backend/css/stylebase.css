@@ -706,7 +706,7 @@ body>aside h1 {
 .searchPage{
     justify-self: center;
     width: 100%;
-    padding: 0;
+    padding: 0 1em;
     max-height: fit-content;
     margin: 1rem;
     border-radius: 1rem;
@@ -717,9 +717,12 @@ body>aside h1 {
     display: flex;
   align-items: center;
   
-   justify-content: space-evenly;
+   justify-content: space-between;
     
     width:100%
+}
+.searchPage img{
+    border-radius: 50%;
 }
 
 
