@@ -431,6 +431,15 @@ class DatabaseHelper
 
     }
 
+    public function setNewPassword($newPassword, $userId){
+
+        $stmt = $this->db->prepare("UPDATE `USER_CREDENTIAL` SET `passwordhash`= ? WHERE `userid` = ?");
+        $stmt->bind_param('ss', $newPassword, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result;
+    }
+
 
     /*------------------------------------------end our file--------------------------------------*/
 
