@@ -188,6 +188,16 @@ class DatabaseHelper
         $stmt->execute();
     }
 
+    public function modifyUserIcon($userid, $iconPath){
+        $query = "UPDATE USER_PROFILE 
+        SET usericon = ?
+        WHERE userid = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('si', $iconPath, $userid);
+        $stmt->execute();
+
+    }
+
     public function searchRandomPost($offset,$size, $userid){     
         $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*,
             (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 

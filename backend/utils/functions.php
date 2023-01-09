@@ -53,8 +53,8 @@ function uploadImage($path, $image){
     if($imageSize === false) {
         $msg .= "File caricato non è un'immagine! ";
     }
-    //Controllo dimensione dell'immagine < 500KB
-    if ($image["size"] > $maxKB * 1024) {
+    //Controllo dimensione dell'immagine < 1000KB
+    if ($image["size"] > $maxKB * 2024) {
         $msg .= "File caricato pesa troppo! Dimensione massima è $maxKB KB. ";
     }
 
@@ -62,6 +62,11 @@ function uploadImage($path, $image){
     $imageFileType = strtolower(pathinfo($fullPath,PATHINFO_EXTENSION));
     if(!in_array($imageFileType, $acceptedExtensions)){
         $msg .= "Accettate solo le seguenti estensioni: ".implode(",", $acceptedExtensions);
+    }
+
+    if (!file_exists($path)) {
+        // Crea la cartella
+        mkdir($path, 0777, true);
     }
 
     //Controllo se esiste file con stesso nome ed eventualmente lo rinomino
@@ -82,7 +87,7 @@ function uploadImage($path, $image){
         }
         else{
             $result = 1;
-            $msg = $imageName;
+            $msg = $fullPath;
         }
     }
     return array($result, $msg);

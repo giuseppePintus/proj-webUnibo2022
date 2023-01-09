@@ -15,7 +15,7 @@
 
 <body>
     <header>
-        <a href="profile.php"><img src="<?php echo $templateParams['usericon'] ?>" alt="" /></a>
+        <a href="profile.php"><img src="<?php echo $dbh->searchUserInfo($_SESSION["userid"])['usericon']; ?>" alt="" /></a>
         <h1><?php echo $templateParams["pagename"] ?></h1>
         
         <form action="search.php" class="searchForm">

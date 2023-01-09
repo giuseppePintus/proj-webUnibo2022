@@ -782,7 +782,7 @@ body>aside h1 {
     position: relative;
    
     width: 30vmin;
-    height: auto;
+    height: 30vmin;
     border-radius: 50%;
 }
 
