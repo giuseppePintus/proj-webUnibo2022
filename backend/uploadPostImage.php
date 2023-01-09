@@ -3,7 +3,7 @@
 
 require_once "utils/bootstrap.php";
 
-$target_dir = "upload/";
+$target_dir = UPLOAD_DIR;
 
 // based on the user's login, his pictures will be uploaded to his folder.
 $target_dir .= $_SESSION["userfolder"];
