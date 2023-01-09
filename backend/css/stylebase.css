@@ -1,8 +1,8 @@
 :root {
-    --first-color: rgb(0, 0, 0);
-    --second-color: #940a66 ;
-    --third-color : rgb(255, 0, 0);
-    --base-color : rgb(199, 255, 191);
+    --first-color: rgb(22, 101, 153);
+    --second-color: #07d2e0 ;
+    --third-color : rgb(221, 231, 248);
+    --base-color : rgb(255, 255, 255);
  }
 
 /* Reset styles */
@@ -23,11 +23,11 @@ body {
     width: 100%;
     height: 100%;
 
-    min-width: 360px;
+    min-width: 333px;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1rem;
     line-height: 1.5;
-    color: var(--second-color);
+    /* color: var(--second-color); */
     background-color: var(--base-color);
 
 
@@ -74,7 +74,7 @@ body>header {
 
     display: flex;
     flex-direction: row;
-    background-color:var(--second-color);
+    background-color:var(--first-color);
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
@@ -106,10 +106,10 @@ body>header>a>img {
     width: 90%;
     min-width: 10em;
     display: inline-flex;
-    align-content: center;
     justify-items: center;
-    flex-grow: 1;
     margin-left: 10%;
+    justify-content: center;
+    align-items: center;
 }
 
 .searchBar>input {
@@ -126,7 +126,7 @@ body>header>a>img {
     padding: 0 1rem;
     border: 1px solid var(--first-color);
     border-radius: 0.5rem;
-    background-color: var(--base-color);
+    background-color: var(--second-color);
     cursor: pointer;
 }
 
@@ -175,9 +175,12 @@ body>header>a>img {
 }
 #fileToUpload + label {
 
+    margin: 0;
+    padding: 1px 6px;
+
     border: solid 1px;
     border-radius: 0.5rem;
-    height: 2rem;
+    height: 1.5rem;
 
     background-color: var(--second-color);
     display: inline-block;
@@ -190,7 +193,8 @@ body>header>a>img {
     display: flex;
     border: 1px solid var(--second-color);
     margin-bottom: 5%;
-
+    width: 100%;
+    max-width: 35em;
     max-height: 35em;
 
     flex-direction: column;
@@ -198,6 +202,7 @@ body>header>a>img {
     justify-content: flex-start;
     align-items: stretch;
 
+    padding-bottom: 3%;
     overflow: hidden;
 }
 
@@ -222,7 +227,7 @@ body>header>a>img {
     width: 100%;
 
     padding: 1vmin 0;
-    background-color: #838383;
+    background-color: var(--first-color);
     white-space: nowrap;
 }
 
@@ -262,12 +267,12 @@ body>header>a>img {
     justify-self: center;
     padding: 0;
     font-weight: 200;
-    color: rgb(0, 119, 238);
+    color: var(--second-color);
 }
 
 .homePost>header p {
     padding: 0 5% 0;
-    color: rgb(184, 184, 184);
+    color: var(--second-color)
 }
 
 .homePost>section {
@@ -334,7 +339,7 @@ body>header>a>img {
 
 /*add post form*/
 .posticon1 {
-    background-color: rgb(0, 153, 255);
+    background-color: var(--third-color);
     /* fill color */
 }
 
@@ -357,24 +362,13 @@ body>header>a>img {
 /* add comment to post */
 
 .writeCommentArea {
-    display: block;
-    margin-left: 15%;
-    margin-bottom: 3rem;
-  
-}
-
-.writeCommentArea>input[type="text"],
-.uploadPostImage input[type="text"] {
-    margin: 3% 0 0;
-    width: 71%;
-    height: 2rem;
-    border-radius: 1rem;
-    padding: 1rem;
     display: flex;
+    flex-direction: column;
+        
 }
 
 .writeCommentArea>button {
-    float: right;
+   
     margin-right: 25%;
     height: 2rem;
     width: 5rem;
@@ -385,17 +379,35 @@ body>header>a>img {
 .writeCommentArea>input[type="text"] {
     display: block;
     white-space: pre-wrap;
+    justify-self: center;
+    margin: 0 10% 0;
+    padding-left: 2em;
+    height: 4rem;
+    border-radius: 1rem;
+   
+    /* display: flex; */
+
+}
+
+.uploadPostImage input[type="text"] {
+    margin: 3% 0 0;
+    width: 71%;
+    height: 2rem;
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
 }
 
 /*comment of post*/
 
 .showComment{
-    position: inherit;
     height: 100%;
-    max-height: 100%;
+
+    width: 100%;
 }
 .scrollableComments{
     max-height: 15em;
+    width: 100%;
     overflow-y: scroll;
 }
 
@@ -405,12 +417,16 @@ body>header>a>img {
 }
 
 .postComment {
-    width: 50%;
+    width: 64%;
     height: auto;
     margin-left: 15%;
     margin-top: 3%;
-    background-color: #f2f2f2;
-    overflow: auto;
+    background-color: var(--third-color);
+    overflow-x: auto;
+    padding:  2% 2% 0% 2%;
+    
+
+
 }
 
 .postComment img {
@@ -427,6 +443,7 @@ body>header>a>img {
 }
 
 /*notification*/
+
 
 .notificationContainer {
    
@@ -468,7 +485,8 @@ body>aside h1 {
 
 
 .notificationContainer {
-    border: 2px solid #ccc;
+    border: 2px solid var(--second-color);
+    background-color: var(--base-color);
     width: fit-content;
 }
 .notificationList>div>ul{
@@ -482,20 +500,23 @@ body>aside h1 {
     margin: 1%;
 }
 
-.notificationIcon {
-    position: relative;
+#notification-container{
+    display: flex;
+    flex-direction: row;
+    max-width: 3em;
+    height: auto;
+
 }
 
+
 .notificationIcon>img {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    margin-right: 1rem;
-    object-fit: scale-down;
+    width: 100%;
+    height: auto;
+
 }
 
 .notification0 {
-    background-color: #f2f2f2;
+    background-color: var(--third-color);
     border-radius: 1rem;
 }
 .notification1{
@@ -504,13 +525,11 @@ body>aside h1 {
 
 .notificationNumber {
     position: absolute;
-    top: 0;
-    left: 0;
     z-index: 1;
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    background-color: rgb(255, 93, 93);
+    background-color: var(--second-color);
     color: white;
     text-align: center;
 }
@@ -561,14 +580,9 @@ body>aside h1 {
 
 }
 
-
-.footer-container>a.active {
-    background-color: rgb(83, 152, 255);
-}
-
 .footer-container a:hover,
 .footer-container a.active:hover {
-    background-color: rgb(12, 109, 255);
+    background-color: var(--third-color);
 }
 
 .footer-container img {
@@ -600,9 +614,9 @@ body>aside h1 {
 
     border-radius: 0.5rem;
 
-    border: 3px solid rgb(0, 0, 0);
+    border: 3px solid var(--second-color);
 
-    background-color: white;
+    background-color: var(--base-color);
 
     transition: opacity 1.0s;
 
@@ -612,8 +626,8 @@ body>aside h1 {
     width: 100%;
 }
 
-/* .searchResult>a>div { */
-    .userinfo{
+
+.userinfo{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -625,7 +639,7 @@ body>aside h1 {
     width: 100%;
 
     padding: 1vmin 0;
-    background-color: #838383;
+    background-color: var(--second-color);
     white-space: nowrap;
 }
 
@@ -678,7 +692,7 @@ body>aside h1 {
 /*search page*/
 .searchPage{
     justify-self: center;
-    width: 100vmin;
+    width: 100%;
     padding: 0;
     max-height: fit-content;
     margin: 1rem;
@@ -708,7 +722,7 @@ body>aside h1 {
 }
 .profileInfo>header>div{
     display: flex;
-    width: 100%;
+    width: 97%;
     align-items: center;
 }
 .profileInfo>header>div>img {
@@ -720,7 +734,7 @@ body>aside h1 {
     height: auto;
 
     border-radius: 20px;
-    border: 5px solid #ddd;
+    border: 5px solid var(--second-color);
    
     margin-top: 3vmin;
 
@@ -768,7 +782,7 @@ body>aside h1 {
 
 
 .profileInfo h2 {
-    color: rgb(6, 132, 242);
+    color: var(--second-color);
 }
 
 .profileInfo p {
@@ -791,7 +805,7 @@ body>aside h1 {
 .profilePosts{
     margin: 0;
     padding: 0;
-    background-color: #ddd;
+    background-color: var(--second-color);
     border-radius: 1rem;
 }
 
@@ -846,4 +860,4 @@ body>aside h1 {
     background-color: var(--secondary-color);
 }
 
-/*Profile page*/
+/*  */
