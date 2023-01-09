@@ -840,24 +840,26 @@ body>aside h1 {
 
 
 .settings{
-    width: 30%;
-    height: 100%;
-    
+    width: 100vw;
+    height: 100vh;
+
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
-
-    align-self: center;
+    
+    align-items: stretch;
     justify-content: center;
 }
 .settings > input{
-    margin: 20%;
-    height: 3%;
+    align-self: center;
+    width: 10em;
+    height: 3em;
+    margin: 2em 0;
     border-radius: 1rem;
+    border-color: var(--second-color);
 }
 
 .settings > input:hover{
-    background-color: var(--secondary-color);
+    background-color: var(--third-color);
 }
 
 /*  */

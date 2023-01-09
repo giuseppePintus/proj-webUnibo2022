@@ -10,7 +10,7 @@ async function logout(){
 function nightMode(){
     let root = document.documentElement;
 
-    root.style.setProperty('--primaryColor', "black");
-    root.style.setProperty('--secondaryColor',  "white");
+    root.style.setProperty('--first-color', "black");
+    root.style.setProperty('--second-color',  "white");
     root.style.setProperty('--invert',  "1");
 }
