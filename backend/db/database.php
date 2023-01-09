@@ -28,29 +28,31 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function searchUser($offset,$size,$string,$username){
+    public function searchUser($offset,$size,$string ,$userid){
         
-        $stmt = $this->db->prepare("SELECT userid, username ,usernickname ,usericon, 
+        $stmt = $this->db->prepare("SELECT DISTINCT u.* ,
+        (SELECT COUNT(*) FROM OTHERUSER o WHERE u.userid = o.fol_userid AND o.userid = ? ) AS follow,
         (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(?) * 100 AS similarity 
-        FROM USER_PROFILE 
-        WHERE username LIKE ? AND username != ? 
+        FROM USER_PROFILE u
+        WHERE username LIKE ? AND u.userid != ? 
         ORDER BY similarity DESC 
-        LIMIT ? ,?");
-
+        LIMIT ? ,?;");
         $string2 = "%".$string."%";
-        $stmt->bind_param('ssssii',$string, $string, $string2, $username, $offset, $size);
+        $stmt->bind_param('isssiii',$userid,$string, $string, $string2, $userid, $offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     
-    public function searchRandomUser($offset,$size,$username){
+    public function searchRandomUser($offset,$size, $userid){
         
-        $stmt = $this->db->prepare("SELECT userid, username ,usernickname ,usericon 
-            FROM USER_PROFILE 
-            WHERE username != ? 
-            ORDER BY RAND() LIMIT ? ,?;");
-        $stmt->bind_param('sii',$username, $offset, $size);
+        $stmt = $this->db->prepare("SELECT DISTINCT u.* ,
+            (SELECT COUNT(*) FROM OTHERUSER o WHERE u.userid=o.fol_userid AND o.userid = ? ) AS follow
+            FROM USER_PROFILE u
+            WHERE u.userid != ? 
+            ORDER BY u.userid
+            LIMIT ? , ?;");
+        $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
