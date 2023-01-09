@@ -82,7 +82,7 @@ async function generateNotifications() {
                         notificationNumber.innerHTML = response.data[0]["number"];
                     else {
                         document.getElementById("notification-container").innerHTML = `
-                        <a href="#"><img src="upload/notification.png" alt="notification"></a>`;
+                        <img src="upload/notification.png" alt="notification">`;
                     }
                     generateNotifications();
                 });
@@ -92,7 +92,7 @@ async function generateNotifications() {
 }
 
 function addNotificationBellListener(){
-    document.getElementById("notificationBellIcon").addEventListener('click', event =>{
+    document.getElementById("notification-container").addEventListener('click', event =>{
         if(showNotification){
             
             document.querySelector(".main").style.transform = "translateX(0%)"; 

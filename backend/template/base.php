@@ -25,10 +25,10 @@
             </div>
         </form>
         <div id="notification-container" class="notificationIcon">
-            <img id="notificationBellIcon" src="upload/notification.png" alt="notification">
             <?php if($templateParams["notificationNumber"] > 0)
                 echo '<div id="notificationNumber" class="notificationNumber">'.$templateParams["notificationNumber"].'</div>';
             ?>
+            <img id="notificationBellIcon" src="upload/notification.png" alt="notification">
         </div>
 
         <div class="searchResult close">
