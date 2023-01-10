@@ -70,6 +70,15 @@
     <?php       
     endif;
     ?>
+    <?php    
+    if (isset($templateParams["action"])) :        
+    ?>
+    <script>
+     let action = <?php echo $templateParams["action"]; ?>;
+    </script>
+    <?php       
+    endif;
+    ?>
     <?php
     
     if (isset($templateParams["js"])) :
