@@ -5,14 +5,18 @@ async function profilePageTemplate(userInfo) {
     let resultHtml = await userInfo.then(result => {
         let fol = '';
         if ("follow" in result) {
-            fol = '<li id="follow"><p>';
+            fol = '<input type="submit" id="follow" ';
             if (result["follow"]) {//<img  src="./upload/friend.png" alt="follow"/> follow
-                fol += 'unfollow';
+                fol += 'value="unfollow"';
             }
             else {
-                fol += 'follow';
+                fol += 'value="follow"';
             }
-            fol += '</p></li>';
+            fol += '/>';
+        } else {
+            fol = `<form action="editProfile.php" method="get">
+            <input type="submit" value="Edit Profile" id="editprofile">
+                </form>`;
         }
         let html = `
         <div class="profileInfo">
@@ -32,12 +36,23 @@ async function profilePageTemplate(userInfo) {
                 </div>
                 <p>Bio: ${result["userbiography"]}</p>
                 <ul class="followSection">
-                    <li><a href="search.php"><h3>${result['followedNumber']} followers<h3></a></li>
-                    <li><a href="search.php"><h3>${result['followingNumber']} following<h3></a></li>
                     <li>
-                    <form action="editProfile.php" method="get">
-                        <input type="submit" value="Edit Profile" id="editprofile">
-                    </form>
+                        <form action="follower.php" method="post">
+                        <input type="hidden" name="user" value="${result["userid"]}">
+                        <input type="hidden" name="action" value="0">
+                        <button class="followedNumber" type="submit">${result['followedNumber']} followers</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form action="follower.php" method="post">
+                        <input type="hidden" name="user" value="${result["userid"]}">
+                        <input type="hidden" name="action" value="1">
+                        <button class="followingNumber" type="submit">${result['followingNumber']} following</button>
+                        </form>
+                    </li>
+                    
+                    <li>
+                        ${fol}
                     </li>
                 </ul>
             </div>
@@ -46,7 +61,6 @@ async function profilePageTemplate(userInfo) {
                     <li><button id="myPostsButton" type="button">My Posts</button></li>
                     <li><button id="likedPostsButton" type="button">Liked Posts</button></li>
                     <li><button id="CommentedPostsButton" type="button">Commented Posts</button></li>
-                    ${fol}
                 </ul>
             </div>
             
@@ -159,7 +173,7 @@ function userInitialPost(userID) {
 }
 
 async function followInteractionsListeners(userID) {
-    if(document.getElementById("follow")!= null){
+    if (document.getElementById("follow") != null) {
         document.getElementById("follow").addEventListener("click", () => {
             axios.post('./api-userFollow.php', {
                 user: userID
@@ -170,11 +184,18 @@ async function followInteractionsListeners(userID) {
                 responseType: 'json',
                 timeout: 5000
             }).then(response => {
-                const p = document.querySelector('li#follow p');
-                p.innerHTML = "" + response.data;
+                if (response.data == "unfollow") {
+                    sendNotification(' has started following you!', userID, 'follow');
+                } else if (response.data == "follow") {
+                    sendNotification(' has unfollowed you!', userID, 'follow');
+                }
+                const p = document.getElementById('follow');
+                if(p !== null){
+                    p.value = '' + response.data;
+                }
             });
         });
-    }    
+    }
 }
 
 
@@ -244,7 +265,16 @@ function cleanPosts() {
 }
 
 
-
+function refleshPage(){
+    profilePageTemplate(userInfo).then(result => {
+        main.innerHTML = result;
+        userInitialPost(user);
+        addProfilePageListenrs(user);
+        userScrollingPost(user);
+        followInteractionsListeners(user);
+    });
+    
+}
 
 
 const main = document.querySelector("main");
@@ -261,10 +291,5 @@ userInfo = getUserInfo(user).then(result => {
     user = result["userid"];
     return result;
 });
-profilePageTemplate(userInfo).then(result => {
-    main.innerHTML = result;
-    userInitialPost(user);
-    addProfilePageListenrs(user);
-    userScrollingPost(user);
-    followInteractionsListeners(user);
-});
+
+refleshPage();

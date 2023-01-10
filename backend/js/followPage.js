@@ -25,7 +25,7 @@ function generateInfoUser(userInfo) {
                         </li>
                         <li id="follow${userInfo[i]["userid"]}" class="followButton"> 
                             <img  src="./upload/friend.png" alt="follow"/>
-                            <p>${userInfo[i]["follow"]?"unfollow":"follow"}</p>
+                            <p>${userInfo[i]["follow"] ? "unfollow" : "follow"}</p>
                         </li>
                     </ul>
                 </div>
@@ -48,39 +48,19 @@ async function followInteractionsListeners(idUserToFollow) {
             responseType: 'json',
             timeout: 5000
         }).then(response => {
-        
-            if(response.data == "unfollow"){
-                sendNotification(' has started following you!', idUserToFollow, 'follow');
-            }else if (response.data == "follow"){
-                sendNotification(' has unfollowed you!', idUserToFollow, 'follow');
-            }
             const p = document.querySelector('li#follow' + idUserToFollow + ' p');
             p.innerHTML = "" + response.data;
         });
     });
 }
 
-function randomUser() {
-    axios.post('./api-randomSearch.php', {
-        offset: randomOffsetDB,
-        size: sizeQRes
-    }, {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }).then(response => {
-        generateInfoUser(response.data);
-        lock = true;
-        randomOffsetDB += sizeQRes;
-    });
-}
-
-
-function searchUser() {
-    axios.post('./api-search.php', {
+function searchFollow() {
+    axios.post('./api-followList.php', {
+        user: user,
+        string: input.value,
         offset: offsetDB,
         size: sizeQRes,
-        string: input.value
+        action
     }, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -88,72 +68,82 @@ function searchUser() {
     }).then(response => {
         generateInfoUser(response.data);
         lock = true;
-        offsetDB+=sizeQRes;
+        offsetDB += sizeQRes;
     });
 }
 
-// Get the current URL
-let url = window.location.search;
-// Create a new URLSearchParams object from the URL
-let params = new URLSearchParams(url);
-// Get the value of the "user" parameter
-let user = params.get('user');
+
+
+function addProfilePageListenrs() {
+    document.getElementById('followedButton').addEventListener('click', () => {
+        action = 0;
+        cleanPosts();
+        searchFollow();
+        document.querySelector("#followingButton").classList.remove(".selected");
+        document.querySelector("#followedButton").classList.add(".selected");
+    });
+
+    document.getElementById('followingButton').addEventListener('click', () => {
+        action = 1;
+        cleanPosts();
+        searchFollow();
+        document.querySelector("#followedButton").classList.remove(".selected");
+        document.querySelector("#followingButton").classList.add(".selected");
+    });
+
+
+}
+
+function cleanPosts() {
+    offsetDB = 0;
+    document.querySelectorAll(".userinfo").forEach(x => x.remove());
+}
+
+function addHeaders() {
+    let header = `
+    <div class="profilePosts">
+                    <ul>
+                        <li><button id="followedButton" type="button">follower</button></li>
+                        <li><button id="followingButton" type="button">who is following</button></li>
+                    </ul>
+                </div>`;
+    main.insertAdjacentHTML('afterbegin', header);
+    switch (action) {
+        case 0:
+            document.querySelector("#followedButton").classList.add(".selected");
+            break;
+        case 1:
+            document.querySelector("#followingButton").classList.add(".selected");
+            break;
+    }
+}
+
 
 const main = document.querySelector("main");
-const urlParams = new URLSearchParams(window.location.search);
-const search = urlParams.get('search');
 const input = document.querySelector('#searchInfo');
 
-let offsetDB = 0, randomOffsetDB = 0;
-let sizeQRes = 5;
+let user = variable;
+let offsetDB = 0;
+let sizeQRes = 10;
 let lock = true;
-
-if (search != null) {
-    input.value = search;
-    axios.post('./api-search.php', {
-        offset: offsetDB,
-        size: sizeQRes,
-        string: input.value
-    }, {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }).then(response => {
-        generateInfoUser(response.data);
-    });
-
-
-}
-else {
-    randomUser();
-}
+addHeaders();
+addProfilePageListenrs();
+searchFollow();
 
 input.addEventListener('input', function () {
     offsetDB = 0;
-    randomOffsetDB = 0;
-    main.innerHTML = "";
-    if (input.value != null && input.value.length != 0) {
-        //axios call
-        searchUser();
-    } else {        
-        randomUser();
-    }
+    cleanPosts();
+    searchFollow();
 });
 
 
 window.addEventListener('scroll', () => {
     const lastChild = main.lastElementChild;
     const childCount = main.childElementCount;
-    if (window.scrollY > main.offsetHeight - window.innerHeight  && lock) {
-        if (offsetDB + randomOffsetDB === childCount) {
+    if (window.scrollY > main.offsetHeight - window.innerHeight && lock) {
+        if (offsetDB === childCount) {
             lock = false;
-            if (randomOffsetDB === 0) {
-                searchUser();
-            }
-            else {
-                randomUser();
-            }
-
+            searchFollow();
         }
     }
 });
