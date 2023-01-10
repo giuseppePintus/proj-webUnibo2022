@@ -32,8 +32,21 @@ async function profilePageTemplate(userInfo) {
                 </div>
                 <p>Bio: ${result["userbiography"]}</p>
                 <ul class="followSection">
-                    <li><a href="search.php"><h3>${result['followedNumber']} followers<h3></a></li>
-                    <li><a href="search.php"><h3>${result['followingNumber']} following<h3></a></li>
+                    <li>
+                        <form action="follower.php" method="post">
+                        <input type="hidden" name="user" value="${result["userid"]}">
+                        <input type="hidden" name="action" value="0">
+                        <button type="submit">${result['followedNumber']} followers</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form action="follower.php" method="post">
+                        <input type="hidden" name="user" value="${result["userid"]}">
+                        <input type="hidden" name="action" value="1">
+                        <button type="submit">${result['followingNumber']} following</button>
+                        </form>
+                    </li>
+                    
                     <li>
                     <form action="editProfile.php" method="get">
                         <input type="submit" value="Edit Profile" id="editprofile">
