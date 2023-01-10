@@ -99,7 +99,7 @@ const search = urlParams.get('search');
 const input = document.querySelector('#searchInfo');
 
 let offsetDB = 0, randomOffsetDB = 0;
-let sizeQRes = 5;
+let sizeQRes = 10;
 let lock = true;
 
 if (search != null) {

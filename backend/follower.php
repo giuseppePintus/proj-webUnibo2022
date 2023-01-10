@@ -4,7 +4,7 @@ require_once "utils/bootstrap.php";
 
 //use Base template
 $templateParams["pagetitle"] = "Tachyon - Profile";
-$templateParams["pagename"] = "follow";
+$templateParams["pagename"] = "Follow";
 $templateParams["usericon"] = UPLOAD_DIR . "icon.png";
 
 $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/followPage.js", "js/darkMode.js",

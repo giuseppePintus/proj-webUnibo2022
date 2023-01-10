@@ -26,7 +26,7 @@ function generateSearchResult(posts) {
 const input = document.querySelector('#searchInfo');
 const result = document.querySelector('.searchResult');
 let offsetDB=0;
-let sizeQRes=5;
+let sizeQRes=10;
 
 
 input.addEventListener('input', function () {
