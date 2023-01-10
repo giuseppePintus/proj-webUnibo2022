@@ -47,7 +47,8 @@ class DatabaseHelper
     public function searchRandomUser($offset,$size, $userid){
         
         $stmt = $this->db->prepare("SELECT DISTINCT u.* ,
-            (SELECT COUNT(*) FROM OTHERUSER o WHERE u.userid=o.fol_userid AND o.userid = ? ) AS follow
+            (SELECT COUNT(*) FROM OTHERUSER o 
+                WHERE u.userid = o.fol_userid AND o.userid = ? ) AS follow
             FROM USER_PROFILE u
             WHERE u.userid != ? 
             ORDER BY u.userid
@@ -58,31 +59,33 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function searchFollowedUser($offset,$size, $userid){
+    public function searchFollowedUser($offset,$size, $string,$userid,$loggedUserId){
         
-        $stmt = $this->db->prepare("SELECT *,
-        (SELECT COUNT(*) FROM OTHERUSER o1 WHERE o1.userid = ? AND o1.fol_userid = u.userid) as follow
-        FROM USER_PROFILE u
-        WHERE u.userid IN (SELECT o.userid
-                          FROM OTHERUSER o
-                          WHERE o.fol_userid = ?)
-        LIMIT ?, ?;");
-        $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
+        $stmt = $this->db->prepare("SELECT u.*,
+            (SELECT COUNT(*) FROM OTHERUSER o1 WHERE o1.userid = ? AND o1.fol_userid = u.userid) as follow
+            FROM USER_PROFILE u
+            WHERE (u.username LIKE ? OR u.usernickname LIKE ? ) AND u.userid IN 
+                (SELECT o.userid FROM OTHERUSER o WHERE o.fol_userid = ? )
+                AND u.userid != ?
+            LIMIT ?, ?;");
+        $string = "%".$string."%";
+        $stmt->bind_param('issiiii',$loggedUserId,$string,$string, $userid, $loggedUserId,$offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function searchFollowingUser($offset,$size, $userid){
+    public function searchFollowingUser($offset,$size, $string,$userid,$loggedUserId){
         
-        $stmt = $this->db->prepare("SELECT *,
-        (SELECT COUNT(*) FROM OTHERUSER o1 WHERE o1.userid = ? AND o1.fol_userid = u.userid) as follow
-        FROM USER_PROFILE u
-        WHERE u.userid IN (SELECT o.fol_userid
-                          FROM OTHERUSER o
-                          WHERE o.userid = ?)
-        LIMIT ?, ?;");
-        $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
+        $stmt = $this->db->prepare("SELECT u.*,
+            (SELECT COUNT(*) FROM OTHERUSER o1 WHERE o1.userid = ? AND o1.fol_userid = u.userid) as follow
+            FROM USER_PROFILE u
+            WHERE (u.username LIKE ? OR u.usernickname LIKE ?) AND u.userid IN (SELECT o.fol_userid
+                FROM OTHERUSER o
+                WHERE o.userid = ? AND o.fol_userid != ? )
+            LIMIt ?,?;");
+        $string = "%".$string."%";
+        $stmt->bind_param('issiiii',$loggedUserId,$string,$string, $userid, $loggedUserId,$offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);

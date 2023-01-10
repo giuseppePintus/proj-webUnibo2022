@@ -25,7 +25,7 @@ function generateInfoUser(userInfo) {
                         </li>
                         <li id="follow${userInfo[i]["userid"]}" class="followButton"> 
                             <img  src="./upload/friend.png" alt="follow"/>
-                            <p>${userInfo[i]["follow"]?"unfollow":"follow"}</p>
+                            <p>${userInfo[i]["follow"] ? "unfollow" : "follow"}</p>
                         </li>
                     </ul>
                 </div>
@@ -55,7 +55,7 @@ async function followInteractionsListeners(idUserToFollow) {
 }
 
 function searchFollow() {
-    axios.post('./api-follower.php', {
+    axios.post('./api-followList.php', {
         user: user,
         string: input.value,
         offset: offsetDB,
@@ -75,17 +75,23 @@ function searchFollow() {
 
 
 function addProfilePageListenrs() {
-    document.getElementById('followingButton').addEventListener('click', () => {
+    document.getElementById('followedButton').addEventListener('click', () => {
         action = 0;
         cleanPosts();
-        console.log("followingButton");
+        searchFollow();
+        document.querySelector("#followingButton").classList.remove(".selected");
+        document.querySelector("#followedButton").classList.add(".selected");
     });
 
-    document.getElementById('followedButton').addEventListener('click', () => {
+    document.getElementById('followingButton').addEventListener('click', () => {
         action = 1;
         cleanPosts();
-        console.log("followedButton");
+        searchFollow();
+        document.querySelector("#followedButton").classList.remove(".selected");
+        document.querySelector("#followingButton").classList.add(".selected");
     });
+
+
 }
 
 function cleanPosts() {
@@ -97,11 +103,19 @@ function addHeaders() {
     let header = `
     <div class="profilePosts">
                     <ul>
-                        <li><button id="followedButton" type="button">who followed you</button></li>
-                        <li><button id="followingButton" type="button">your followings</button></li>
+                        <li><button id="followedButton" type="button">follower</button></li>
+                        <li><button id="followingButton" type="button">who is following</button></li>
                     </ul>
                 </div>`;
     main.insertAdjacentHTML('afterbegin', header);
+    switch (action) {
+        case 0:
+            document.querySelector("#followedButton").classList.add(".selected");
+            break;
+        case 1:
+            document.querySelector("#followingButton").classList.add(".selected");
+            break;
+    }
 }
 
 
@@ -110,26 +124,26 @@ const input = document.querySelector('#searchInfo');
 
 let user = variable;
 let offsetDB = 0;
-let sizeQRes = 5;
+let sizeQRes = 10;
 let lock = true;
-
 addHeaders();
 addProfilePageListenrs();
+searchFollow();
 
 input.addEventListener('input', function () {
     offsetDB = 0;
     cleanPosts();
-    //searchFollow();  
+    searchFollow();
 });
 
 
 window.addEventListener('scroll', () => {
     const lastChild = main.lastElementChild;
     const childCount = main.childElementCount;
-    if (window.scrollY > main.offsetHeight - window.innerHeight  && lock) {
-        if (offsetDB  === childCount) {
+    if (window.scrollY > main.offsetHeight - window.innerHeight && lock) {
+        if (offsetDB === childCount) {
             lock = false;
-            //searchFollow();
+            searchFollow();
         }
     }
 });

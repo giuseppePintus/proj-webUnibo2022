@@ -7,9 +7,8 @@ $templateParams["pagetitle"] = "Tachyon - Profile";
 $templateParams["pagename"] = "follow";
 $templateParams["usericon"] = UPLOAD_DIR . "icon.png";
 
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/followPage.js",
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/followPage.js", "js/darkMode.js",
 "js/interaction.js" , "js/notifications.js" );
-
 
 if( !isset($_POST["user"])){
     $user= $_SESSION["userid"];
