@@ -58,6 +58,38 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function searchFollowedUser($offset,$size, $userid){
+        
+        $stmt = $this->db->prepare("SELECT *,
+        (SELECT COUNT(*) FROM OTHERUSER o1 WHERE o1.userid = ? AND o1.fol_userid = u.userid) as follow
+        FROM USER_PROFILE u
+        WHERE u.userid IN (SELECT o.userid
+                          FROM OTHERUSER o
+                          WHERE o.fol_userid = ?)
+        LIMIT ?, ?;");
+        $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function searchFollowingUser($offset,$size, $userid){
+        
+        $stmt = $this->db->prepare("SELECT *,
+        (SELECT COUNT(*) FROM OTHERUSER o1 WHERE o1.userid = ? AND o1.fol_userid = u.userid) as follow
+        FROM USER_PROFILE u
+        WHERE u.userid IN (SELECT o.fol_userid
+                          FROM OTHERUSER o
+                          WHERE o.userid = ?)
+        LIMIT ?, ?;");
+        $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+
+
     public function searchUserInfo($userid){        
         $stmt = $this->db->prepare("SELECT up.* ,
         (SELECT COUNT(*) FROM USER_PROFILE up2, OTHERUSER o2 WHERE up2.userid = o2.userid AND up2.userid = ?) as followingNumber,

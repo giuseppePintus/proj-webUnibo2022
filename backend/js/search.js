@@ -54,10 +54,12 @@ async function followInteractionsListeners(idUserToFollow) {
     });
 }
 
-function randomUser() {
+
+function getUser() {
     axios.post('./api-randomSearch.php', {
         offset: randomOffsetDB,
-        size: sizeQRes
+        size: sizeQRes,
+        userDisplaySelector : userDisplaySelector
     }, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -101,6 +103,7 @@ const input = document.querySelector('#searchInfo');
 let offsetDB = 0, randomOffsetDB = 0;
 let sizeQRes = 5;
 let lock = true;
+let userDisplaySelector = 2; // 0 random users, 1 followed users, 2 following users
 
 if (search != null) {
     input.value = search;
@@ -119,7 +122,7 @@ if (search != null) {
 
 }
 else {
-    randomUser();
+    getUser();
 }
 
 input.addEventListener('input', function () {
@@ -130,7 +133,7 @@ input.addEventListener('input', function () {
         //axios call
         searchUser();
     } else {        
-        randomUser();
+        getUser();
     }
 });
 
@@ -145,7 +148,7 @@ window.addEventListener('scroll', () => {
                 searchUser();
             }
             else {
-                randomUser();
+                getUser();
             }
 
         }
