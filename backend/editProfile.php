@@ -1,15 +1,18 @@
+<?php
+require_once "utils/bootstrap.php";
 
-<html>
-<form action="api-editProfile.php" method="post" enctype="multipart/form-data">
-  <label for="fname">Your Nickname:</label><br>
-  <input type="text" id="nickname" name="nickname"><br>
-  <hr>
-  <label for="lname">Your Bio:</label><br>
-  <input type="text" id="bio" name="bio"><br>
-  <hr>
-  Select image to change your icon: 
-  <input type="file" name="fileToUpload" id="fileToUpload"><br>
-  <hr>
-  <input type="submit" value="Submit">
-</form>
-</html>
+
+//use Base template
+$templateParams["pagetitle"] = "Tachyon - Edit Profile";
+$templateParams["pagename"] = "Edit Profile";
+//$templateParams["usericon"] = UPLOAD_DIR . "icon.png";
+
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/editProfile.js", "js/darkMode.js",
+"js/interaction.js" , "js/notifications.js" ,"js/searchBar.js");
+if (isset($_POST["user"])){
+    $templateParams["userProfile"]= $_POST["user"];
+}
+else{
+    $templateParams["userProfile"] = $_SESSION["userid"];
+}
+require 'template/base.php';
