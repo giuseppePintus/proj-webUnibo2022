@@ -48,18 +48,20 @@ function nightMode(){
   let valCookie = getCookie("nightMode");
   if(valCookie == null || valCookie == "0"){
       setCookie("nightMode", "1");
-      document.documentElement.style.setProperty('--first-color', arrayColor[3]);
-  document.documentElement.style.setProperty('--second-color', arrayColor[4]);
-  document.documentElement.style.setProperty('--third-color', arrayColor[5]);
-  document.documentElement.style.setProperty('--base-color', "#000");
-  document.documentElement.style.setProperty('--text-color', "#fff");
+    document.documentElement.style.setProperty('--first-color', arrayColor[3]);
+    document.documentElement.style.setProperty('--second-color', arrayColor[4]);
+    document.documentElement.style.setProperty('--third-color', arrayColor[5]);
+    document.documentElement.style.setProperty('--base-color', "#000");
+    document.documentElement.style.setProperty('--text-color', "#fff");
+    document.documentElement.style.setProperty('--invert', 1);
   }else{
-      setCookie("nightMode", "0");
-      document.documentElement.style.setProperty('--first-color', arrayColor[0]);
-  document.documentElement.style.setProperty('--second-color', arrayColor[1]);
-  document.documentElement.style.setProperty('--third-color', arrayColor[2]);
-  document.documentElement.style.setProperty('--base-color', "#fff");
-  document.documentElement.style.setProperty('--text-color', "#000");
+    setCookie("nightMode", "0");
+    document.documentElement.style.setProperty('--first-color', arrayColor[0]);
+    document.documentElement.style.setProperty('--second-color', arrayColor[1]);
+    document.documentElement.style.setProperty('--third-color', arrayColor[2]);
+    document.documentElement.style.setProperty('--base-color', "#fff");
+    document.documentElement.style.setProperty('--text-color', "#000");
+    document.documentElement.style.setProperty('--invert', 0);
   }
   document.querySelector('input[name="NightButton"]').value = valCookie == 0 ? "toggle light" : "toggle dark" ; 
   return;

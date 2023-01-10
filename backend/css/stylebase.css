@@ -41,18 +41,14 @@ body {
 
     width: 100%;
     height: 100%;
+    max-height: 100vh;
 
-    min-width: 333px;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1rem;
     line-height: 1.5;
    
     background-color: var(--base-color);
-    
-
-
 }
-
 
 /* Basic styles */
 
@@ -104,6 +100,8 @@ form{
 
 body>header {
     width: auto;
+    
+
     height: max-content;
     
     margin: 0;
@@ -119,14 +117,18 @@ body>header {
     border-radius: 1rem;
 
 }
+body>header>a{
+    width: 5em;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+}
 
 body>header>a>img {
-    width: 3rem;
-    height: 3rem;
+    width: 100%;
+    height: auto;
 
-    margin-right: 1rem;
-    
-    border-radius: 50%;
 }
 
 
@@ -141,7 +143,7 @@ body>header>a>img {
 
 .searchBar {
     width: 90%;
-    min-width: 10em;
+ 
     display: inline-flex;
     justify-items: center;
     margin-left: 10%;
@@ -187,7 +189,7 @@ body>header>a>img {
 /*main styles*/
 .main {
 
-    max-width: 99vw;
+    max-width: 99%;
     width: 30em;
 
 }
@@ -581,31 +583,42 @@ body>aside h1 {
     right: 0;
 
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+   
+    
 
     height: auto;
 
     background-color: var(--base-color);
     border-top: 1px solid var(--third-color);
+
+    box-sizing: border-box;
 }
 
 .footer-container ul {
     display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    width: 100%;
+
+    height: 5vh;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 .footer-container li {
-    flex-grow: 1;
-    text-align: center;
+    
+    width: 100%;
+    height: 100%;
 }
 
 .footer-container a {
-    display: block;
-    padding: 0.5rem 0;
- 
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
@@ -615,9 +628,10 @@ body>aside h1 {
 }
 
 .footer-container img {
-    width: 10%;
+    width: 2em;
     height: auto;
     filter: invert(var(--invert));
+    
 }
 
 /* search bar and page */
@@ -631,20 +645,21 @@ body>aside h1 {
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: stretch;
+
     position: absolute;
     top: 5em;
 
-
-
     max-height: 40vh;
-    width: 80vw;
+    width: 30em;
+    max-width: 80%;
 
     overflow-y: scroll;
     overflow-x: hidden;
 
     border-radius: 0.5rem;
 
-    border: 3px solid var(--third-color);
+    /* border: 3px solid var(--third-color); */
+    z-index: 2;
 
     background-color: var(--base-color);
 
@@ -941,5 +956,52 @@ body>aside h1 {
 .settings > input:hover{
     background-color: var(--second-color);
 }
+@media only screen and (min-width: 400px){
+    .searchBar {
+        min-width: 10em;
+    }
+}
 
-/*  */
+@media only screen and (max-width: 400px){
+
+    body{
+        max-width: 98%;
+    }
+
+    body>header {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body>header h1{
+        visibility: hidden;
+        width: 0.1px;
+        position: absolute;
+
+    }
+    .searchPage{
+        margin: 1rem 0;
+    }
+    .centerPage{
+        margin: 0;
+    }
+    .main{
+        margin: 0;
+        padding: 0;
+        max-width: 99%;
+    }
+
+    .profileInfo img{
+        margin: 0;
+    }
+    .footer-container{
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    #profilePostArea{
+        
+    }
+    
+}

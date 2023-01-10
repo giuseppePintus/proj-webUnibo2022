@@ -53,8 +53,6 @@ async function profilePageTemplate(userInfo) {
             </section>
         </div>
 
-        <div id="profilePostArea">
-        </div>
         `;
         return html;
     });
