@@ -1,7 +1,6 @@
 <?php
 require_once "utils/bootstrap.php";
 
-
 if(!isset($_POST['offset']) || !isset($_POST['size']) || !isset($_POST['userDisplaySelector'])){
     echo json_encode("");
     exit(0);

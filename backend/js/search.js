@@ -65,6 +65,7 @@ function getUser() {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
+        console.log(response.data);
         generateInfoUser(response.data);
         lock = true;
         randomOffsetDB += sizeQRes;
@@ -88,6 +89,32 @@ function searchUser() {
     });
 }
 
+function addProfilePageListenrs() {
+    document.getElementById('randomButton').addEventListener('click', () => {
+        userDisplaySelector = 0;
+        cleanPosts();
+        getUser();
+    });
+
+    document.getElementById('followedButton').addEventListener('click', () => {
+        userDisplaySelector = 1;
+        cleanPosts();
+        getUser();
+    });
+
+    document.getElementById('followingButton').addEventListener('click', () => {
+        userDisplaySelector = 2;
+        cleanPosts();
+        getUser();
+    });
+}
+
+function cleanPosts() {
+    offsetUserPostQuery = 0;
+    document.querySelectorAll(".userinfoSearchPage").forEach(x => x.remove());
+}
+
+
 // Get the current URL
 let url = window.location.search;
 // Create a new URLSearchParams object from the URL
@@ -103,7 +130,18 @@ const input = document.querySelector('#searchInfo');
 let offsetDB = 0, randomOffsetDB = 0;
 let sizeQRes = 5;
 let lock = true;
-let userDisplaySelector = 2; // 0 random users, 1 followed users, 2 following users
+let userDisplaySelector = 0; // 0 random users, 1 followed users, 2 following users
+
+main.innerHTML = `
+<div class="profilePosts">
+                <ul>
+                    <li><button id="randomButton" type="button">you may be interested</button></li>
+                    <li><button id="followedButton" type="button">who followed you</button></li>
+                    <li><button id="followingButton" type="button">your followings</button></li>
+                </ul>
+            </div>`;
+
+addProfilePageListenrs();
 
 if (search != null) {
     input.value = search;
@@ -118,8 +156,6 @@ if (search != null) {
     }).then(response => {
         generateInfoUser(response.data);
     });
-
-
 }
 else {
     getUser();
@@ -132,8 +168,6 @@ input.addEventListener('input', function () {
     if (input.value != null && input.value.length != 0) {
         //axios call
         searchUser();
-    } else {        
-        getUser();
     }
 });
 

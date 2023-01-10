@@ -673,6 +673,7 @@ body>aside h1 {
 
 .userinfo img {
     width: 30px;
+    height: 30px;
 }
 .userinfo button{
     background-color: var(--second-color) ;
@@ -764,7 +765,7 @@ body>aside h1 {
     width: 100%;
     padding: 0 1em;
     max-height: fit-content;
-    margin: 1rem;
+    margin-bottom: 1%;
     border-radius: 1rem;
 
 }
