@@ -68,7 +68,7 @@ function getUser() {
         console.log(response.data);
         generateInfoUser(response.data);
         lock = true;
-        randomOffsetDB += sizeQRes;
+        //randomOffsetDB += sizeQRes;
     });
 }
 
@@ -111,7 +111,7 @@ function addProfilePageListenrs() {
 
 function cleanPosts() {
     offsetUserPostQuery = 0;
-    document.querySelectorAll(".userinfoSearchPage").forEach(x => x.remove());
+    document.querySelectorAll(".userinfo").forEach(x => x.remove());
 }
 
 
