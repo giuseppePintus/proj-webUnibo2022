@@ -42,17 +42,26 @@ async function digestMessage(message) {
 }
 
 function nightMode(){
+  let paletteCookie = getCookie("colorPalette");
+  let arrayColor = JSON.parse(paletteCookie);
+
   let valCookie = getCookie("nightMode");
   if(valCookie == null || valCookie == "0"){
       setCookie("nightMode", "1");
-      document.documentElement.classList.remove("light");
-      document.documentElement.classList.add("dark");
+      document.documentElement.style.setProperty('--first-color', arrayColor[3]);
+  document.documentElement.style.setProperty('--second-color', arrayColor[4]);
+  document.documentElement.style.setProperty('--third-color', arrayColor[5]);
+  document.documentElement.style.setProperty('--base-color', "#000");
+  document.documentElement.style.setProperty('--text-color', "#fff");
   }else{
       setCookie("nightMode", "0");
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
+      document.documentElement.style.setProperty('--first-color', arrayColor[0]);
+  document.documentElement.style.setProperty('--second-color', arrayColor[1]);
+  document.documentElement.style.setProperty('--third-color', arrayColor[2]);
+  document.documentElement.style.setProperty('--base-color', "#fff");
+  document.documentElement.style.setProperty('--text-color', "#000");
   }
-  document.querySelector('input[name="NightButton"]').value = valCookie==0 ? "toggle dark" : "toggle light" ; 
+  document.querySelector('input[name="NightButton"]').value = valCookie == 0 ? "toggle light" : "toggle dark" ; 
   return;
 }
 
@@ -97,13 +106,13 @@ function changeColor(){
     <div class="selectColor">
       <label for="colorPicker">Choose your base color</label><br>
       <input type="color" id="colorPicker" name="colorPicker" value="#ff0000"><br>
-      <input type="submit" value="Select" onClick="getPalette()">
+      <input type="submit" value="Select" onClick="setPalette()">
     </div>
   `;
   return;
 }
 
-function getPalette(){
+function setPalette(){
   let color = document.querySelector("#colorPicker").value;
   let hsl = hexToHsl(color);
 
@@ -117,14 +126,15 @@ function getPalette(){
       ];
 
   let darkPalette = [
-      hslToHex({...hsl, l:25}), 
-      hslToHex({...hsl, h: (hsl.h + 120) % 360, l:25}), 
-      hslToHex({...hsl, h: (hsl.h + 240) % 360, l:25})
+      hslToHex({...hsl, l:(l-10)}), 
+      hslToHex({...hsl, h: (hsl.h + 120) % 360, l: (l-10)}), 
+      hslToHex({...hsl, h: (hsl.h + 240) % 360, l: (l-10)})
       ];
   let concatArray = lightPalette.concat(darkPalette) ; 
       console.log(concatArray)
   //salvo valori in un cookie
   setCookie("colorPalette", JSON.stringify(concatArray) );
+  window.location.href = './settings.php';
   return;
 }
 
@@ -217,4 +227,4 @@ main.innerHTML = `
         <input type="button"  name="changePassButton" value="cambia password"  onclick="changePassword()">
     </div>`;
 
-document.querySelector('input[name="NightButton"]').value = getCookie("nightMode")==0 ? "toggle light" : "toggle dark" ; 
+document.querySelector('input[name="NightButton"]').value = getCookie("nightMode")==0 ? "toggle dark" : "toggle light" ; 
