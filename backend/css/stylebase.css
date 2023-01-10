@@ -184,9 +184,8 @@ body>header>a>img {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
+    margin-bottom: 10%;
    
-   
-
 }
 
 #fileToUpload{
