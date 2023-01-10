@@ -40,14 +40,14 @@ async function profilePageTemplate(userInfo) {
                         <form action="follower.php" method="post">
                         <input type="hidden" name="user" value="${result["userid"]}">
                         <input type="hidden" name="action" value="0">
-                        <button type="submit">${result['followedNumber']} followers</button>
+                        <button class="followedNumber" type="submit">${result['followedNumber']} followers</button>
                         </form>
                     </li>
                     <li>
                         <form action="follower.php" method="post">
                         <input type="hidden" name="user" value="${result["userid"]}">
                         <input type="hidden" name="action" value="1">
-                        <button type="submit">${result['followingNumber']} following</button>
+                        <button class="followingNumber" type="submit">${result['followingNumber']} following</button>
                         </form>
                     </li>
                     
