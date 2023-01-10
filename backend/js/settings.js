@@ -116,7 +116,7 @@ function changeColor(){
 
 function setPalette(){
   let color = document.querySelector("#colorPicker").value;
-  let hsl = hexToHsl(color);
+  const  hsl = hexToHsl(color);
 
   console.log(hsl);
 
@@ -128,9 +128,9 @@ function setPalette(){
       ];
 
   let darkPalette = [
-      hslToHex({...hsl, l:(l-10)}), 
-      hslToHex({...hsl, h: (hsl.h + 120) % 360, l: (l-10)}), 
-      hslToHex({...hsl, h: (hsl.h + 240) % 360, l: (l-10)})
+      hslToHex({...hsl, l: (hsl.l-10)}), 
+      hslToHex({...hsl, h: (hsl.h + 120) % 360, l: (hsl.l-10)}), 
+      hslToHex({...hsl, h: (hsl.h + 240) % 360, l: (hsl.l-10)})
       ];
   let concatArray = lightPalette.concat(darkPalette) ; 
       console.log(concatArray)
