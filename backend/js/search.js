@@ -25,7 +25,7 @@ function generateInfoUser(userInfo) {
                         </li>
                         <li id="follow${userInfo[i]["userid"]}" class="followButton"> 
                             <img  src="./upload/friend.png" alt="follow"/>
-                            <p>${userInfo[i]["follow"]?"unfollow":"follow"}</p>
+                            <p>${userInfo[i]["follow"] ? "unfollow" : "follow"}</p>
                         </li>
                     </ul>
                 </div>
@@ -59,7 +59,7 @@ function getUser() {
     axios.post('./api-randomSearch.php', {
         offset: randomOffsetDB,
         size: sizeQRes,
-        userDisplaySelector : userDisplaySelector
+        userDisplaySelector: userDisplaySelector
     }, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -85,7 +85,7 @@ function searchUser() {
     }).then(response => {
         generateInfoUser(response.data);
         lock = true;
-        offsetDB+=sizeQRes;
+        offsetDB += sizeQRes;
     });
 }
 
@@ -114,6 +114,17 @@ function cleanPosts() {
     document.querySelectorAll(".userinfo").forEach(x => x.remove());
 }
 
+function addHeaders() {
+    main.innerHTML = `
+    <div class="profilePosts">
+                    <ul>
+                        <li><button id="randomButton" type="button">you may be interested</button></li>
+                        <li><button id="followedButton" type="button">who followed you</button></li>
+                        <li><button id="followingButton" type="button">your followings</button></li>
+                    </ul>
+                </div>`;
+}
+
 
 // Get the current URL
 let url = window.location.search;
@@ -132,15 +143,8 @@ let sizeQRes = 5;
 let lock = true;
 let userDisplaySelector = 0; // 0 random users, 1 followed users, 2 following users
 
-main.innerHTML = `
-<div class="profilePosts">
-                <ul>
-                    <li><button id="randomButton" type="button">you may be interested</button></li>
-                    <li><button id="followedButton" type="button">who followed you</button></li>
-                    <li><button id="followingButton" type="button">your followings</button></li>
-                </ul>
-            </div>`;
-
+//the part of follow and followers
+addHeaders();
 addProfilePageListenrs();
 
 if (search != null) {
@@ -175,7 +179,7 @@ input.addEventListener('input', function () {
 window.addEventListener('scroll', () => {
     const lastChild = main.lastElementChild;
     const childCount = main.childElementCount;
-    if (window.scrollY > main.offsetHeight - window.innerHeight  && lock) {
+    if (window.scrollY > main.offsetHeight - window.innerHeight && lock) {
         if (offsetDB + randomOffsetDB === childCount) {
             lock = false;
             if (randomOffsetDB === 0) {
