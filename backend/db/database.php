@@ -351,7 +351,7 @@ class DatabaseHelper
     public function getNotifications($userid){
         $query = "SELECT up.userid, up.username, up.usericon, up.usernickname, n.notificationid, n.notificationtext, n.notificationdate, n.alreadyread 
         FROM `NOTIFICATION` n, `USER_PROFILE` up
-        WHERE n.to_userid = ? AND up.userid = n.to_userid ORDER BY n.alreadyread, n.notificationid DESC";
+        WHERE n.to_userid = ? AND up.userid = n.from_userid ORDER BY n.alreadyread, n.notificationid DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userid);
         $stmt->execute();

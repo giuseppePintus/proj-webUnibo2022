@@ -172,6 +172,11 @@ async function followInteractionsListeners(userID) {
                 responseType: 'json',
                 timeout: 5000
             }).then(response => {
+                if(response.data == "unfollow"){
+                    sendNotification(' has started following you!', userID, 'follow');
+                }else if (response.data == "follow"){
+                    sendNotification(' has unfollowed you!', userID, 'follow');
+                }
                 const p = document.querySelector('li#follow p');
                 p.innerHTML = "" + response.data;
             });

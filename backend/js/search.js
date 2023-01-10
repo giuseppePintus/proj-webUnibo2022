@@ -48,6 +48,12 @@ async function followInteractionsListeners(idUserToFollow) {
             responseType: 'json',
             timeout: 5000
         }).then(response => {
+        
+            if(response.data == "unfollow"){
+                sendNotification(' has started following you!', idUserToFollow, 'follow');
+            }else if (response.data == "follow"){
+                sendNotification(' has unfollowed you!', idUserToFollow, 'follow');
+            }
             const p = document.querySelector('li#follow' + idUserToFollow + ' p');
             p.innerHTML = "" + response.data;
         });
