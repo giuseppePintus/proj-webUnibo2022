@@ -25,7 +25,7 @@ function generateInfoUser(userInfo) {
                         </li>
                         <li id="follow${userInfo[i]["userid"]}" class="followButton"> 
                             <img  src="./upload/friend.png" alt="follow"/>
-                            <p>${userInfo[i]["follow"] ? "unfollow" : "follow"}</p>
+                            <p>${userInfo[i]["follow"]?"unfollow":"follow"}</p>
                         </li>
                     </ul>
                 </div>
@@ -54,21 +54,18 @@ async function followInteractionsListeners(idUserToFollow) {
     });
 }
 
-
-function getUser() {
+function randomUser() {
     axios.post('./api-randomSearch.php', {
         offset: randomOffsetDB,
-        size: sizeQRes,
-        userDisplaySelector: userDisplaySelector
+        size: sizeQRes
     }, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
-        console.log(response.data);
         generateInfoUser(response.data);
         lock = true;
-        //randomOffsetDB += sizeQRes;
+        randomOffsetDB += sizeQRes;
     });
 }
 
@@ -85,46 +82,9 @@ function searchUser() {
     }).then(response => {
         generateInfoUser(response.data);
         lock = true;
-        offsetDB += sizeQRes;
+        offsetDB+=sizeQRes;
     });
 }
-
-function addProfilePageListenrs() {
-    document.getElementById('randomButton').addEventListener('click', () => {
-        userDisplaySelector = 0;
-        cleanPosts();
-        getUser();
-    });
-
-    document.getElementById('followedButton').addEventListener('click', () => {
-        userDisplaySelector = 1;
-        cleanPosts();
-        getUser();
-    });
-
-    document.getElementById('followingButton').addEventListener('click', () => {
-        userDisplaySelector = 2;
-        cleanPosts();
-        getUser();
-    });
-}
-
-function cleanPosts() {
-    offsetUserPostQuery = 0;
-    document.querySelectorAll(".userinfo").forEach(x => x.remove());
-}
-
-function addHeaders() {
-    main.innerHTML = `
-    <div class="profilePosts">
-                    <ul>
-                        <li><button id="randomButton" type="button">you may be interested</button></li>
-                        <li><button id="followedButton" type="button">who followed you</button></li>
-                        <li><button id="followingButton" type="button">your followings</button></li>
-                    </ul>
-                </div>`;
-}
-
 
 // Get the current URL
 let url = window.location.search;
@@ -141,11 +101,6 @@ const input = document.querySelector('#searchInfo');
 let offsetDB = 0, randomOffsetDB = 0;
 let sizeQRes = 5;
 let lock = true;
-let userDisplaySelector = 0; // 0 random users, 1 followed users, 2 following users
-
-//the part of follow and followers
-addHeaders();
-addProfilePageListenrs();
 
 if (search != null) {
     input.value = search;
@@ -160,9 +115,11 @@ if (search != null) {
     }).then(response => {
         generateInfoUser(response.data);
     });
+
+
 }
 else {
-    getUser();
+    randomUser();
 }
 
 input.addEventListener('input', function () {
@@ -172,6 +129,8 @@ input.addEventListener('input', function () {
     if (input.value != null && input.value.length != 0) {
         //axios call
         searchUser();
+    } else {        
+        randomUser();
     }
 });
 
@@ -179,14 +138,14 @@ input.addEventListener('input', function () {
 window.addEventListener('scroll', () => {
     const lastChild = main.lastElementChild;
     const childCount = main.childElementCount;
-    if (window.scrollY > main.offsetHeight - window.innerHeight && lock) {
+    if (window.scrollY > main.offsetHeight - window.innerHeight  && lock) {
         if (offsetDB + randomOffsetDB === childCount) {
             lock = false;
             if (randomOffsetDB === 0) {
                 searchUser();
             }
             else {
-                getUser();
+                randomUser();
             }
 
         }
