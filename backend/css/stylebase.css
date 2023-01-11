@@ -79,6 +79,7 @@ h6 {
     font-weight: normal;
     margin: 0;
     color: var(--text-color);
+    mix-blend-mode: luminosity;
 }
 
 ul{
@@ -88,20 +89,28 @@ ul{
 
 li {
     color: var(--text-color);
+    /* mix-blend-mode: luminosity; */
 }
 p{
     color: var(--text-color);
+    mix-blend-mode: luminosity;
 }
 button{
-    color: var(--text-color);
+    /* color: var(--text-color); */
+    /* mix-blend-mode: luminosity; */
 }
+
 
 label{
     color: var(--text-color);
+    mix-blend-mode: luminosity;
 }
+
 form{
     color: var(--text-color);
+    /* mix-blend-mode: luminosity; */
 }
+
 
 
 /* Header styles */
@@ -712,6 +721,7 @@ body>aside h1 {
     color: none;
     padding: 0;
     text-decoration: none;
+ 
 
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.5rem;
@@ -870,7 +880,7 @@ body>aside h1 {
 .profileInfo>section>div>div>img {
     
     width: 10em;
-    height: auto;
+    height: 10em;
     border-radius: 50%;
 }
 
