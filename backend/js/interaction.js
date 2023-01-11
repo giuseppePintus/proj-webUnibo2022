@@ -20,6 +20,28 @@ function likeAction(postid) {
   });
 }
 
+function saveAction(postid) {
+
+  axios.post('./api-userSavePost.php', {
+    userSavePostId: postid
+  }, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    responseType: 'json',
+    timeout: 5000
+  }).then(response => {
+   // response.data[0]['saves'] ? sendNotification(' has unsaved it', postid, 'save') : sendNotification(' has saved your post', postid, 'save');
+    let tagElement = document.getElementById(postid);
+    let saveElement = tagElement.querySelector('.save');
+    let newState = response.data[0]['saves'] ? '0' : '1';
+
+    saveElement.classList.remove('posticon' + response.data[0]['saves']);
+    saveElement.classList.add('posticon' + newState);
+    refreshPost(postid);
+  });
+}
+
 async function showComment(postid) {
   commentBoxStateMap.set(postid, !commentBoxStateMap.get(postid));
 
@@ -170,6 +192,7 @@ document.body.addEventListener('click', function (event) {
     if (event.target.classList.contains('save')) {
       // If it is, do something
       console.log('save post');
+      saveAction(postID);
     }
 
   }
