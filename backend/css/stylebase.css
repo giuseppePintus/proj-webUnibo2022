@@ -937,14 +937,14 @@ body>aside h1 {
 
 .profilePosts{
     margin: 0;
-    padding: 0;
+    padding: 0.5em;
     background-color: var(--third-color);
     border-radius: 1rem;
 }
 
 .profilePosts>ul{
     padding: 0;
-    margin: 1em;
+    
     width: 100%;
     list-style-type: none;
     display: flex;
