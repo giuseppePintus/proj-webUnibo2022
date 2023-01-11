@@ -144,8 +144,13 @@ body>header>a{
 }
 
 body>header>a>img {
-    width: 100%;
-    height: auto;
+    width: 2.5em;
+    height: 2.5em;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+   
 
 }
 
@@ -347,6 +352,7 @@ body>header>a>img {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
+    object-fit: cover;
    
 }
 
@@ -881,6 +887,7 @@ body>aside h1 {
     width: 10em;
     height: 10em;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .profileInfo>section>div>div>ul {
