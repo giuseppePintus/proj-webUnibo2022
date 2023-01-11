@@ -41,7 +41,7 @@ body {
 
     width: 100%;
     height: 100%;
-    max-height: 100vh;
+    
 
     font-family: 'Times New Roman', Times, serif;
     font-size: 1rem;
@@ -50,6 +50,14 @@ body {
     background-color: var(--base-color);
 }
 
+body>footer{
+    width: 100%;
+    position: fixed;
+    
+    left: 0;
+    bottom: 0;
+    box-sizing: border-box;
+}
 /* Basic styles */
 
 a {
@@ -187,19 +195,20 @@ body>header>a>img {
 
 
 /*main styles*/
-.main {
-
-    max-width: 99%;
+.main {   
     width: 30em;
+    max-width: 100%;
+    transition: 1s;
 
 }
 .centerPage{
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
-    margin-bottom: 10%;
+    align-items: center;
+ 
    
 }
 
@@ -451,7 +460,7 @@ input[type="file"]::file-selector-button {
     margin-left: 15%;
     margin-top: 3%;
     background-color: var(--second-color);
-    overflow-x: auto;
+    overflow-x: scroll;
     padding:  2% 2% 0% 2%;
     
 
@@ -563,30 +572,27 @@ body>aside h1 {
     text-align: center;
 }
 
-/*notification animation*/
 
-.main{
-
-    transition: 1s;
-}
 
 
 
 /* Footer styles */
 .footer-container {
-    position: fixed;
+    position: fixed !important;
+    
     width: 100%;
-    max-width: 100vw;
-    box-sizing: border-box;
+    height: 2.3em;
+   
+  
     bottom: 0;
     left: 0;
     right: 0;
 
     display: flex;
-   
+   align-items: stretch;
+   align-content: center;
     
 
-    height: auto;
 
     background-color: var(--base-color);
     border-top: 1px solid var(--third-color);
@@ -598,10 +604,10 @@ body>aside h1 {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-
+    align-items: stretch;
+    align-content: center;
     width: 100%;
 
-    height: 5vh;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -733,9 +739,9 @@ body>aside h1 {
     transition: 500ms;
 }
 
-.searchResult.open {
-    height: auto;
-    max-height: fit-content;
+.searchResult.open {    
+    height: fit-content;
+    
     opacity: 1;
 
     transition: 500ms;
@@ -822,21 +828,20 @@ body>aside h1 {
     align-items: center;
 }
 .profileInfo>header>div>img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0;
 
-    max-width: 100%;
+
+    width: 99%;
     height: auto;
 
-    border-radius: 20px;
-    border: 5px solid var(--third-color);
+    border-radius: 3vmin;
+    border: 0.4em solid var(--third-color);
    
     margin-top: 3vmin;
 
 }
 .profileInfo>section{
-    width: 100%;
+    width: 99%;
 }
 .profileInfo>section>div{
     position: relative;
@@ -844,6 +849,7 @@ body>aside h1 {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    width: 100%;
  
   
 }
@@ -855,14 +861,14 @@ body>aside h1 {
     max-height:min-content;
     align-items: flex-end;
    
+    max-width: 100%;
     
 }
 
 .profileInfo>section>div>div>img {
-    position: relative;
-   
-    width: 30vmin;
-    height: 30vmin;
+    
+    width: 10em;
+    height: auto;
     border-radius: 50%;
 }
 
@@ -957,23 +963,20 @@ body>aside h1 {
 .settings > input:hover{
     background-color: var(--second-color);
 }
-@media only screen and (min-width: 400px){
+@media  (min-width: 400px){
     .searchBar {
         min-width: 10em;
     }
 }
 
-@media only screen and (max-width: 400px){
+@media (max-width: 400px){
 
-    body{
-        max-width: 98%;
-    }
+   
 
     body>header {
-        max-width: 100%;
-        margin: 0;
         padding: 0;
-        box-sizing: border-box;
+
+   
     }
     body>header h1{
         visibility: hidden;
@@ -988,21 +991,16 @@ body>aside h1 {
         margin: 0;
     }
     .main{
+        display: flex;
+        flex-direction: column;
         margin: 0;
         padding: 0;
-        max-width: 99%;
+       width: 99%;
+       height: 50%;
     }
 
     .profileInfo img{
         margin: 0;
     }
-    .footer-container{
-        margin: 0;
-        box-sizing: border-box;
-    }
 
-    #profilePostArea{
-        
-    }
-    
 }
