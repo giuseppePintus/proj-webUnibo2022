@@ -465,8 +465,6 @@ input[type="file"]::file-selector-button {
     overflow-x: scroll;
     padding:  2% 2% 0% 2%;
     
-
-
 }
 
 .postComment img {
@@ -481,6 +479,7 @@ input[type="file"]::file-selector-button {
 
     text-overflow: clip;
 }
+
 
 /*notification*/
 

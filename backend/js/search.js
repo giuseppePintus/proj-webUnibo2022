@@ -20,7 +20,7 @@ function generateInfoUser(userInfo) {
                         <li>
                             <form action="profile.php" method="post">
                             <input type="hidden" name="user" value="${userInfo[i]["userid"]}">
-                            <button type="submit">${userInfo[i]["username"]}</button>
+                            <button type="submit">@${userInfo[i]["username"]}</button>
                             </form>
                         </li>
                         <li id="follow${userInfo[i]["userid"]}" class="followButton"> 
