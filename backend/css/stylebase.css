@@ -1,7 +1,8 @@
+/* default color for light mode in case cookie is deleted */
 :root{
-    --first-color: rgb(35, 154, 233);
-    --second-color: rgb(24, 107, 161);
-    --third-color : rgb(0, 72, 124);
+    --first-color: #4677a4;
+    --second-color: #a44677;
+    --third-color : #77a446;
 
     --base-color : #fff;
     --text-color: #000;
@@ -411,6 +412,7 @@ input[type="file"]::file-selector-button {
     height: 2rem;
     width: 5rem;
     border-radius: 0.5rem;
+    margin: 0 10% 0;
 }
 
 
@@ -990,6 +992,7 @@ body>aside h1 {
         max-width: 100%;
         display: block;
       }
+      
     .searchPage{
         margin: 1rem 0;
     }
