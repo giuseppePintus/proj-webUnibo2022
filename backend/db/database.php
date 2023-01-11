@@ -174,6 +174,25 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function searchUserSavedPost($offset,$size, $userid){      
+        $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*,
+        (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 
+        (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid AND l.userid = ? ) AS liked, 
+        (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid) AS commented, 
+        (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid ) AS saved 
+        FROM `POST` p
+        JOIN `SAVED` s ON s.postid = p.postid
+        JOIN `USER_PROFILE` u ON  u.userid = p.userid
+        WHERE (SELECT COUNT(*) FROM SAVED s1 WHERE s1.postid = p.postid AND s1.userid = ?) > 0 
+        ORDER BY p.`postdate` DESC ,p.postid DESC       
+        LIMIT ? , ?;");
+         $stmt->bind_param('iiii',$userid,$userid, $offset, $size);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function searchUserHomePost($offset,$size, $userid){      
         $stmt = $this->db->prepare("SELECT DISTINCT p.*, u.*, 
             (SELECT COUNT(*) FROM `LIKED` l WHERE l.postid = p.postid ) AS nlike, 

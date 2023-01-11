@@ -61,6 +61,8 @@ async function profilePageTemplate(userInfo) {
                     <li><button id="myPostsButton" type="button">My Posts</button></li>
                     <li><button id="likedPostsButton" type="button">Liked Posts</button></li>
                     <li><button id="CommentedPostsButton" type="button">Commented Posts</button></li>
+                    <li><button id="savedPostsButton" type="button">Saved Posts</button></li>
+
                 </ul>
             </div>
             
@@ -267,6 +269,13 @@ function addProfilePageListenrs(userID) {
         cleanPosts();
         userInitialPost(userID);
     });
+
+    document.getElementById('savedPostsButton').addEventListener('click', () => {
+        postDisplaySelector = 3;
+        cleanPosts();
+        userInitialPost(userID);
+    });
+    
 }
 
 function cleanPosts() {

@@ -14,6 +14,10 @@ if ($selector == 0) {
 } else if ($selector == 2) {
     //commented posts
     $posts = $dbh->searchUserCommentedPost($data["offset"], $data["size"], $data["user"]);
+} else if($selector == 3){
+    //saved posts
+    $posts = $dbh->searchUserSavedPost($data["offset"], $data["size"], $data["user"]);
+
 }
 
 header("Content-Type: application/json");
