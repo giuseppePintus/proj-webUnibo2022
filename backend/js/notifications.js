@@ -15,17 +15,21 @@ async function getNotificationNumber() {
     return response.data[0]['number'];
 }
 
-async function generateNotifications() {
-    const notificationNumber = document.getElementById("notificationNumber");
-    let notiNumber = await getNotificationNumber();
-    if (notificationNumber != null) {
-        notificationNumber.innerHTML = await getNotificationNumber();
-    } else if (notiNumber > 0) {
+function toggleNotificationDisplay(notiNumber){
+    if(notiNumber > 0){
         document.getElementById("notification-container").innerHTML = `
         <img id="notificationBellIcon" src="upload/notification.png" alt="notification">
-        <div id="notificationNumber" class="notificationNumber"></div>`;
-        //generateNotifications();
+        <div id="notificationNumber" class="notificationNumber">${notiNumber}</div>`;
+    }else if (notiNumber == 0){
+        document.getElementById("notification-container").innerHTML = `
+        <img id="notificationBellIcon" src="upload/notification.png" alt="notification">`;
     }
+}
+
+async function generateNotifications() {
+    let notiNumber = await getNotificationNumber();
+    toggleNotificationDisplay(notiNumber); 
+    
     if(!showNotification)
     return;
     const aside = document.querySelector("aside");
@@ -66,32 +70,35 @@ async function generateNotifications() {
             asideHTML += notification;
         }
         aside.innerHTML = asideInitialHTML + asideHTML + `</div></section>`;
-        
-       
-
-        notificationIds.forEach(element => {
-            document.getElementById("notification" + element).addEventListener('click', event => {
-                axios.post('./api-readNotification.php', {
-                    notificationid: element
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    responseType: 'json',
-                    timeout: 5000
-                }).then(response => {
-                    //notificationNumber.innerHTML = "";
-                    if (response.data[0]["number"] > 0 && notificationNumber != null)
-                        notificationNumber.innerHTML = response.data[0]["number"];
-                    else {
-                        document.getElementById("notification-container").innerHTML = `
-                        <img src="upload/notification.png" alt="notification">`;
-                    }
-                    generateNotifications();
-                });
-            });
-        })
+        addNotificationMessageListener(notificationIds);
     });
+}
+
+function addNotificationMessageListener(notificationIds){
+    
+
+    notificationIds.forEach(element => {
+        document.getElementById("notification" + element).addEventListener('click', event => {
+            axios.post('./api-readNotification.php', {
+                notificationid: element
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                responseType: 'json',
+                timeout: 5000
+            }).then(response => {
+                //notificationNumber.innerHTML = "";
+                if (response.data[0]["number"] > 0 && notificationNumber != null)
+                    notificationNumber.innerHTML = response.data[0]["number"];
+                else {
+                    document.getElementById("notification-container").innerHTML = `
+                    <img src="upload/notification.png" alt="notification">`;
+                }
+                generateNotifications();
+            });
+        });
+    })
 }
 
 function addNotificationBellListener(){
