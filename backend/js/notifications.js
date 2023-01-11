@@ -55,6 +55,9 @@ async function generateNotifications() {
                     <h3>${notifications[i]["usernickname"]}</h3>
                 </li>
                 <li>
+                    <h3>${notifications[i]["notificationdate"]}</h3>
+                </li>
+                <li>
                     <p>${notifications[i]["notificationtext"]}</p>
                 </li>
             </ul>

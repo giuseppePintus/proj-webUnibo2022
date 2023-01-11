@@ -96,7 +96,7 @@ async function getCommentsByPostId(postid) {
 function generateCommentsHTML(comments, postid) {
   let result = `<div class="writeCommentArea">
                   <input id="commentBox${postid}" type="text" placeholder="comment this post.." required>
-                  <button id="commentButton${postid}" type="submit">comment</button>
+                  <button class="commentButton" id="commentButton${postid}" type="submit">comment</button>
               </div>
               <div class="scrollableComments">
               `;
@@ -107,6 +107,7 @@ function generateCommentsHTML(comments, postid) {
           <ul>
               <li> <img src="${comments[i]["usericon"]}" alt="usericon" /></li>
               <li><h3>@${comments[i]["username"]}</h3> </li>
+              <li>${comments[i]["commentdate"]}</li>
               <li><p>${comments[i]["commenttext"]}</p></li>
           </ul>
       </div>`;
