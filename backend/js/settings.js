@@ -1,9 +1,9 @@
 async function logout(){
-    const resp = await axios.post("./api-logOut.php");
-    if(resp.data == "ok"){
-        window.location.href = './login.php';
-    }    
-    return;
+  const resp = await axios.post("./api-logOut.php");
+  if(resp.data == "ok"){
+    window.location.href = './login.php';
+  }    
+  return;
 }
 
 async function setNewPassword(){  
@@ -12,23 +12,25 @@ async function setNewPassword(){
 
   if(oldPass == "" || newPass == ""){
     console.log("campi vuoti");
-    return;
+  return;
   }
   const oldPassHash = await digestMessage(oldPass);
   const newPassHash = await digestMessage(newPass);
 
-  const response  = await axios.post('./api-changePassword.php', {
-    oldPass: oldPassHash,
-    newPass: newPassHash
-    }, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    responseType: 'json'
-  });   
+  const response  = await axios.post('./api-changePassword.php', 
+      {
+      oldPass: oldPassHash,
+      newPass: newPassHash
+      },{
+        headers: {
+          'Content-Type': 'application/json'
+          },
+        responseType: 'json'
+      }
+    );   
 
   if(response.data == "ok"){
-    window.location.href = './profile.php';    
+  window.location.href = './profile.php';    
   }
   return;
 }
@@ -44,8 +46,8 @@ async function digestMessage(message) {
 function nightMode(){
   let paletteCookie = getCookie("colorPalette");
   let arrayColor = JSON.parse(paletteCookie);
-
   let valCookie = getCookie("nightMode");
+
   if(valCookie == null || valCookie == "0"){
       setCookie("nightMode", "1");
     document.documentElement.style.setProperty('--first-color', arrayColor[3]);
@@ -67,22 +69,23 @@ function nightMode(){
   return;
 }
 
-
-
 function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let cookieAray = decodedCookie.split(';');
   for(let i = 0; i <cookieAray.length; i++) {
     let c = cookieAray[i];
+
     while (c.charAt(0) == ' ') {
       c = c.substring(1);
     }
+
     if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length); //ritorno valore del cookie
+      return c.substring(name.length, c.length); //return cookie value
     }
+
   }
-  return null; //cookie non esiste
+  return null; //cookie not exist
 }
 
 function setCookie(cname, cvalue) {
@@ -111,16 +114,13 @@ function changeColor(){
       <input type="submit" value="Select" onClick="setPalette()">
     </div>
   `;
-  return;
 }
 
 function setPalette(){
   let color = document.querySelector("#colorPicker").value;
   const  hsl = hexToHsl(color);
 
-  console.log(hsl);
-
-  // create variations of the color by adjusting the hue value
+  // create variations of the color by adjusting the hue value triadic schemes
   let lightPalette = [
       hslToHex(hsl), 
       hslToHex({...hsl, h: (hsl.h + 120) % 360}), 
@@ -133,9 +133,9 @@ function setPalette(){
       hslToHex({...hsl, h: (hsl.h + 240) % 360, l: (hsl.l-10)})
       ];
   let concatArray = lightPalette.concat(darkPalette) ; 
-      console.log(concatArray)
-  //salvo valori in un cookie
+  //save colors in cookie
   setCookie("colorPalette", JSON.stringify(concatArray) );
+  //reload pagina
   window.location.href = './settings.php';
   return;
 }
@@ -152,7 +152,7 @@ function hexToHsl(H) {
     b = "0x" + H[5] + H[6];
   }
   console.log(r + " " + g + " " + b)
-  // Then to HSL
+  // convert to HSL
   r /= 255;
   g /= 255;
   b /= 255;
@@ -163,19 +163,21 @@ function hexToHsl(H) {
   let s = 0;
   let l = 0;
 
-  if (delta == 0)
+  if (delta == 0){
     h = 0;
-  else if (cmax == r)
+  } else if (cmax == r){
     h = ((g - b) / delta) % 6;
-  else if (cmax == g)
+  } else if (cmax == g){
     h = (b - r) / delta + 2;
-  else
+  }else{
     h = (r - g) / delta + 4;
+  }
 
   h = Math.round(h * 60);
 
-  if (h < 0)
+  if (h < 0){
     h += 360;
+  }
 
   l = (cmax + cmin) / 2;
   s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));

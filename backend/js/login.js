@@ -23,7 +23,6 @@ async function login() {
   console.log(response);
   if(response.data == "ok"){
     window.location.href = './index.php';
-
   }
   return;
 }
@@ -42,7 +41,7 @@ function checkInput(usr, pwd){
     addErrElem("Username");
     return false;
   }else{
-      remErrElem("Username")
+      remErrElem("Username");
   }
 
   if(pwd=='' || pwd == null){
@@ -50,30 +49,29 @@ function checkInput(usr, pwd){
       addErrElem("Password");
       return false;
   }else{
-      remErrElem("Password")
+      remErrElem("Password");
   }
 
   return true;
-
 }
 
 function addErrElem(msg){
-  //se esiste gia non faccio ninete
+  //check if already exists
   if(document.getElementById("err"+msg)!=null){
-      return    
+      return;   
   }
-  //creo elemento
+  //new message
   const node = document.createElement("p");
   const textnode = document.createTextNode( msg + " not valid");
   node.appendChild(textnode);
   node.setAttribute("class", "errorMsg" );
   node.setAttribute("id", "err" + msg);
-  //aggiungo elemento al dom
+  //add mesage to DOM
   document.getElementById("loginDiv").appendChild(node);  
 }
 
 function remErrElem(msg){
-  //controllo esisstenza elemento
+  //check if already exists
   if(document.getElementById("err" + msg) != null){
       document.getElementById("err" + msg).remove();
   }
@@ -87,3 +85,10 @@ form.addEventListener('keydown', function(event) {
     login();
   }
 });
+
+//setup cookie for personalization
+document.cookie = "colorPalette=" + JSON.stringify(["#4677a4","#a44677","#77a446","#375d80","#80375d","#5d8037"]) + "; expires = 0; path=/";
+document.cookie = "nightMode=0; expires = 0; path=/";
+
+
+
