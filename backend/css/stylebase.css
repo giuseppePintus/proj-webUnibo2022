@@ -996,9 +996,6 @@ body>aside h1 {
 
 @media (max-width: 425px){
 
-
-   
-
     body>header {
         padding: 0;
 
@@ -1019,7 +1016,9 @@ body>aside h1 {
     .searchPage{
         margin: 1rem 0;
     }
+
     .centerPage{
+        flex-direction: column-reverse;
         margin: 0;
     }
     .main{
@@ -1033,6 +1032,12 @@ body>aside h1 {
 
     .profileInfo img{
         margin: 0;
+    }
+
+
+    .notificationContainer{
+        position: relative;
+       
     }
 
 }
