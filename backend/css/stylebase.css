@@ -169,7 +169,6 @@ body>header>a>img {
  
     display: inline-flex;
     justify-items: center;
-    margin-left: 10%;
     justify-content: center;
     align-items: center;
 }
@@ -953,18 +952,20 @@ body>aside h1 {
 }
 .profilePosts>ul>li {
     display: inline-block;
-    width: 25%;
+    
     height: 3rem;
 
 
 }
 
 .profilePosts>ul>li>button {
-    width: 100%;
+    width: auto;
     height: 100%;
     overflow: hidden;
     justify-self: center;
+    text-align: center;
     border-radius: 1rem;
+    
     
 }
 
