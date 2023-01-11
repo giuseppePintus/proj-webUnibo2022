@@ -733,6 +733,7 @@ body>aside h1 {
     width: 30px;
     height: 30px;
 }
+
 .userinfo button{
     background-color: var(--third-color) ;
     border: none;
@@ -933,6 +934,19 @@ body>aside h1 {
     align-items: center;
 
 }
+.followSection button{
+    border: 0;
+    border-radius: 1rem;
+    height: 1.5em;
+    background-color: var(--base-color);
+    color: var(--text-color);
+    margin: 0.5em;
+
+}
+.followSection button:hover{
+    background-color: var(--second-color);
+}
+
 
 
 .profilePosts{
@@ -958,7 +972,7 @@ body>aside h1 {
 
 }
 
-.profilePosts>ul>li>button {
+.profilePosts button {
     width: auto;
     height: 100%;
     overflow: hidden;
@@ -967,6 +981,9 @@ body>aside h1 {
     border-radius: 1rem;
     
     
+}
+.profilePosts button.current{
+    background-color: var(--second-color);
 }
 
 /*end profile css*/
