@@ -31,7 +31,7 @@ function saveAction(postid) {
     responseType: 'json',
     timeout: 5000
   }).then(response => {
-    response.data[0]['saves'] ? sendNotification(' has unsaved your post', postid, 'save') : sendNotification(' has saved your post', postid, 'save');
+   // response.data[0]['saves'] ? sendNotification(' has unsaved your post', postid, 'save') : sendNotification(' has saved your post', postid, 'save');
     let tagElement = document.getElementById(postid);
     let saveElement = tagElement.querySelector('.save');
     let newState = response.data[0]['saves'] ? '0' : '1';
