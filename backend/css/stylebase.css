@@ -219,11 +219,10 @@ body>header>a>img {
 .centerPage{
     width: 100%;
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
- 
+   
    
 }
 
@@ -517,6 +516,7 @@ input[type="file"]::file-selector-button {
 
     position: absolute;
     right: 0;
+   
     
 }
 
