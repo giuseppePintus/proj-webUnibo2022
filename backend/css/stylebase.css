@@ -230,7 +230,7 @@ body>header>a>img {
 .homePost {
     display: flex;
     border: 1px solid var(--third-color);
-    margin-bottom: 5%;
+    margin: 5% 0;
     width: 100%;
     max-width: 35em;
     max-height: 35em;
@@ -243,6 +243,7 @@ body>header>a>img {
     padding-bottom: 3%;
     overflow: hidden;
 }
+
 
 .homePost>header {
     width: 100%;
@@ -294,7 +295,10 @@ body>header>a>img {
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
-    justify-content: flex-start;
+    justify-content: space-around;
+
+    justify-self: center;
+    max-height: 29em;
 }
 
 
@@ -305,17 +309,24 @@ body>header>a>img {
 
 .homePost>section>div {
     text-align: center;
-
+    
+}
+.postimage{
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.homePost>section>div>img {
-    width: 50%;
+.postimage>img {
+    max-width: 90%;
+    max-height: 20em;
+
     object-fit: cover;
 }
 
 .homePost>footer {
     box-sizing: border-box;
     width: 100%;
+    max-height: 3em;
     padding: 0;
 }
 .homePost>footer>ul{
@@ -374,11 +385,7 @@ body>header>a>img {
     border-radius: 1rem;
 }
 
-.homePost {
-    margin-top: 5%;
-    width: 100%;
-    max-height: 35em;
-}
+
 
 
 
