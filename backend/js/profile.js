@@ -185,7 +185,7 @@ async function followInteractionsListeners(userID) {
                 },
                 responseType: 'json',
                 timeout: 5000
-            }).then(response => {
+            }).then(async response => {
                 if (response.data == "unfollow") {
                     sendNotification(' has started following you!', userID, 'follow');
                 } else if (response.data == "follow") {
@@ -195,9 +195,19 @@ async function followInteractionsListeners(userID) {
                 if(p !== null){
                     p.value = '' + response.data;
                 }
+                /*Update followNumber state*/
+                await refleshUserInfo();
+                userInfo.then(result =>{
+                    document.querySelector('.followedNumber').innerHTML = result['followedNumber'] + ' followers';
+                    document.querySelector('.followingNumber').innerHTML = result['followingNumber'] + ' following';
+                });
             });
         });
     }
+}
+
+function getFollowerNumber(){
+    
 }
 
 
@@ -278,6 +288,12 @@ function refleshPage(){
     
 }
 
+async function refleshUserInfo(){
+    userInfo = getUserInfo(user).then(result => {
+        user = result["userid"];
+        return result;
+    });
+}
 
 const main = document.querySelector("main");
 
@@ -289,9 +305,6 @@ let userInfo;
 let postDisplaySelector = 0; // 0 my posts, 1 liked posts, 2 commented posts
 
 /*get user passed in the url*/
-userInfo = getUserInfo(user).then(result => {
-    user = result["userid"];
-    return result;
-});
 
+refleshUserInfo(); 
 refleshPage();
