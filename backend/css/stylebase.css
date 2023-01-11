@@ -219,11 +219,10 @@ body>header>a>img {
 .centerPage{
     width: 100%;
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
- 
+   
    
 }
 
@@ -319,12 +318,19 @@ body>header>a>img {
     width: 100%;
     padding: 0;
 }
+.homePost>footer>ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
 
 .homePost>footer li {
     list-style-type: none;
     display: inline-block;
-    margin-left: 10%;
-    margin-top: 0;
+   
 }
 
 .homePost>footer img {
@@ -517,6 +523,7 @@ input[type="file"]::file-selector-button {
 
     position: absolute;
     right: 0;
+   
     
 }
 
@@ -989,9 +996,6 @@ body>aside h1 {
 
 @media (max-width: 425px){
 
-
-   
-
     body>header {
         padding: 0;
 
@@ -1012,7 +1016,9 @@ body>aside h1 {
     .searchPage{
         margin: 1rem 0;
     }
+
     .centerPage{
+        flex-direction: column-reverse;
         margin: 0;
     }
     .main{
@@ -1026,6 +1032,12 @@ body>aside h1 {
 
     .profileInfo img{
         margin: 0;
+    }
+
+
+    .notificationContainer{
+        position: relative;
+       
     }
 
 }
