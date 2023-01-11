@@ -192,12 +192,12 @@ async function followInteractionsListeners(userID) {
                     sendNotification(' has unfollowed you!', userID, 'follow');
                 }
                 const p = document.getElementById('follow');
-                if(p !== null){
+                if (p !== null) {
                     p.value = '' + response.data;
                 }
                 /*Update followNumber state*/
                 await refleshUserInfo();
-                userInfo.then(result =>{
+                userInfo.then(result => {
                     document.querySelector('.followedNumber').innerHTML = result['followedNumber'] + ' followers';
                     document.querySelector('.followingNumber').innerHTML = result['followingNumber'] + ' following';
                 });
@@ -206,8 +206,8 @@ async function followInteractionsListeners(userID) {
     }
 }
 
-function getFollowerNumber(){
-    
+function getFollowerNumber() {
+
 }
 
 
@@ -251,8 +251,45 @@ function userScrollingPost(userID) {
         }
     });
 }
+function addCurrentTagToButtons() {
+
+    const myPost = document.getElementById('myPostsButton');
+    const liked = document.getElementById('likedPostsButton');
+    const commented = document.getElementById('CommentedPostsButton');
+    const saved = document.getElementById('savedPostsButton');
+    switch (postDisplaySelector) {
+        case 0:
+            myPost.classList.add('current');
+            liked.classList.remove('current');
+            commented.classList.remove('current');
+            saved.classList.remove('current');
+            break;
+        case 1:
+            liked.classList.add('current');
+            myPost.classList.remove('current');
+            commented.classList.remove('current');
+            saved.classList.remove('current');
+            break;
+        case 2:
+            commented.classList.add('current');
+            myPost.classList.remove('current');
+            liked.classList.remove('current');
+            saved.classList.remove('current');
+            break;
+        case 3:
+            saved.classList.add('current');
+            myPost.classList.remove('current');
+            liked.classList.remove('current');
+            commented.classList.remove('current');
+            break;
+        default:
+            break;
+    }
+
+}
+
 function addProfilePageListenrs(userID) {
-    document.getElementById('myPostsButton').addEventListener('click', (aa) => {
+    document.getElementById('myPostsButton').addEventListener('click', () => {
         postDisplaySelector = 0;
         cleanPosts();
         userInitialPost(userID);
@@ -275,7 +312,7 @@ function addProfilePageListenrs(userID) {
         cleanPosts();
         userInitialPost(userID);
     });
-    
+
 }
 
 function cleanPosts() {
@@ -284,7 +321,7 @@ function cleanPosts() {
 }
 
 
-function refleshPage(){
+function refleshPage() {
     profilePageTemplate(userInfo).then(result => {
         main.innerHTML = result;
         userInitialPost(user);
@@ -292,10 +329,10 @@ function refleshPage(){
         userScrollingPost(user);
         followInteractionsListeners(user);
     });
-    
+
 }
 
-async function refleshUserInfo(){
+async function refleshUserInfo() {
     userInfo = getUserInfo(user).then(result => {
         user = result["userid"];
         return result;
@@ -313,5 +350,5 @@ let postDisplaySelector = 0; // 0 my posts, 1 liked posts, 2 commented posts
 
 /*get user passed in the url*/
 
-refleshUserInfo(); 
+refleshUserInfo();
 refleshPage();
