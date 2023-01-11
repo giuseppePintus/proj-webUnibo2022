@@ -24,7 +24,7 @@ async function generateNotifications() {
         document.getElementById("notification-container").innerHTML = `
         <img id="notificationBellIcon" src="upload/notification.png" alt="notification">
         <div id="notificationNumber" class="notificationNumber"></div>`;
-        generateNotifications();
+        //generateNotifications();
     }
     if(!showNotification)
     return;

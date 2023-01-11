@@ -21,7 +21,13 @@
 
     $dbh -> addAccount($data['username'], $data['email'], $data['username'], $data['password']);
     
-    //sendEmail($data['email']);
+    //sendEmail($data['email']);,
+    $path = UPLOAD_DIR . '/' . $data['username'];
+    
+    if (!file_exists($path)) {
+        // Crea la cartella
+        mkdir($path, 0777, true);
+    }
 
     echo json_encode("OK");
     
