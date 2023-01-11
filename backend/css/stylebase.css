@@ -969,7 +969,8 @@ body>aside h1 {
     }
 }
 
-@media (max-width: 400px){
+@media (max-width: 425px){
+
 
    
 
@@ -984,6 +985,11 @@ body>aside h1 {
         position: absolute;
 
     }
+
+    img {
+        max-width: 100%;
+        display: block;
+      }
     .searchPage{
         margin: 1rem 0;
     }
