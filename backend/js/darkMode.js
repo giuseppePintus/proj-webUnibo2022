@@ -13,12 +13,23 @@ function getCookie(cname) {
     }
     return null; //cookie non esiste
 }
-let valCookie = getCookie("nightMode");
+let darkCookie = getCookie("nightMode");
+let paletteCookie = getCookie("colorPalette");
+let arrayColor = JSON.parse(paletteCookie);
+console.log(arrayColor);
 
-if(valCookie == null || valCookie == "0"){
-    document.documentElement.classList.remove("dark");
-    document.documentElement.classList.add("light");
+if(darkCookie == null || darkCookie == "0"){
+  document.documentElement.style.setProperty('--first-color', arrayColor[0]);
+  document.documentElement.style.setProperty('--second-color', arrayColor[1]);
+  document.documentElement.style.setProperty('--third-color', arrayColor[2]);
+  document.documentElement.style.setProperty('--base-color', "#fff");
+  document.documentElement.style.setProperty('--text-color', "#000");
+  document.documentElement.style.setProperty('--invert', 0);
 }else{
-    document.documentElement.classList.remove("light");
-    document.documentElement.classList.add("dark");
+  document.documentElement.style.setProperty('--first-color', arrayColor[3]);
+  document.documentElement.style.setProperty('--second-color', arrayColor[4]);
+  document.documentElement.style.setProperty('--third-color', arrayColor[5]);
+  document.documentElement.style.setProperty('--base-color', "#222");
+  document.documentElement.style.setProperty('--text-color', "#fff");
+  document.documentElement.style.setProperty('--invert', 1);
 }

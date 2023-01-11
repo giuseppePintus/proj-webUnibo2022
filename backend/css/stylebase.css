@@ -1,16 +1,11 @@
-:root.dark{
-    --first-color: rgb(22, 101, 153);
-    --second-color: #07d2e0 ;
-    --third-color : rgb(221, 231, 248);
-    --base-color : rgb(255, 255, 255);
-    --text-color: black;
- }
- :root.light{
-    --first-color: rgb(10, 38, 56);
-    --second-color: #056369 ;
-    --third-color : rgb(8, 44, 107);
-    --base-color : rgb(109, 7, 7);
-    --text-color: white;
+:root{
+    --first-color: rgb(35, 154, 233);
+    --second-color: rgb(24, 107, 161);
+    --third-color : rgb(0, 72, 124);
+
+    --base-color : #fff;
+    --text-color: #000;
+    --invert: 1;
  }
 
  /*scrollbar*/
@@ -26,7 +21,7 @@
     background: var(--first-color); 
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--second-color); 
+    background: var(--third-color); 
 }
 
 /* Reset styles */
@@ -46,27 +41,32 @@ body {
 
     width: 100%;
     height: 100%;
+    
 
-    min-width: 333px;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1rem;
     line-height: 1.5;
-    /* color: var(--second-color); */
+   
     background-color: var(--base-color);
-
-
 }
 
-
+body>footer{
+    width: 100%;
+    position: fixed;
+    
+    left: 0;
+    bottom: 0;
+    box-sizing: border-box;
+}
 /* Basic styles */
 
 a {
-    color: var(--second-color);
+    color: var(--text-color);
     text-decoration: none;
 }
 
 a:hover {
-    color: var(--third-color);
+    color: var(--second-color);
 }
 
 h1,
@@ -85,12 +85,31 @@ ul{
     padding: 0;
 }
 
+li {
+    color: var(--text-color);
+}
+p{
+    color: var(--text-color);
+}
+button{
+    color: var(--text-color);
+}
+
+label{
+    color: var(--text-color);
+}
+form{
+    color: var(--text-color);
+}
+
 
 /* Header styles */
 
 
 body>header {
     width: auto;
+    
+
     height: max-content;
     
     margin: 0;
@@ -106,14 +125,18 @@ body>header {
     border-radius: 1rem;
 
 }
+body>header>a{
+    width: 5em;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+}
 
 body>header>a>img {
-    width: 3rem;
-    height: 3rem;
+    width: 100%;
+    height: auto;
 
-    margin-right: 1rem;
-    
-    border-radius: 50%;
 }
 
 
@@ -128,7 +151,7 @@ body>header>a>img {
 
 .searchBar {
     width: 90%;
-    min-width: 10em;
+ 
     display: inline-flex;
     justify-items: center;
     margin-left: 10%;
@@ -150,7 +173,7 @@ body>header>a>img {
     padding: 0 1rem;
     border: 1px solid var(--first-color);
     border-radius: 0.5rem;
-    background-color: var(--second-color);
+    background-color: var(--third-color);
     cursor: pointer;
 }
 
@@ -159,7 +182,7 @@ body>header>a>img {
 
 .profilePostArea body>main>article {
     display: flex;
-    border: 1px solid var(--second-color);
+    border: 1px solid var(--third-color);
     margin-bottom: 5%;
 
     flex-direction: column;
@@ -172,49 +195,27 @@ body>header>a>img {
 
 
 /*main styles*/
-.main {
-
-    max-width: 30em;
-    min-width: 30em;
+.main {   
+    width: 30em;
+    max-width: 100%;
+    transition: 1s;
 
 }
 .centerPage{
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
-    margin-bottom: 10%;
+    align-items: center;
+ 
    
 }
-
-#fileToUpload{
-   width: 0.1;
-   height: 0.1;
-   opacity: 0;
-   overflow: hidden;
-   position: absolute;
-   z-index: -1;
-}
-#fileToUpload + label {
-
-    margin: 0;
-    padding: 1px 6px;
-
-    border: solid 1px;
-    border-radius: 0.5rem;
-    height: 1.5rem;
-
-    background-color: var(--second-color);
-    display: inline-block;
-    cursor: pointer;
-}
-
 
 /*user post in index.php*/
 .homePost {
     display: flex;
-    border: 1px solid var(--second-color);
+    border: 1px solid var(--third-color);
     margin-bottom: 5%;
     width: 100%;
     max-width: 35em;
@@ -314,6 +315,7 @@ body>header>a>img {
 .homePost>footer img {
     width: 2rem;
     height: 2rem;
+
 }
 
 .postHeader{
@@ -340,7 +342,7 @@ body>header>a>img {
 
 .postHeader p {
     padding: 0;
-    color: var(--second-color)
+    color: var(--third-color)
 }
 
 
@@ -361,8 +363,14 @@ body>header>a>img {
 
 /*add post form*/
 .posticon1 {
-    background-color: var(--third-color);
+    filter: invert(var(--invert));
+    filter: brightness(1) invert(0.5)sepia(1) hue-rotate(180deg) saturate(500%);
     /* fill color */
+}
+
+
+.posticon0,.comment, .save {
+    filter: invert(var(--invert));
 }
 
 .uploadPostImage {
@@ -375,11 +383,19 @@ body>header>a>img {
 
 }
 
-.uploadPostImage button {
+input[type="file"]::file-selector-button {
     height: 2rem;
     width: 5rem;
     border-radius: 0.5rem;
-}
+
+    background-color: var(--base-color);
+    color: var(--text-color);
+    transition: 1s;
+    transition: 0s;
+  }
+  input[type="file"]::file-selector-button:hover{
+    border-color: var(--second-color);
+  }
 
 /* add comment to post */
 
@@ -443,8 +459,8 @@ body>header>a>img {
     height: auto;
     margin-left: 15%;
     margin-top: 3%;
-    background-color: var(--third-color);
-    overflow-x: auto;
+    background-color: var(--second-color);
+    overflow-x: scroll;
     padding:  2% 2% 0% 2%;
     
 
@@ -507,7 +523,7 @@ body>aside h1 {
 
 
 .notificationContainer {
-    border: 2px solid var(--second-color);
+    border: 2px solid var(--third-color);
     background-color: var(--base-color);
     width: fit-content;
 }
@@ -538,7 +554,7 @@ body>aside h1 {
 }
 
 .notification0 {
-    background-color: var(--third-color);
+    background-color: var(--second-color);
     border-radius: 1rem;
 }
 .notification1{
@@ -551,65 +567,77 @@ body>aside h1 {
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    background-color: var(--second-color);
+    background-color: var(--third-color);
     color: var(--text-color);
     text-align: center;
 }
 
-/*notification animation*/
 
-.main{
-    transition: 1s;
-}
 
 
 
 /* Footer styles */
 .footer-container {
-    position: fixed;
+    position: fixed !important;
+    
     width: 100%;
-    box-sizing: border-box;
+    height: 2.3em;
+   
+  
     bottom: 0;
     left: 0;
     right: 0;
 
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+   align-items: stretch;
+   align-content: center;
+    
 
-    height: auto;
 
     background-color: var(--base-color);
-    border-top: 1px solid var(--second-color);
+    border-top: 1px solid var(--third-color);
+
+    box-sizing: border-box;
 }
 
 .footer-container ul {
     display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: stretch;
+    align-content: center;
+    width: 100%;
+
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 .footer-container li {
-    flex-grow: 1;
-    text-align: center;
+    
+    width: 100%;
+    height: 100%;
 }
 
 .footer-container a {
-    display: block;
-    padding: 0.5rem 0;
- 
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
 .footer-container a:hover,
 .footer-container a.active:hover {
-    background-color: var(--third-color);
+    background-color: var(--second-color);
 }
 
 .footer-container img {
-    width: 10%;
+    width: 2em;
     height: auto;
+    filter: invert(var(--invert));
+    
 }
 
 /* search bar and page */
@@ -623,20 +651,21 @@ body>aside h1 {
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: stretch;
+
     position: absolute;
     top: 5em;
 
-
-
     max-height: 40vh;
-    width: 80vw;
+    width: 30em;
+    max-width: 80%;
 
     overflow-y: scroll;
     overflow-x: hidden;
 
     border-radius: 0.5rem;
 
-    border: 3px solid var(--second-color);
+    /* border: 3px solid var(--third-color); */
+    z-index: 2;
 
     background-color: var(--base-color);
 
@@ -661,7 +690,7 @@ body>aside h1 {
     width: 100%;
 
     padding: 1vmin 0;
-    background-color: var(--second-color);
+    background-color: var(--third-color);
     white-space: nowrap;
 
     border-radius: 1rem;
@@ -676,7 +705,7 @@ body>aside h1 {
     height: 30px;
 }
 .userinfo button{
-    background-color: var(--second-color) ;
+    background-color: var(--third-color) ;
     border: none;
     color: none;
     padding: 0;
@@ -710,9 +739,9 @@ body>aside h1 {
     transition: 500ms;
 }
 
-.searchResult.open {
-    height: auto;
-    max-height: fit-content;
+.searchResult.open {    
+    height: fit-content;
+    
     opacity: 1;
 
     transition: 500ms;
@@ -799,21 +828,20 @@ body>aside h1 {
     align-items: center;
 }
 .profileInfo>header>div>img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0;
 
-    max-width: 100%;
+
+    width: 99%;
     height: auto;
 
-    border-radius: 20px;
-    border: 5px solid var(--second-color);
+    border-radius: 3vmin;
+    border: 0.4em solid var(--third-color);
    
     margin-top: 3vmin;
 
 }
 .profileInfo>section{
-    width: 100%;
+    width: 99%;
 }
 .profileInfo>section>div{
     position: relative;
@@ -821,6 +849,7 @@ body>aside h1 {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    width: 100%;
  
   
 }
@@ -832,14 +861,14 @@ body>aside h1 {
     max-height:min-content;
     align-items: flex-end;
    
+    max-width: 100%;
     
 }
 
 .profileInfo>section>div>div>img {
-    position: relative;
-   
-    width: 30vmin;
-    height: 30vmin;
+    
+    width: 10em;
+    height: auto;
     border-radius: 50%;
 }
 
@@ -855,7 +884,7 @@ body>aside h1 {
 
 
 .profileInfo h2 {
-    color: var(--second-color);
+    color: var(--third-color);
 }
 
 .profileInfo p {
@@ -878,7 +907,7 @@ body>aside h1 {
 .profilePosts{
     margin: 0;
     padding: 0;
-    background-color: var(--second-color);
+    background-color: var(--third-color);
     border-radius: 1rem;
 }
 
@@ -928,11 +957,50 @@ body>aside h1 {
     height: 3em;
     margin: 2em 0;
     border-radius: 1rem;
-    border-color: var(--second-color);
+    border-color: var(--third-color);
 }
 
 .settings > input:hover{
-    background-color: var(--third-color);
+    background-color: var(--second-color);
+}
+@media  (min-width: 400px){
+    .searchBar {
+        min-width: 10em;
+    }
 }
 
-/*  */
+@media (max-width: 400px){
+
+   
+
+    body>header {
+        padding: 0;
+
+   
+    }
+    body>header h1{
+        visibility: hidden;
+        width: 0.1px;
+        position: absolute;
+
+    }
+    .searchPage{
+        margin: 1rem 0;
+    }
+    .centerPage{
+        margin: 0;
+    }
+    .main{
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+       width: 99%;
+       height: 50%;
+    }
+
+    .profileInfo img{
+        margin: 0;
+    }
+
+}
