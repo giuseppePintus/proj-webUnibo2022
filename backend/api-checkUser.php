@@ -19,6 +19,17 @@
         echo json_encode('Invalid username ');
         exit();
     }
+    $userId = $dbh->getUserId($data['username'])[0];
+    echo json_encode($userId, $dbh->addLoginAttempts($userId));
+    exit();
+    
+
+        //allows 5 attempts in the last 5 minutes -> 5+1(current) = 6 attempts max
+    if ($dbh->getLoginAttempts($userId)[0] > 7) {
+        echo json_encode("too much attempts, wait few minutes");     
+        exit();
+
+    }
     
 
     $expectPwd = strval($dbh -> getUserPassHash($data['username'])[0]);
@@ -34,10 +45,11 @@
     setcookie("SID", session_id(), 0);
 
     $_SESSION["Username"] =  $data['username'];
-    $_SESSION["userid"] = $dbh->getUserId($data['username'])[0];
+    $_SESSION["userid"] = $userId;
     $_SESSION["isAuth"] = true;
     $_SESSION["userfolder"] = $data['username'].'/';
    
     echo json_encode('ok'); 
     exit();
+
 ?>

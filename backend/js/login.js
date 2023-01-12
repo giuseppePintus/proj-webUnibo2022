@@ -20,7 +20,7 @@ async function login() {
     responseType: 'json'
   });
 
-  console.log(response);
+  console.log(response.data);
   if(response.data == "ok"){
     window.location.href = './index.php';
   }
