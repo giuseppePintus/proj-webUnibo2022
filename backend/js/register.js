@@ -5,23 +5,20 @@ async function register(){
   const password = document.getElementById('passInput').value;
 
   if(email == '' || user == '' || password == '' ){
-    if(document.getElementsByClassName("errorMsg")!=null){  
-    }else{
-      const node = document.createElement("p");
-      const textnode = document.createTextNode( "Missing data");
-      node.appendChild(textnode);
-      node.setAttribute("class", "errorMsg" );
-      //aggiungo elemento al dom
-      document.getElementById("loginDiv").appendChild(node);  
-    }
-    console.log("Missing data");
+    printError("Missing data");
     return;
   }
 
+  if(password.length < 8){
+    document.querySelector("#passInput").classList.add("invalid");
+    printError("Password troppo corta");
+    console.log("pass");
+    return;
+  }
 
   const hashPassword = await digestMessage(password);
 
-  console.log("email: " + email + " | username: " + user + " | passwordHash: " + hashPassword);
+
 
   const result = await axios.post("./api-registerUser.php", {
                                     email: email,
@@ -29,14 +26,39 @@ async function register(){
                                     password: hashPassword
                                   });
 
-  console.log(result.data);
-
-  if( result.data == "OK")
-  {
+console.log(result.data)
+let resData = result.data;
+  if( resData == "OK"){
     window.location.href = './login.php';
+  }else if(resData=="username gia esistente"){
+    document.querySelector("#userInput").classList.add("invalid");
+    printError(resData);
   }
 
+
   return;
+}
+
+
+function printError(msg){
+  //remove existing error message
+  let err = document.querySelector(".errorMsg");
+  if(err !=null){ 
+    err.remove();
+  }
+
+  const node = document.createElement("p");
+  const textnode = document.createTextNode(msg);
+  node.appendChild(textnode);
+  node.setAttribute("class", "errorMsg" );
+  //aggiungo elemento al dom
+  document.querySelector("#loginDiv").appendChild(node);  
+  
+}
+function resetClass(){
+  document.querySelector("#userInput").classList.remove("invalid");
+  document.querySelector("#passInput").classList.remove("invalid");
+
 }
 
 async function digestMessage(message) {

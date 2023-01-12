@@ -22,6 +22,14 @@ body{
     background-color: #fff;
 }
 
+input[type=email]:invalid{
+    border-color: red;
+}
+
+.invalid{
+    border-color: red;
+}
+
 
 .loginDiv {
     flex: auto;
@@ -50,10 +58,8 @@ body{
 .loginDiv>form>input{
     padding:3%;
     margin: 2%;
-
     border-style: solid;
     border-radius: 1vmin;
-    border-color: var(--textColor);
     border-width: 1px;
 }
 
