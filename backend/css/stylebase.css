@@ -733,6 +733,7 @@ body>aside h1 {
     width: 30px;
     height: 30px;
 }
+
 .userinfo button{
     background-color: var(--third-color) ;
     border: none;
@@ -933,18 +934,35 @@ body>aside h1 {
     align-items: center;
 
 }
+#followingButton.selected,
+#followedButton.selected{
+    background-color: var(--second-color);
+}
+.followSection button{
+    border: 0;
+    border-radius: 1rem;
+    height: 1.5em;
+    background-color: var(--base-color);
+    color: var(--text-color);
+    margin: 0.5em;
+
+}
+.followSection button:hover{
+    background-color: var(--second-color);
+}
+
 
 
 .profilePosts{
-    margin: 0;
-    padding: 0;
+    margin: 1rem 0;
+    padding: 0.5em;
     background-color: var(--third-color);
     border-radius: 1rem;
 }
 
 .profilePosts>ul{
     padding: 0;
-    margin: 1em;
+    
     width: 100%;
     list-style-type: none;
     display: flex;
@@ -958,7 +976,7 @@ body>aside h1 {
 
 }
 
-.profilePosts>ul>li>button {
+.profilePosts button {
     width: auto;
     height: 100%;
     overflow: hidden;
@@ -968,6 +986,10 @@ body>aside h1 {
     
     
 }
+.profilePosts button:hover{
+    background-color: var(--second-color);
+}
+
 
 /*end profile css*/
 
