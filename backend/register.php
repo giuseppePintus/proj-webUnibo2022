@@ -22,12 +22,13 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/re
             <img src="../img/logo.png"/>
             <h1> Welcome to Tachyon</h1> 
             <h2> Sign Up </h2>
-            <form id="LoginForm">
-                <input type="text"      name="EmailIn"  id="emailInput" class="emailIn"  placeholder="Email" >
-                <input type="text"      name="UsernameIn"  id="userInput" class="usrIn"  placeholder="Username" >
-                <input type="password"  name="PasswordIn"  id="passInput" class="passIn" placeholder="Password">
+            <form id="LoginForm" onfocus="resetClass()">
+                <input type="email"     name="EmailIn"      id="emailInput"     class="emailIn" placeholder="Email">
+                <input type="text"      name="UsernameIn"   id="userInput"      class="usrIn"   placeholder="Username">
+                <input type="password"  name="PasswordIn"   id="passInput"      class="passIn"  placeholder="Password">
                 <input type="button"    name="LoginButton" value="Register"  onclick="register()">
             </form> 
+            <p> La password deve essere almeno 8 caratteri</p>
         </div>
         <?php
 
