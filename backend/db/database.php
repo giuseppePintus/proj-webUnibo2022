@@ -520,20 +520,17 @@ class DatabaseHelper
     }
 
     public function getLoginAttempts($userid){
-        $stmt = $this->db->prepare("SELECT COUNT(`time`) 
-                                    FROM `LOGIN_ATTEMPTS` 
-                                    WHERE `userid`= ? and `time` >= now() - interval 5 minute");
-        $stmt->bind_param('i', $userId);
+        $stmt = $this->db->prepare("SELECT COUNT(`time`) FROM `LOGIN_ATTEMPTS` WHERE `userid`= ? and `time` >= now() - interval 5 minute;");
+        $stmt->bind_param('i', $userid);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_row();
     }
 
     public function addLoginAttempts($userid){
-        $stmt = $this->db->prepare("INSERT INTO `LOGIN_ATTEMPTS`(`userid`) VALUES(?)");
-        $stmt->bind_param('i', $userId);
+        $stmt = $this->db->prepare("INSERT INTO `LOGIN_ATTEMPTS`(`time`,`userid`) VALUES( null , ? )");
+        $stmt->bind_param('i', $userid);
         $stmt->execute();
-        $result = $stmt->get_result();
-        return $result;
+        return $stmt->get_result();;
     }
 }
