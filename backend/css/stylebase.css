@@ -95,10 +95,6 @@ p{
     color: var(--text-color);
     mix-blend-mode: luminosity;
 }
-button{
-    /* color: var(--text-color); */
-    /* mix-blend-mode: luminosity; */
-}
 
 
 label{
@@ -566,6 +562,13 @@ body>aside h1 {
 .notificationList>div>ul>li{
     margin: 1%;
 }
+.notificationList>div>ul>li:nth-child(3){
+    font-size: smaller;
+    color: var(--third-color);
+    white-space: nowrap;
+    display: flex;
+    margin: 0;
+}
 
 #notification-container{
     display: flex;
@@ -718,11 +721,13 @@ body>aside h1 {
     box-sizing: border-box;
     width: 100%;
 
+    margin: 0.5rem 0;
     padding: 1vmin 0;
+    border-radius: 1rem;
+
     background-color: var(--third-color);
     white-space: nowrap;
 
-    border-radius: 1rem;
 }
 
 .userinfo>ul {
@@ -733,6 +738,7 @@ body>aside h1 {
     width: 30px;
     height: 30px;
 }
+
 
 .userinfo button{
     background-color: var(--third-color) ;
@@ -909,17 +915,9 @@ body>aside h1 {
     height: min-content;
 }
 
-.profileInfo>section>div>p{
-   align-self: center;
-   font-weight: bold;
-}
-
-
-.profileInfo h2 {
-    color: var(--third-color);
-}
-
 .profileInfo p {
+    align-self: center;
+    font-weight: bold;
     display: block;
 }
 .followSection{
@@ -938,6 +936,7 @@ body>aside h1 {
 #followedButton.selected{
     background-color: var(--second-color);
 }
+
 .followSection button{
     border: 0;
     border-radius: 1rem;
@@ -949,6 +948,9 @@ body>aside h1 {
 }
 .followSection button:hover{
     background-color: var(--second-color);
+}
+.followSection input[type="submit"]{
+
 }
 
 
@@ -976,6 +978,7 @@ body>aside h1 {
 
 }
 
+#editprofile,
 .profilePosts button {
     width: auto;
     height: 100%;
@@ -983,10 +986,15 @@ body>aside h1 {
     justify-self: center;
     text-align: center;
     border-radius: 1rem;
+    padding: 0.3rem;
     
     
 }
+#editprofile:hover,
 .profilePosts button:hover{
+    background-color: var(--second-color);
+}
+.profilePosts button.current{
     background-color: var(--second-color);
 }
 
