@@ -8,7 +8,7 @@ async function login() {
 
   //calculate SHA-256 of the user password
   const hashpwd = await digestMessage(pwd);
-  console.log('hashpwd: ' + hashpwd);
+
 
   const response  = await axios.post('./api-checkUser.php', {
     username: user,
@@ -20,10 +20,15 @@ async function login() {
     responseType: 'json'
   });
 
-  console.log(response.data);
   if(response.data == "ok"){
     window.location.href = './index.php';
+  }else if(response.data == "Brute"){
+    printError("Too many attempts");    
   }
+  else if(response.data == "usrPwd"){
+    printError("Username or Password not valid");    
+  }
+
   return;
 }
 
@@ -37,46 +42,33 @@ async function digestMessage(message) {
 
 function checkInput(usr, pwd){
   if(usr=='' || usr == null){
-    console.log('username non valido');
-    addErrElem("Username");
+    printError("Username cannot be empty")
     return false;
-  }else{
-      remErrElem("Username");
   }
 
   if(pwd=='' || pwd == null){
-      console.log('password non valida');
-      addErrElem("Password");
-      return false;
-  }else{
-      remErrElem("Password");
+    printError("Password cannot be empty")
+    return false;
   }
-
   return true;
 }
 
-function addErrElem(msg){
-  //check if already exists
-  if(document.getElementById("err"+msg)!=null){
-      return;   
+
+function printError(msg){
+  //remove existing error message
+  let err = document.querySelector(".errorMsg");
+  if(err !=null){ 
+    err.remove();
   }
-  //new message
+
   const node = document.createElement("p");
-  const textnode = document.createTextNode( msg + " not valid");
+  const textnode = document.createTextNode(msg);
   node.appendChild(textnode);
   node.setAttribute("class", "errorMsg" );
-  node.setAttribute("id", "err" + msg);
-  //add mesage to DOM
-  document.getElementById("loginDiv").appendChild(node);  
+  //aggiungo elemento al dom
+  document.querySelector("#loginDiv").appendChild(node);  
+  
 }
-
-function remErrElem(msg){
-  //check if already exists
-  if(document.getElementById("err" + msg) != null){
-      document.getElementById("err" + msg).remove();
-  }
-}
-
 
 let form = document.querySelector("#LoginForm");
 
