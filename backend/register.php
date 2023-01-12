@@ -13,13 +13,13 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/re
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Tachyon-SignUp</title>
-        <link rel="icon" href="../img/logo.ico" type="image/x-icon">
-        <link rel="stylesheet" href="../backend/css/login.css">
+        <link rel="icon" href="./upload/logo.ico" type="image/x-icon">
+        <link rel="stylesheet" href="./css/login.css">
         
     </head>
     <body>
         <div class="loginDiv" id="loginDiv">
-            <img src="../img/logo.png"/>
+            <img src="./upload/logo.png"/>
             <h1> Welcome to Tachyon</h1> 
             <h2> Sign Up </h2>
             <form id="LoginForm" onfocus="resetClass()">

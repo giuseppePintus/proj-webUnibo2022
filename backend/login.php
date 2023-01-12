@@ -20,7 +20,7 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/lo
     </head>
     <body>
         <div class="loginDiv" id="loginDiv">
-            <img src="../img/logo.png"/>
+            <img src="./upload/logo.png"/>
             <h1> Welcome to Tachyon</h1>
             <h2> Login </h2>
             <form id="LoginForm">
