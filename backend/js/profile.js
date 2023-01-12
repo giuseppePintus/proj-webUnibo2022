@@ -30,8 +30,8 @@ async function profilePageTemplate(userInfo) {
                 <div>
                     <img src="${result['usericon']}" alt="usericon">
                     <ul>
-                        <li><h1>${result['usernickname']}</h1></li>
-                        <li><h2>@${result["username"]}</h2></li>
+                        <li><h2>${result['usernickname']}</h2></li>
+                        <li>@${result["username"]}</li>
                     </ul>
                 </div>
                 <p>Bio: ${result["userbiography"]}</p>

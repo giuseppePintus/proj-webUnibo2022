@@ -35,7 +35,7 @@ async function generateNotifications() {
     const aside = document.querySelector("aside");
     const asideInitialHTML = `<section class="notificationContainer">
     <header>
-        <h1>Notification</h1>
+        <h2>Notification</h2>
     </header> <div class="notificationList">`;
 
     axios.post('./api-getUserNotifications.php', {
@@ -59,7 +59,7 @@ async function generateNotifications() {
                     <h3>${notifications[i]["usernickname"]}</h3>
                 </li>
                 <li>
-                    <h3>${notifications[i]["notificationdate"]}</h3>
+                    ${notifications[i]["notificationdate"]}
                 </li>
                 <li>
                     <p>${notifications[i]["notificationtext"]}</p>
