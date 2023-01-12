@@ -293,24 +293,28 @@ function addProfilePageListenrs(userID) {
         postDisplaySelector = 0;
         cleanPosts();
         userInitialPost(userID);
+        addCurrentTagToButtons();
     });
 
     document.getElementById('likedPostsButton').addEventListener('click', () => {
         postDisplaySelector = 1;
         cleanPosts();
         userInitialPost(userID);
+        addCurrentTagToButtons();
     });
 
     document.getElementById('CommentedPostsButton').addEventListener('click', () => {
         postDisplaySelector = 2;
         cleanPosts();
         userInitialPost(userID);
+        addCurrentTagToButtons();
     });
 
     document.getElementById('savedPostsButton').addEventListener('click', () => {
         postDisplaySelector = 3;
         cleanPosts();
         userInitialPost(userID);
+        addCurrentTagToButtons();
     });
 
 }
@@ -328,6 +332,7 @@ function refleshPage() {
         addProfilePageListenrs(user);
         userScrollingPost(user);
         followInteractionsListeners(user);
+        addCurrentTagToButtons();
     });
 
 }
