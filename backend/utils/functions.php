@@ -97,10 +97,8 @@ function sendEmail($email){
     
     $subject = 'Welcome to Tachyon';
     $message = 'Thank you for your subscription';
-    $headers = 'From: tachyon@localhost' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
 
-    if (mail($email, $subject, $message, $headers)) {
+    if (mail($email, $subject, $message)) {
         echo 'Email sent successfully!';
     } else {
         echo 'Error sending email.';
