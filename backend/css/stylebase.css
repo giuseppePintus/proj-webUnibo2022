@@ -372,6 +372,10 @@ body>header>a>img {
     padding: 0;
     color: var(--third-color)
 }
+.postHeader h2{
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
 
 
 .postHeader,
@@ -485,7 +489,7 @@ input[type="file"]::file-selector-button {
     margin-left: 15%;
     margin-top: 3%;
     background-color: var(--second-color);
-    overflow-x: scroll;
+    overflow-x: auto;
     padding:  2% 2% 0% 2%;
     
 }
@@ -493,6 +497,7 @@ input[type="file"]::file-selector-button {
 .postComment img {
     width: 2rem;
     height: 2rem;
+    border-radius: 50%;
 }
 
 .postComment p {
