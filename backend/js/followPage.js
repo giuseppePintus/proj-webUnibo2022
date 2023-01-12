@@ -79,16 +79,16 @@ function addProfilePageListenrs() {
         action = 0;
         cleanPosts();
         searchFollow();
-        document.querySelector("#followingButton").classList.remove(".selected");
-        document.querySelector("#followedButton").classList.add(".selected");
+        document.querySelector("#followingButton").classList.remove("selected");
+        document.querySelector("#followedButton").classList.add("selected");
     });
 
     document.getElementById('followingButton').addEventListener('click', () => {
         action = 1;
         cleanPosts();
         searchFollow();
-        document.querySelector("#followedButton").classList.remove(".selected");
-        document.querySelector("#followingButton").classList.add(".selected");
+        document.querySelector("#followedButton").classList.remove("selected");
+        document.querySelector("#followingButton").classList.add("selected");
     });
 
 
@@ -110,10 +110,10 @@ function addHeaders() {
     main.insertAdjacentHTML('afterbegin', header);
     switch (action) {
         case 0:
-            document.querySelector("#followedButton").classList.add(".selected");
+            document.querySelector("#followedButton").classList.add("selected");
             break;
         case 1:
-            document.querySelector("#followingButton").classList.add(".selected");
+            document.querySelector("#followingButton").classList.add("selected");
             break;
     }
 }
