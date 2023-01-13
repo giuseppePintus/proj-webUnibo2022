@@ -644,6 +644,35 @@ input[type="color"]{
     justify-content: center;
 }
 
+/*Cookie prompt*/
+.cookie-notification {
+    width: 100%;
+    background-color: #f2f2f2;
+    padding: 1em;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+  }
+  .cookie-notification p {
+    font-size: 0.9em;
+    color: #333333;
+  }
+  .cookie-notification a {
+    color: #0066cc;
+    text-decoration: none;
+    margin-left: 1em;
+  }
+  .cookie-notification button {
+    background-color: #0066cc;
+    color: #fff;
+    padding: 0.5em 1em;
+    border: none;
+    cursor: pointer;
+    margin-left: 1em;
+  }
+
 
 /*responsive design*/
 @media  (min-width: 400px){

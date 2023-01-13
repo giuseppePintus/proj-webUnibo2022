@@ -4,7 +4,7 @@ require_once 'utils/bootstrap.php';
 //use Base template
 $templateParams["pagetitle"] = "Tachyon - SignUp";
 $templateParams["pagename"] = "SignUp";
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/register.js" , "js/darkMode.js");
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/register.js" , "js/darkMode.js", "js/cookie.js");
 
 ?>
 <!DOCTYPE html>

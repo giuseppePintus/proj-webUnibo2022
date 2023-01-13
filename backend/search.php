@@ -13,7 +13,7 @@ if(isset($_GET['search'])){
 else{
     $search = "js/search.js";
 }
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js",$search, "js/interaction.js", "js/notifications.js", "js/darkMode.js" );
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js",$search, "js/interaction.js", "js/notifications.js", "js/darkMode.js" , "js/cookie.js");
 
 
 require 'template/base.php';

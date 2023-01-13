@@ -81,6 +81,6 @@ form.addEventListener('keydown', function(event) {
 //setup cookie for personalization
 document.cookie = "colorPalette=" + JSON.stringify(["#4677a4","#a44677","#77a446","#375d80","#80375d","#5d8037"]) + "; expires = 0; path=/";
 document.cookie = "nightMode=0; expires = 0; path=/";
-
+document.cookie = "cookieAccepted=0; expires = 0; path=/";
 
 
