@@ -4,8 +4,8 @@
     --second-color: #a44677;
     --third-color : #77a446;
 
-    --base-color : #fff;
-    --text-color: #000;
+    --base-color : #ddd;
+    --text-color: #333;
     --invert: 1;
  }
  /*responsive queryes*/
@@ -194,6 +194,7 @@ input[type="color"]{
     
     margin-top: 0.5em;
     transition: 1s; 
+   
 }
 .centerPage{
     width: 100%;
@@ -289,6 +290,9 @@ input[type="color"]{
     padding: 0.3em 0;
     background-color: var(--first-color);
     white-space: nowrap;
+}
+.postHeader button{
+    border: 0;
 }
 .homePost {
     display: flex;
@@ -581,6 +585,7 @@ input[type="color"]{
 .profilePosts button:hover{
     background-color: var(--second-color);
 }
+
 .selected,
 .current{
     background-color: var(--second-color);
@@ -598,14 +603,6 @@ input[type="color"]{
     justify-content: center;
 }
 
-.settings > input{
-    align-self: center;
-    width: 10em;
-    height: 3em;
-    margin: 2em 0;
-    border-radius: 1rem;
-    border-color: var(--third-color);
-}
 
 /*responsive design*/
 @media  (min-width: 400px){
