@@ -1,5 +1,4 @@
 <?php
-
     require_once 'utils/bootstrap.php';
     $request_body = file_get_contents('php://input');
     $data = json_decode($request_body, true);
@@ -29,8 +28,6 @@
         mkdir($path, 0777, true);
     }
 
-    echo json_encode("OK");
-    
+    echo json_encode("OK");    
     exit();
-
 ?>

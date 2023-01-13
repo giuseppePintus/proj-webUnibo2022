@@ -1,10 +1,10 @@
 <?php
-require_once 'utils/bootstrap.php';
+    require_once 'utils/bootstrap.php';
 
-//use Base template
-$templateParams["pagetitle"] = "Tachyon - SignUp";
-$templateParams["pagename"] = "SignUp";
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/register.js" , "js/darkMode.js", "js/cookie.js");
+    //use Base template
+    $templateParams["pagetitle"] = "Tachyon - SignUp";
+    $templateParams["pagename"] = "SignUp";
+    $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/register.js" , "js/darkMode.js", "js/cookie.js");
 
 ?>
 <!DOCTYPE html>
@@ -31,13 +31,12 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/re
             <p> La password deve essere almeno 8 caratteri</p>
         </div>
         <?php
-
             if (isset($templateParams["js"])) :
-                foreach ($templateParams["js"] as $script) :
-            ?>
-                    <script src="<?php echo $script; ?>"></script>
-            <?php
-                endforeach;
+            foreach ($templateParams["js"] as $script) :
+        ?>
+        <script src="<?php echo $script; ?>"></script>
+        <?php
+            endforeach;
             endif;
         ?>
     </body>
@@ -48,9 +47,6 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/re
             <a href="cookie.html"> Cookie </a>       
             | ©2022 -
             <a href="credit.html"> Credit </a>
-
-        </p>
-        
-        
+        </p>        
     </footer>
 </html>

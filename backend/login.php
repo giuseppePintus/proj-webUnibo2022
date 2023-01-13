@@ -1,12 +1,10 @@
 <?php
-require_once 'utils/bootstrap.php';
+    require_once 'utils/bootstrap.php';
 
-//use Base template
-$templateParams["pagetitle"] = "Tachyon - Login";
-$templateParams["pagename"] = "Login";
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/login.js", "js/cookie.js");
-
-
+    //use Base template
+    $templateParams["pagetitle"] = "Tachyon - Login";
+    $templateParams["pagename"] = "Login";
+    $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/login.js", "js/cookie.js");
 ?>
 <!DOCTYPE html>
 <html lang="it-IT">
