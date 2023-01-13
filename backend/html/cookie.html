@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cookie Notification</title>
+    <style>
+      /* CSS styles go here */
+      .cookie-notification {
+        background-color: #f2f2f2;
+        padding: 1em;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+      }
+      .cookie-notification p {
+        margin: 0;
+        font-size: 0.9em;
+        color: #333333;
+      }
+      .cookie-notification a {
+        color: #0066cc;
+        text-decoration: none;
+        margin-left: 1em;
+      }
+      .cookie-notification button {
+        background-color: #0066cc;
+        color: #fff;
+        padding: 0.5em 1em;
+        border: none;
+        cursor: pointer;
+        margin-left: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cookie-notification">
+      <p>This website uses cookies to ensure you get the best experience on our website. <a href="#">Learn more</a>
+      <button onClick="setCookie()">Got it!</button>
+      </p>
+    </div>
+    <script>
+      function setCookie(){
+        //set a cookie to remember user agreed to cookie policy
+        //you can use any library or plain javascript to set cookie
+        //example:
+        document.cookie = "cookieAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+        // hide the cookie notification
+        document.querySelector(".cookie-notification").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

@@ -42,11 +42,11 @@ $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/lo
         ?>
         <footer>
             <p>
-                <a href="privacy.html"> Informativa Privacy </a> 
+                <a href="html/privacy.html"> Informativa Privacy </a> 
                 |
-                <a href="cookie.html"> Cookie </a>       
+                <a href="html/cookie.html"> Cookie </a>       
                 | ©2022 -
-                <a href="credit.html"> Credit </a>
+                <a href="html/credit.html"> Credit </a>
                 
             </p>
         </footer>
