@@ -117,12 +117,12 @@ function generatePostOfUser(posts, userInfo) {
             </section>
             <footer>
                 <ul>                    
-                    <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
-                    <li><p class="nLike">${posts[i]["nlike"]}</p></li>
-                    <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
-                    <li><p class="nComment">${posts[i]["commented"]}</p></li>
-                    <li><img class="save" src="./upload/save.png" alt="save"/></li>
-                    <li><p class="nSave">${posts[i]["saved"]}</p></li>
+                <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
+                <li><p class="nLike">${posts[i]["nlike"]}</p></li>
+                <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
+                <li><p class="nComment">${posts[i]["commented"]}</p></li>
+                <li><img class="save posticon${posts[i]["saved"]}" src="./upload/save.png" alt="save"/></li>
+                <li><p class="nSave">${posts[i]["saved"]}</p></li>
                 </ul>
             </footer>
         `;

@@ -375,7 +375,7 @@ input[type="color"]{
     width: auto;
     height: auto;
     max-width: 90%;
-    max-height: 15em;
+    max-height: 30em;
 
     object-fit: cover;
 }
@@ -425,7 +425,7 @@ input[type="color"]{
     
 }
 .postComment ul{
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     text-align: left;
 }
