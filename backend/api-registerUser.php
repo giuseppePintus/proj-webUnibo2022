@@ -5,7 +5,7 @@
     $data = json_decode($request_body, true);
    
     if (!isset($data['email']) || !isset($data['username']) || !isset($data['password'])){
-        echo('missing data');
+        echo json_encode('missing data');
         exit();
     }
    
