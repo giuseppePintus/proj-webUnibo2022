@@ -290,18 +290,42 @@ input[type="color"]{
 }
 
 .postHeader ul{
-    display: flex;
+  
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: stretch;
+    align-items: center;
    
     box-sizing: border-box;
     width: 100%;
-
-    padding: 0.3em 0;
+    max-width: 100%;
     background-color: var(--first-color);
     white-space: nowrap;
+    margin: 0;
+    padding:0%;
 }
+
+.postHeader ul li{
+    display: inline-flex;
+}
+
+.postHeader ul li:first-child, .postHeader ul li:nth-child(2){
+    margin: 0%;
+}
+
+.postHeader h2{
+    font-size: large;
+    white-space: pre-line;
+}
+
+.postHeader ul li:nth-child(3) button{
+    color: var(--third-color); 
+}
+
+.postHeader ul li:last-child{
+    font-style: italic;
+}
+
+
 .postHeader button{
     border: 0;
 }
@@ -314,7 +338,7 @@ input[type="color"]{
 
     width: 100%;
     max-width: 35em;
-    max-height: 49em;
+    max-height: auto;
     
     border: 1px solid var(--third-color);
     margin: 5% 0;
@@ -337,7 +361,7 @@ input[type="color"]{
  
 
    
-    max-height: 27em;
+    /*max-height: 27em;*/
     margin: 0 3rem ;
 }
 
