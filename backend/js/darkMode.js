@@ -1,22 +1,22 @@
 function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let cookieAray = decodedCookie.split(';');
-    for(let i = 0; i <cookieAray.length; i++) {
-      let c = cookieAray[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length); //ritorno valore del cookie
-      }
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let cookieAray = decodedCookie.split(';');
+  for(let i = 0; i <cookieAray.length; i++) {
+    let c = cookieAray[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
     }
-    return null; //cookie non esiste
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length); //ritorno valore del cookie
+    }
+  }
+  return null; //cookie non esiste
 }
+
 let darkCookie = getCookie("nightMode");
 let paletteCookie = getCookie("colorPalette");
 let arrayColor = JSON.parse(paletteCookie);
-console.log(arrayColor);
 
 if(darkCookie == null || darkCookie == "0"){
   document.documentElement.style.setProperty('--first-color', arrayColor[0]);

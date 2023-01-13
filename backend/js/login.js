@@ -1,7 +1,6 @@
 async function login() {
   const user = document.getElementById("userInput").value;
   let pwd =  document.getElementById("passInput").value;
-
   if (!checkInput(user, pwd)) {
     return;
   }
@@ -9,16 +8,15 @@ async function login() {
   //calculate SHA-256 of the user password
   const hashpwd = await digestMessage(pwd);
 
-
   const response  = await axios.post('./api-checkUser.php', {
     username: user,
     password: hashpwd
-  }, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    responseType: 'json'
-  });
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      responseType: 'json'
+    });
 
   if(response.data == "ok"){
     window.location.href = './index.php';
@@ -28,7 +26,6 @@ async function login() {
   else if(response.data == "usrPwd"){
     printError("Username or Password not valid");    
   }
-
   return;
 }
 
@@ -45,14 +42,12 @@ function checkInput(usr, pwd){
     printError("Username cannot be empty")
     return false;
   }
-
   if(pwd=='' || pwd == null){
     printError("Password cannot be empty")
     return false;
   }
   return true;
 }
-
 
 function printError(msg){
   //remove existing error message
@@ -67,7 +62,6 @@ function printError(msg){
   node.setAttribute("class", "errorMsg" );
   //aggiungo elemento al dom
   document.querySelector("#loginDiv").appendChild(node);  
-  
 }
 
 let form = document.querySelector("#LoginForm");

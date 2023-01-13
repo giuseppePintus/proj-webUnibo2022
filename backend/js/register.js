@@ -23,16 +23,14 @@ async function register(){
 
   const hashPassword = await digestMessage(password.value);
 
-
-
   const result = await axios.post("./api-registerUser.php", {
                                     email: email.value,
                                     username: user.value,
                                     password: hashPassword
                                   });
 
-console.log(result.data);
-let resData = result.data;
+
+  let resData = result.data;
   if( resData == "OK"){
     window.location.href = './login.php';
   }else if(resData=="username not available"){

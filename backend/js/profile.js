@@ -206,12 +206,6 @@ async function followInteractionsListeners(userID) {
     }
 }
 
-function getFollowerNumber() {
-
-}
-
-
-
 function userPost(userID) {
 
     lock = false;
@@ -233,16 +227,6 @@ function userPost(userID) {
     });
 }
 
-
-
-
-
-
-
-
-
-
-
 function userScrollingPost(userID) {
     window.addEventListener('scroll', () => {
         const childCount = main.querySelectorAll('.homePost').length;
@@ -251,6 +235,7 @@ function userScrollingPost(userID) {
         }
     });
 }
+
 function addCurrentTagToButtons() {
 
     const myPost = document.getElementById('myPostsButton');
@@ -285,7 +270,6 @@ function addCurrentTagToButtons() {
         default:
             break;
     }
-
 }
 
 function addProfilePageListenrs(userID) {
@@ -316,14 +300,12 @@ function addProfilePageListenrs(userID) {
         userInitialPost(userID);
         addCurrentTagToButtons();
     });
-
 }
 
 function cleanPosts() {
     offsetUserPostQuery = 0;
     document.querySelectorAll(".homePost").forEach(x => x.remove());
 }
-
 
 function refleshPage() {
     profilePageTemplate(userInfo).then(result => {
@@ -334,7 +316,6 @@ function refleshPage() {
         followInteractionsListeners(user);
         addCurrentTagToButtons();
     });
-
 }
 
 async function refleshUserInfo() {

@@ -41,13 +41,12 @@ input[type=email]:invalid{
 
     justify-content: center;
     align-items: center;
-
 }
+
 .loginDiv>img{
     filter: invert(var(--invert));
     width: 30%;   
-    max-width: 200px;
-   
+    max-width: 200px;  
 }
 
 .loginDiv>form{
@@ -55,6 +54,7 @@ input[type=email]:invalid{
     justify-content: center;
     padding: px;
 }
+
 .loginDiv>form>input{
     padding:3%;
     margin: 2%;
@@ -70,9 +70,11 @@ a{
 a:hover{
     text-decoration: underline;
 }
+
 p{
     color: var(--textColor);
 }
+
 .errorMsg{
     color: red;
     font-weight: bold;

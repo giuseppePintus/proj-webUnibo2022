@@ -162,16 +162,12 @@ async function refreshPost(postid) {
   //await displayComment(postid, commentBoxStateMap.get(postid));
 }
 
-
-
 commentBoxStateMap = new Map();
-
 
 // Add a click event listener to the body element
 document.body.addEventListener('click', function (event) {
+  
   // Check if the clicked element is a .homepost element
-
-
   let article = event.target.closest('.homePost');
 
   // Check if the clicked element is a li element
@@ -179,7 +175,6 @@ document.body.addEventListener('click', function (event) {
     let postID = article.id;
     if (event.target.classList.contains('like')) {
       // If it is, do something
-      console.log('like post');
       likeAction(postID);
     }
     if (event.target.classList.contains('comment')) {
@@ -191,12 +186,9 @@ document.body.addEventListener('click', function (event) {
     }
     if (event.target.classList.contains('save')) {
       // If it is, do something
-      console.log('save post');
       saveAction(postID);
     }
-
   }
-
 });
 
 

@@ -11,8 +11,7 @@ async function setNewPassword(){
   const newPass = document.getElementById("newPassword").value;
 
   if(oldPass == "" || newPass == ""){
-    console.log("campi vuoti");
-  return;
+    return;
   }
   const oldPassHash = await digestMessage(oldPass);
   const newPassHash = await digestMessage(newPass);
@@ -151,7 +150,6 @@ function hexToHsl(H) {
     g = "0x" + H[3] + H[4];
     b = "0x" + H[5] + H[6];
   }
-  console.log(r + " " + g + " " + b)
   // convert to HSL
   r /= 255;
   g /= 255;

@@ -1,5 +1,3 @@
-
-
 function generatePosts(posts) {
     let result = "";
     for (let i = 0; i < posts.length; i++) {
@@ -8,63 +6,56 @@ function generatePosts(posts) {
             postiamge = "<img src=" + posts[i]["postimage"] + " alt=" + "postimage" + "/>";
         }
         let article = `
-        <article id="${posts[i]["postid"]}" class="homePost">
-            <header>
-                <div class="postHeader">
+            <article id="${posts[i]["postid"]}" class="homePost">
+                <header>
+                    <div class="postHeader">
+                        <ul>
+                            <li>
+                                <form action="profile.php" method="post">
+                                <input type="hidden" name="user" value="${posts[i]["userid"]}">
+                                <button type="submit"><img src="${posts[i]["usericon"]}" alt="usericon" /></button>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="profile.php" method="post">
+                                <input type="hidden" name="user" value="${posts[i]["userid"]}">
+                                <button type="submit"><h2>${posts[i]['usernickname']}</h2></button>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="profile.php" method="post">
+                                <input type="hidden" name="user" value="${posts[i]["userid"]}">
+                                <button type="submit">@${posts[i]["username"]}</button>
+                                </form>
+                            </li>
+                            <li><p> - ${posts[i]["postdate"]}</p></li>
+                        </ul>
+                    </div>
+                </header>
+                <section>
+                    <p>${posts[i]["posttext"]}</p>
+                    <div class="postimage">
+                    ${postiamge}
+                    </div>
+                </section>
+                <footer>
                     <ul>
-                        <li>
-                            <form action="profile.php" method="post">
-                            <input type="hidden" name="user" value="${posts[i]["userid"]}">
-                            <button type="submit"><img src="${posts[i]["usericon"]}" alt="usericon" /></button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="profile.php" method="post">
-                            <input type="hidden" name="user" value="${posts[i]["userid"]}">
-                            <button type="submit"><h2>${posts[i]['usernickname']}</h2></button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="profile.php" method="post">
-                            <input type="hidden" name="user" value="${posts[i]["userid"]}">
-                            <button type="submit">@${posts[i]["username"]}</button>
-                            </form>
-                        </li>
-                        <li><p> - ${posts[i]["postdate"]}</p></li>
+                        
+                        <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
+                        <li><p class="nLike">${posts[i]["nlike"]}</p></li>
+                        <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
+                        <li><p class="nComment">${posts[i]["commented"]}</p></li>
+                        <li><img class="save posticon${posts[i]["saved"]}" src="./upload/save.png" alt="save"/></li>
+                        <li><p class="nSave">${posts[i]["saved"]}</p></li>
                     </ul>
-                </div>
-            </header>
-            <section>
-                <p>${posts[i]["posttext"]}</p>
-                <div class="postimage">
-                ${postiamge}
-                </div>
-            </section>
-            <footer>
-                <ul>
-                    
-                    <li><img  class="like posticon${posts[i]["liked"]}" src="./upload/like.png" alt="like"/></li>
-                    <li><p class="nLike">${posts[i]["nlike"]}</p></li>
-                    <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
-                    <li><p class="nComment">${posts[i]["commented"]}</p></li>
-                    <li><img class="save posticon${posts[i]["saved"]}" src="./upload/save.png" alt="save"/></li>
-                    <li><p class="nSave">${posts[i]["saved"]}</p></li>
-                </ul>
-            </footer>
-        `;
-
-        //let comments = await getCommentsByPostId(posts[i]['postid']);
-        //article += generateCommentsHTML(comments, posts[i]['postid']);
+                </footer>
+            `;
         article += `<div id="showComment${posts[i]["postid"]}" class="showComment"></div>`;
-
         result += article;
         result += `</article>`;
     }
     return result;
 }
-
-
-
 
 function randomPost() {
     lock = false;
@@ -81,7 +72,6 @@ function randomPost() {
         lock = true;
     });
 }
-
 
 function feedUserPost() {
     lock = false;
@@ -102,9 +92,6 @@ function feedUserPost() {
     });
 }
 
-function userHome() {
-}
-
 function userScrollingHomePost() {
     window.addEventListener('scroll', () => {
         const childCount = main.querySelectorAll('.homePost').length;
@@ -115,11 +102,9 @@ function userScrollingHomePost() {
             else {
                 randomPost();
             }
-
         }
     });
 }
-
 
 // Get the current URL
 let url = window.location.search;
@@ -137,6 +122,7 @@ let randomFeedHome = 0;
 let sizeOfUserFeedQuery = 5;
 let lock = true;
 let userInfo;
+
 axios.post('./api-getUser.php', {
     userID: user
 }, {
@@ -150,5 +136,3 @@ axios.post('./api-getUser.php', {
     feedUserPost();
     userScrollingHomePost();
 });
-
-

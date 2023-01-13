@@ -4,9 +4,6 @@
     $request_body = file_get_contents('php://input');
     $data = json_decode($request_body, true);
 
-
-
-
     header('Content-Type: application/json');
     if(!isset($data['oldPass']) || !isset($data['newPass'])){
         http_response_code(401);  // set the response code to 401 Unauthorized

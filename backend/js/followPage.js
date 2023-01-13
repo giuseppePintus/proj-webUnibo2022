@@ -1,8 +1,7 @@
 
 function generateInfoUser(userInfo) {
     for (let i = 0; i < userInfo.length; i++) {
-        let result = `
-       
+        let result = `       
                 <div class="userinfo searchPage">
                     <ul>
                         <li>
@@ -28,9 +27,7 @@ function generateInfoUser(userInfo) {
                             <p>${userInfo[i]["follow"] ? "unfollow" : "follow"}</p>
                         </li>
                     </ul>
-                </div>
-    
-        `;// <li><p>${userInfo[i]["liked"]}</p></li>
+                </div> `;
         main.insertAdjacentHTML('beforeend', result);
         followInteractionsListeners(userInfo[i]["userid"]);
     }
@@ -72,8 +69,6 @@ function searchFollow() {
     });
 }
 
-
-
 function addProfilePageListenrs() {
     document.getElementById('followedButton').addEventListener('click', () => {
         action = 0;
@@ -90,8 +85,6 @@ function addProfilePageListenrs() {
         document.querySelector("#followedButton").classList.remove("selected");
         document.querySelector("#followingButton").classList.add("selected");
     });
-
-
 }
 
 function cleanPosts() {
@@ -101,7 +94,7 @@ function cleanPosts() {
 
 function addHeaders() {
     let header = `
-    <div class="profilePosts">
+                <div class="profilePosts">
                     <ul>
                         <li><button id="followedButton" type="button">follower</button></li>
                         <li><button id="followingButton" type="button">who is following</button></li>
@@ -118,7 +111,6 @@ function addHeaders() {
     }
 }
 
-
 const main = document.querySelector("main");
 const input = document.querySelector('#searchInfo');
 
@@ -126,6 +118,7 @@ let user = variable;
 let offsetDB = 0;
 let sizeQRes = 10;
 let lock = true;
+
 addHeaders();
 addProfilePageListenrs();
 searchFollow();
@@ -135,7 +128,6 @@ input.addEventListener('input', function () {
     cleanPosts();
     searchFollow();
 });
-
 
 window.addEventListener('scroll', () => {
     const lastChild = main.lastElementChild;

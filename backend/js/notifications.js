@@ -1,8 +1,3 @@
-
-
-
-
-
 async function getNotificationNumber() {
     const response = await axios.post('./api-readNotificationNumber.php', {
     }, {
@@ -120,13 +115,10 @@ function addNotificationBellListener(){
             showNotification = 1;
             generateNotifications();
         }
-        //console.log(showNotification);
     });
 }
-
 /*retrieve posts from the database*/
 let showNotification = 0;
-
 
 generateNotifications();
 addNotificationBellListener();
