@@ -1,41 +1,46 @@
 async function register(){
 
-  const email = document.getElementById('emailInput').value;
-  const user = document.getElementById('userInput').value;
-  const password = document.getElementById('passInput').value;
+  const email = document.getElementById('emailInput');
+  const user = document.getElementById('userInput');
+  const password = document.getElementById('passInput');
 
-  if(email == '' || user == '' || password == '' ){
+  if(email.value == '' || user.value == '' || password.value == '' ){
     printError("Missing data");
     return;
   }
 
-  if(password.length < 8){
-    document.querySelector("#passInput").classList.add("invalid");
-    printError("Password troppo corta");
-    console.log("pass");
+  if(!email.checkValidity()){
+    printError("Email not valid");
     return;
   }
 
-  const hashPassword = await digestMessage(password);
+  if(password.value.length < 8){
+    document.querySelector("#passInput").classList.add("invalid");
+    printError("Password too short");
+   
+    return;
+  }
+
+  const hashPassword = await digestMessage(password.value);
 
 
 
   const result = await axios.post("./api-registerUser.php", {
-                                    email: email,
-                                    username: user,
+                                    email: email.value,
+                                    username: user.value,
                                     password: hashPassword
                                   });
 
-console.log(result.data)
+console.log(result.data);
 let resData = result.data;
   if( resData == "OK"){
     window.location.href = './login.php';
-  }else if(resData=="username gia esistente"){
+  }else if(resData=="username not available"){
     document.querySelector("#userInput").classList.add("invalid");
     printError(resData);
+  }else if(resData==" missing data"){
+    printError("Error during communication with server");
   }
-
-
   return;
 }
 
