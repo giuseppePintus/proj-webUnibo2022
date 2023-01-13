@@ -312,14 +312,15 @@ input[type="color"]{
 
     width: 100%;
     max-width: 35em;
-    max-height: 35em;
+    max-height: 45em;
     
     border: 1px solid var(--third-color);
     margin: 5% 0;
     padding-bottom: 3%;
 
     text-align: center;
-    overflow: hidden;
+   
+   
 }
 
 .homePost>section{
@@ -330,8 +331,11 @@ input[type="color"]{
     justify-content: space-around;
     justify-self: center;
 
-    min-height: 3em;
-    max-height: 29em;
+    text-align: left;
+ 
+
+   
+    max-height: 27em;
     margin: 0 3rem ;
 }
 
@@ -344,12 +348,13 @@ input[type="color"]{
     width: auto;
     height: auto;
     max-width: 90%;
-    max-height: 20em;
+    max-height: 10em;
 
     object-fit: cover;
 }
 
 .homePost>footer {
+    position: relative;
     max-height: 3em;
 }
 
