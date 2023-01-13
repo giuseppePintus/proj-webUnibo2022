@@ -312,7 +312,7 @@ input[type="color"]{
 
     width: 100%;
     max-width: 35em;
-    max-height: 45em;
+    max-height: 49em;
     
     border: 1px solid var(--third-color);
     margin: 5% 0;
@@ -349,7 +349,7 @@ input[type="color"]{
     width: auto;
     height: auto;
     max-width: 90%;
-    max-height: 10em;
+    max-height: 15em;
 
     object-fit: cover;
 }
@@ -383,7 +383,7 @@ input[type="color"]{
     width: 100%;
 }
 .scrollableComments{
-    max-height: 15em;
+    max-height: 12em;
     width: 100%;
     overflow-y: scroll;
 }
