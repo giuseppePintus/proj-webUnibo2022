@@ -33,7 +33,7 @@ header{
     flex-direction: row;
     background-color:var(--first-color);
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 
     width: auto;
@@ -205,6 +205,15 @@ input[type="color"]{
 
 }
 /*search bar*/
+.searchForm{
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+}
+.searchBar{
+
+}
 .searchBar>input {
     width: 50%;
     height: 2rem;
@@ -227,7 +236,7 @@ input[type="color"]{
 
     width: 30em;
     max-width: 80%;
-    max-height: 30em; 
+    max-height: 60em; 
 
     border-radius: 1rem;
     background-color: var(--base-color);
