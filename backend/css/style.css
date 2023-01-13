@@ -12,7 +12,6 @@
  
 
   /*scrollbar*/
-
 ::-webkit-scrollbar {
     width: 0.3rem;
 }
@@ -116,8 +115,7 @@ p{
     padding: 0;
     justify-content: center;
     color: var(--text-color);
-    mix-blend-mode: luminosity;
-    
+    mix-blend-mode: luminosity;    
 }
 
 img{
@@ -638,10 +636,13 @@ input[type="color"]{
     height: 100%;
 
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column;    
     align-items: stretch;
     justify-content: center;
+}
+
+.settings input[type="button"]{
+    margin: 1em 0;
 }
 
 /*Cookie prompt*/
@@ -654,24 +655,24 @@ input[type="color"]{
     bottom: 0;
     left: 0;
     z-index: 10;
-  }
-  .cookie-notification p {
+}
+.cookie-notification p {
     font-size: 0.9em;
     color: #333333;
-  }
-  .cookie-notification a {
+}
+.cookie-notification a {
     color: #0066cc;
     text-decoration: none;
     margin-left: 1em;
-  }
-  .cookie-notification button {
+}
+.cookie-notification button {
     background-color: #0066cc;
     color: #fff;
     padding: 0.5em 1em;
     border: none;
     cursor: pointer;
     margin-left: 1em;
-  }
+}
 
 
 /*responsive design*/
@@ -721,11 +722,8 @@ input[type="color"]{
         margin: 0;
     }
 
-
     .notificationContainer{
         position: relative;
-        width: 90%;
-       
+        width: 90%;       
     }
-
 }
