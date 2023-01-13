@@ -110,7 +110,7 @@ function changeColor(){
   main.innerHTML =`
     <div class="selectColor">
       <label for="colorPicker">Choose your base color</label><br>
-      <input type="color" id="colorPicker" name="colorPicker" value="#ff0000"><br>
+      <input type="color" id="colorPicker" name="colorPicker" value="${document.documentElement.style.getPropertyValue('--first-color')}"><br>
       <input type="submit" value="Select" onClick="setPalette()">
     </div>
   `;
