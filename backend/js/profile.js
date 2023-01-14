@@ -22,7 +22,7 @@ async function profilePageTemplate(userInfo) {
         <div class="profileInfo">
         <header>
             <div>
-                <img src="upload/html5-js-css3.png" alt="userbackground">
+                <img src="${result['usericon']}" alt="usericon">
             </div>
         </header>
         <section>
