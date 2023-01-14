@@ -12,19 +12,19 @@ function generatePosts(posts) {
                         <ul>
                             <li>
                                 <form action="profile.php" method="post">
-                                <input type="hidden" name="user" value="${posts[i]["userid"]}">
+                                <input type="hidden" name="user" title="user" value="${posts[i]["userid"]}">
                                 <button type="submit"><img src="${posts[i]["usericon"]}" alt="usericon" /></button>
                                 </form>
                             </li>
                             <li>
                                 <form action="profile.php" method="post">
-                                <input type="hidden" name="user" value="${posts[i]["userid"]}">
+                                <input type="hidden" name="user" title="user" value="${posts[i]["userid"]}">
                                 <button type="submit"><h2>${posts[i]['usernickname']}</h2></button>
                                 </form>
                             </li>
                             <li>
                                 <form action="profile.php" method="post">
-                                <input type="hidden" name="user" value="${posts[i]["userid"]}">
+                                <input type="hidden" name="user" title="user" value="${posts[i]["userid"]}">
                                 <button type="submit">@${posts[i]["username"]}</button>
                                 </form>
                             </li>
