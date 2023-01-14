@@ -1,6 +1,7 @@
 
-# Project for technology web 2022-2023 Tachyon
+# Tachyon - Project for technology web 2022-2023
 [![License: MIT ](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
+
 
 Tachyon is a general social media site desined for older users with super simple designs, it's design partially comes from 
 the sites:
