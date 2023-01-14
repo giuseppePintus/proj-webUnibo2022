@@ -40,9 +40,7 @@
         ?>
         <footer>
             <p>
-                <a href="html/privacy.html"> Informativa Privacy </a> 
-                |
-                <a href="html/cookie.html"> Cookie </a>       
+                <a href="html/privacy.html"> Informativa Privacy </a>    
                 | ©2022 -
                 <a href="html/credit.html"> Credit </a>
                 
