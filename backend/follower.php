@@ -6,7 +6,7 @@
     $templateParams["pagename"] = "follow";
     $templateParams["usericon"] = UPLOAD_DIR . "icon.png";
 
-    $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/followPage.js", "js/darkMode.js",
+    $templateParams["js"] = array("js/darkMode.js","https://unpkg.com/axios/dist/axios.min.js","js/followPage.js", 
     "js/interaction.js" , "js/notifications.js" , "js/cookie.js");
 
     if( !isset($_POST["user"])){

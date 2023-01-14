@@ -9,7 +9,7 @@
     $templateParams["pagename"] = "Home";
     $templateParams["usericon"] = UPLOAD_DIR . "icon.png";
 
-    $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/index.js", "js/darkMode.js",
-        "js/interaction.js" , "js/notifications.js" ,"js/searchBar.js", "js/cookie.js");
+    $templateParams["js"] = array("js/darkMode.js","https://unpkg.com/axios/dist/axios.min.js", "js/cookie.js","js/index.js", 
+        "js/interaction.js" , "js/notifications.js" ,"js/searchBar.js");
     require 'template/base.php';
 ?>

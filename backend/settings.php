@@ -3,7 +3,7 @@
 
     $templateParams["pagetitle"] = "Tachyon - Settings";
     $templateParams["pagename"] = "Settings";
-    $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/settings.js", "js/darkMode.js", "js/cookie.js");
+    $templateParams["js"] = array("js/darkMode.js","https://unpkg.com/axios/dist/axios.min.js","js/settings.js","js/notifications.js",  "js/cookie.js");
 
     require 'template/base.php'
 ?>
