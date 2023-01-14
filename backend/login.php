@@ -22,9 +22,9 @@
             <h1> Welcome to Tachyon</h1>
             <h2> Login </h2>
             <form id="LoginForm">
-                <input type="text"  for="userInput"  name="UsernameIn"  id="userInput" class="usrIn"  placeholder="Username" >
-                <input type="password"  for="passInput" name="PasswordIn"  id="passInput" class="passIn" placeholder="Password">
-                <input type="button"  for="loginButton"  name="LoginButton" value="Login"  onclick="login()">
+                <input title="username" type="text"  for="userInput"  name="UsernameIn"  id="userInput" class="usrIn"  placeholder="Username" >
+                <input title="password" type="password"  for="passInput" name="PasswordIn"  id="passInput" class="passIn" placeholder="Password">
+                <input title="log-in button" type="button"  for="loginButton"  name="LoginButton" value="Login"  onclick="login()">
             </form>
             <a href="register.php"> sign up</a> 
         </div>

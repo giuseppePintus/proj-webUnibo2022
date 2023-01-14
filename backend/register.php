@@ -23,10 +23,10 @@
             <h1> Welcome to Tachyon</h1> 
             <h2> Sign Up </h2>
             <form id="LoginForm" onfocus="resetClass()">
-                <input type="email"     name="EmailIn"      id="emailInput"     class="emailIn" placeholder="Email">
-                <input type="text"      name="UsernameIn"   id="userInput"      class="usrIn"   placeholder="Username">
-                <input type="password"  name="PasswordIn"   id="passInput"      class="passIn"  placeholder="Password">
-                <input type="button"    name="LoginButton" value="Register"  onclick="register()">
+                <input title="email" type="email"     name="EmailIn"      id="emailInput"     class="emailIn" placeholder="Email">
+                <input title="user Input" type="text"      name="UsernameIn"   id="userInput"      class="usrIn"   placeholder="Username">
+                <input title="password Input" type="password"  name="PasswordIn"   id="passInput"      class="passIn"  placeholder="Password">
+                <input title="Register button" type="button"    name="LoginButton" value="Register"  onclick="register()">
             </form> 
             <p> La password deve essere almeno 8 caratteri</p>
         </div>
