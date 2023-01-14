@@ -65,5 +65,9 @@ Activate all web services.
 You can download the xampp container here: https://hub.docker.com/r/tomsik68/xampp/
 
 Once you have done, You will be able to host this web.
+Then change the web port to 8080 such as 
+```
+http://localhost:8080/www/backend/index.php
+```
 
 
