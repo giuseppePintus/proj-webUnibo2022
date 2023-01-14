@@ -31,7 +31,8 @@ class DatabaseHelper
         
         $stmt = $this->db->prepare("SELECT DISTINCT u.* ,
         (SELECT COUNT(*) FROM OTHERUSER o WHERE u.userid = o.fol_userid AND o.userid = ? ) AS follow,
-        (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(?) * 100 AS similarity 
+        (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(username) * 50 +
+        (LENGTH(usernickname) - LENGTH(REPLACE(usernickname,?, ''))) / LENGTH(usernickname) * 50 AS similarity 
         FROM USER_PROFILE u
         WHERE (username LIKE ? OR usernickname LIKE ?) AND u.userid != ? 
         ORDER BY similarity DESC 
