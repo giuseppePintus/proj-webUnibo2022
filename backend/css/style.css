@@ -542,9 +542,11 @@ input[type="color"]{
 }
 .notificationList>div>ul{
     margin: 0.5em 0;
+    display: inline-block;
 }
 .notificationList>div>ul>li{
     margin: 1%;
+    display: inline-block;
 }
 .notificationList>div>ul>li:nth-child(3){
     position: relative;
@@ -552,9 +554,9 @@ input[type="color"]{
     color: var(--text-color);
     opacity: 0.6;
     white-space: nowrap;
-    display: flex;
+    float: right;
     margin: 0;
-    top: -1em;
+    
 }
 
 .notification0 {
