@@ -20,7 +20,7 @@
             
             <form action="search.php" class="searchForm">
                 <div class="searchBar">
-                    <input id="searchInfo" type="search" placeholder="Search.." name="search">
+                    <input id="searchInfo" type="search" title="search" placeholder="Search.." name="search"/>
                     <button type="submit" >Go</button>
                 </div>
             </form>
@@ -39,9 +39,9 @@
                 <?php if ($templateParams["pagename"] == 'Home' || $templateParams["pagename"] == 'Profile') {
                     echo '<div class = "uploadPostImage">
                     <form action="uploadPostImage.php" method="post" enctype="multipart/form-data">
-                        <input id="newpost" type="text" placeholder="write something to share..." name="writepost" required>
+                        <input id="newpost" type="text" placeholder="write something to share..." name="writepost" title="writepost" required>
                         Select image to upload:
-                        <input type="file" name="fileToUpload" id="fileToUpload">
+                        <input type="file" name="fileToUpload" id="fileToUpload" title="fileToUpload">
                         <button type="submit" name="submitpost">post</button>
                     </form></div>';
                 } ?>
