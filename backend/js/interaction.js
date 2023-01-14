@@ -155,7 +155,7 @@ async function refreshPost(postid) {
   }).then( response => {
     post.querySelector(".nLike").innerHTML = response.data["nlike"];
     post.querySelector(".nComment").innerHTML = response.data["commented"];
-    post.querySelector(".nSave").innerHTML = response.data["saved"];
+    //spost.querySelector(".nSave").innerHTML = response.data["saved"];
   });
 
   //document.getElementById("commentBox" + postid).innerHTML = "";
