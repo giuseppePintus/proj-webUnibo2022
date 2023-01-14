@@ -610,7 +610,6 @@ input[type="color"]{
     width: 99%;
     height: 15em;
     border-radius: 1em;
-    border: 0.4em solid var(--third-color);
 }
 .profileInfo>header img {
     margin: 0;
@@ -618,7 +617,7 @@ input[type="color"]{
     height: 100%;
     object-fit: cover;    
     border-radius: 1em;
-   
+    border: 0.4em solid var(--third-color);   
 }
 .profileInfo section{
     display: flex;
