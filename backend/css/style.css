@@ -521,9 +521,16 @@ input[type="color"]{
     overflow-y: auto;
     position: absolute;
     right: 0;    
-    background-color: var(--base-color);
+    border-radius: 1em;
+    border: solid 3px var(--first-color);
 }
-
+.notificationContainer div{
+    margin: 1% 0;
+    border-radius: 1em;
+}
+.notificationContainer header{
+    border-radius: 0 0 1em 1em;
+}
 .notificationIcon>img {
     width: 100%;
     height: auto;
@@ -545,8 +552,9 @@ input[type="color"]{
     display: inline-block;
 }
 .notificationList>div>ul>li{
-    margin: 1%;
     display: inline-block;
+    vertical-align: middle;
+
 }
 .notificationList>div>ul>li:nth-child(3){
     position: relative;
@@ -555,18 +563,18 @@ input[type="color"]{
     opacity: 0.6;
     white-space: nowrap;
     float: right;
-    margin: 0;
+    margin: 0 5% 0 0;
     
 }
 
 .notification0 {
     background-color: var(--second-color);
-    border-radius: 1rem;
+    border-radius: 1em;
 }
 
 .notification1{
-    border-radius: 1rem;
-    opacity: 0.4;
+    border-radius: 1em;
+    opacity: 0.6;
     background-color: var(--second-color);
 }
 /*search page*/
