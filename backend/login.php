@@ -7,7 +7,7 @@
     $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/login.js", "js/cookie.js");
 ?>
 <!DOCTYPE html>
-<html lang="it-IT">
+<html lang="en" xml:lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.00">

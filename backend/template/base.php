@@ -5,7 +5,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en" xml:lang="en">
     <head>
         <meta content="width=device-width, initial-scale=1.0">
         <title><?php echo $templateParams["pagetitle"]; ?></title>
