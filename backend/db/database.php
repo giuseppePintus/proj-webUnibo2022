@@ -200,7 +200,7 @@ class DatabaseHelper
             (SELECT COUNT(*) FROM COMMENTPOST cp WHERE cp.postid = p.postid ) AS commented, 
             (SELECT COUNT(*) FROM SAVED s WHERE s.postid = p.postid AND s.userid = ? ) AS saved
             FROM `POST` p 
-            JOIN `OTHERUSER` o ON p.`userid` = o.fol_userid OR p.`userid` = o.userid AND o.userid = ? 
+            JOIN `OTHERUSER` o ON (p.`userid` = o.fol_userid OR p.`userid` = o.userid) AND o.userid = ? 
             JOIN `USER_PROFILE` u ON u.userid = p.userid         
             ORDER BY p.`postdate` DESC ,p.postid DESC 
             LIMIT ? , ?;");
