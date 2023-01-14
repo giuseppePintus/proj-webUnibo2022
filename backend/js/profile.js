@@ -170,7 +170,6 @@ function userInitialPost(userID) {
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;
         lock = true;
-        console.log(response.data);
     });
 }
 
