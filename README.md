@@ -9,11 +9,12 @@ the sites:
 The site address: https://tachyon.altervista.org/
 
 ---------------------------------
-1. [Basic Functionalities](#BasicFunctionalities)
-2. [WOW effects](#[WOWeffects)
+1. [Basic-Functionalities](#basic-functionalities)
+2. [WOW-effects](#wow-effects)
+3. [Instalation](#Instalation)
 ---------------------------------
 
-## Basic Functionalities:
+## Basic-Functionalities:
 - [X] Design: max 3 points
 - [X] Registration and login: max 3 points
 - [X] Home with post feed of followed users: max 4 points
@@ -24,7 +25,7 @@ The site address: https://tachyon.altervista.org/
 - [X] Notifications: max 5 points
 
 
-## WOW effects
+## WOW-effects
 ### Functional Features:
 - [X] UserInteractions: like and save
 - [X] Search users with username
@@ -39,5 +40,26 @@ The site address: https://tachyon.altervista.org/
 - [X] Limit of login times within a certain period
 - [X] mobile version of the website
 - [X] secure connection with HTTPS (only website) 
+
+## Instalation
+### Step 1:
+Clone the repositofy:
+```
+git@github.com:giuseppePintus/proj-webUnibo2022.git && cd proj-webUnibo2022
+```
+### Step 2:
+You can choose to download xampp server and mysql server to manage this site or using a docker container.
+
+#### Xampp
+You need to create a link or move the folder under the folder of htdocs inside the xampp, giving the right access!
+```
+cd ..
+sudo mv -r  proj-webUnibo2022 /opt/lampp/htdocs/
+cd ..
+sudo ./manager-linux-x64.run
+```
+Activate all web services.
+
+#### Docker
 
 
