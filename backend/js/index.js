@@ -46,7 +46,7 @@ function generatePosts(posts) {
                         <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
                         <li><p class="nComment">${posts[i]["commented"]}</p></li>
                         <li><img class="save posticon${posts[i]["saved"]}" src="./upload/save.png" alt="save"/></li>
-                        <li><p class="nSave">${posts[i]["saved"]}</p></li>
+                       
                     </ul>
                 </footer>
             `;

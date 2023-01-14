@@ -122,7 +122,6 @@ function generatePostOfUser(posts, userInfo) {
                 <li><img class="comment" src="./upload/comment.png" alt="comment"/></li>
                 <li><p class="nComment">${posts[i]["commented"]}</p></li>
                 <li><img class="save posticon${posts[i]["saved"]}" src="./upload/save.png" alt="save"/></li>
-                <li><p class="nSave">${posts[i]["saved"]}</p></li>
                 </ul>
             </footer>
         `;
@@ -171,6 +170,7 @@ function userInitialPost(userID) {
         main.insertAdjacentHTML('beforeend', postshtml);
         offsetUserPostQuery += sizeUserPostQueryResult;
         lock = true;
+        console.log(response.data);
     });
 }
 
