@@ -33,11 +33,11 @@ class DatabaseHelper
         (SELECT COUNT(*) FROM OTHERUSER o WHERE u.userid = o.fol_userid AND o.userid = ? ) AS follow,
         (LENGTH(username) - LENGTH(REPLACE(username, ?, ''))) / LENGTH(?) * 100 AS similarity 
         FROM USER_PROFILE u
-        WHERE username LIKE ? AND u.userid != ? 
+        WHERE (username LIKE ? OR usernickname LIKE ?) AND u.userid != ? 
         ORDER BY similarity DESC 
         LIMIT ? ,?;");
         $string2 = "%".$string."%";
-        $stmt->bind_param('isssiii',$userid,$string, $string, $string2, $userid, $offset, $size);
+        $stmt->bind_param('issssiii',$userid,$string, $string, $string2, $string2, $userid, $offset, $size);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
