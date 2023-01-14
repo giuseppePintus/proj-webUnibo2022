@@ -96,7 +96,7 @@ function generatePostOfUser(posts, userInfo) {
                     <li>
                         <form action="profile.php" method="post">
                         <input type="hidden" name="user" value="${posts[i]["userid"]}">
-                        <button type="submit">${posts[i]['usernickname']}</button>
+                        <button type="submit"><h2>${posts[i]['usernickname']}</h2></button>
                         </form>
                     </li>
                     <li>
