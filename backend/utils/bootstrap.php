@@ -17,12 +17,6 @@ if( basename($_SERVER['PHP_SELF'])== "login.php" ||
     checkSession(); // close current session an
 
 }
-
-//session_regenerate_id(); // Rigenera la sessione e cancella quella creata in precedenza. usato per aumentare sicurezza
-
-
-
-
 define("UPLOAD_DIR", "./upload/");
 
 $dbh = new DatabaseHelper("localhost", "root", "", "TachyonDB", 3306);
