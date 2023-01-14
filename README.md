@@ -62,5 +62,8 @@ sudo ./manager-linux-x64.run
 Activate all web services.
 
 #### Docker
+You can download the xampp container here: https://hub.docker.com/r/tomsik68/xampp/
+
+Once you have done, You will be able to host this web.
 
 
