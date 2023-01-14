@@ -110,7 +110,7 @@ function changeColor(){
     <div class="selectColor">
       <label for="colorPicker">Choose your base color</label><br>
       <input type="color" id="colorPicker" name="colorPicker" value="${document.documentElement.style.getPropertyValue('--first-color')}"><br>
-      <input type="submit" value="Select" onClick="setPalette()">
+      <input title="submit" type="submit" value="Select" onClick="setPalette()">
     </div>
   `;
 }
@@ -223,10 +223,10 @@ search.innerHTML =  ``;
 
 main.innerHTML = `
     <div class="settings">                      
-        <input type="button"  name="LogoutButton" value="Log out"  onclick="logout()">
-        <input type="button"  name="PersButton" value="Personalizza"  onclick="changeColor()">
-        <input type="button"  name="NightButton" value=""  onclick="nightMode()">
-        <input type="button"  name="changePassButton" value="cambia password"  onclick="changePassword()">
+        <input title="log-out button" type="button"  name="LogoutButton" value="Log out"  onclick="logout()">
+        <input title="personalize" type="button"  name="PersButton" value="Personalizza"  onclick="changeColor()">
+        <input title="change color" type="button"  name="NightButton" value=""  onclick="nightMode()">
+        <input title="change password" type="button"  name="changePassButton" value="cambia password"  onclick="changePassword()">
     </div>`;
 
 document.querySelector('input[name="NightButton"]').value = getCookie("nightMode")==0 ? "toggle dark" : "toggle light" ; 
