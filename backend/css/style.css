@@ -193,8 +193,16 @@ input[type="color"]{
     max-width: 100%;
     
     margin-top: 0.5em;
+
+    transform: translateX(0%);
+
     transition: 1s; 
-   
+}
+.main.notify{
+    transform: translateX(-5%);
+}
+.homePost:last-child{
+    margin-bottom: 4em;
 }
 .centerPage{
     width: 100%;
@@ -211,9 +219,7 @@ input[type="color"]{
 
     width: 100%;
 }
-.searchBar{
 
-}
 .searchBar>input {
     width: 50%;
     height: 2rem;
@@ -281,6 +287,14 @@ input[type="color"]{
     transform: scaleY(100%);
 }
 
+/*post creation*/
+.uploadPostImage>form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
 /*post*/
 .postHeader{
     width: 100%;
@@ -311,11 +325,14 @@ input[type="color"]{
 }
 
 .postHeader h2{
-    font-size: large;
+    font-size: x-large;
     white-space: pre-line;
 }
 
-.postHeader ul li:nth-child(3) button{
+
+.postHeader button{
+    font-size: large;
+    font-style: italic;
     color: var(--third-color); 
 }
 
@@ -366,7 +383,7 @@ input[type="color"]{
 .postimage{
     max-width: 100%;
     max-height: 100%;
-    align-self: center;
+   text-align: center;
 }
 
 .postimage>img {
@@ -402,9 +419,10 @@ input[type="color"]{
 .writeCommentArea {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 0 2em;
-    width: 100%;
+    align-items: center;
+}
+.writeCommentArea input[type=text]{
+    height: 3em;
 }
 .scrollableComments{
     max-height: 12em;
@@ -419,13 +437,16 @@ input[type="color"]{
     margin-top: 3%;
     background-color: var(--second-color);
     overflow-x: auto;
-    padding:  2% 2% 0% 2%;
+    padding:  2% 3% 0% 3%;
     
 }
 .postComment ul{
     flex-direction: row;
     align-items: flex-start;
     text-align: left;
+}
+.commentButton{
+    margin:  1em 0;
 }
 
 /*Page footer*/
@@ -588,8 +609,11 @@ input[type="color"]{
     border-radius: 1rem;
     border: 0.4em solid var(--third-color);
     background-color: #ccc;
-   
-
+}
+.profileInfo section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 .profileInfo>section>div{
     position: relative;
@@ -698,7 +722,6 @@ input[type="color"]{
 
     img {
         max-width: 100%;
-        display: block;
       }
       
     .searchPage{
@@ -716,6 +739,11 @@ input[type="color"]{
         padding: 0;
        width: 99%;
        height: 50%;
+       transition: 0s;
+    }
+    .main.notify{
+        transform: translateX(0);
+     transition: 0;
     }
 
     .profileInfo img{
@@ -724,6 +752,6 @@ input[type="color"]{
 
     .notificationContainer{
         position: relative;
-        width: 90%;       
+        width: 90%;    
     }
 }

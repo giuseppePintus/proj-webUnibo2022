@@ -9,9 +9,11 @@ if(getCookie("cookieAccepted") === null){
 }
 
 if(getCookie("cookieAccepted")==0){
-    document.querySelector("footer").innerHTML += `  <div class="cookie-notification">
-    <p>This website uses cookies to ensure you get the best experience on our website. <a href="#">Learn more</a>
-    <button onClick="setCookie1()">Got it!</button>
-    </p>
-  </div>`;
+    document.querySelector("footer").innerHTML += `  
+    
+    <div class="cookie-notification">
+      <p>This website uses cookies to ensure you get the best experience on our website. </p>
+      <a href="/html/privacy">Learn more</a>
+      <button onClick="setCookie1()">Got it!</button>
+    </div>`;
 }

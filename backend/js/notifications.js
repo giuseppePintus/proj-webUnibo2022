@@ -100,7 +100,7 @@ function addNotificationBellListener(){
     document.getElementById("notification-container").addEventListener('click', event =>{
         if(showNotification){
             
-            document.querySelector(".main").style.transform = "translateX(0%)"; 
+            document.querySelector(".main").classList.remove("notify"); 
           
             document.querySelector("aside").style.opacity = "0";
 
@@ -108,7 +108,7 @@ function addNotificationBellListener(){
             showNotification = 0;
             
         }else{
-            document.querySelector(".main").style.transform = "translateX(-5%)";          
+            document.querySelector(".main").classList.add("notify");          
            
             document.querySelector("aside").style.opacity = "1";
             
